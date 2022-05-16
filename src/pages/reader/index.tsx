@@ -30,7 +30,8 @@ const getArtifactType = () => {
 
 const getArtifactData = (text: string): Artifact => {
   const line = text.replace(/\s/g, "")
-  const [option, prm] = line.split("+")
+  const [opt, prm] = line.split("+")
+  const option = opt.replace("カ", "力")
   const param = trimCircleFromNumber(prm)
   const label = option + "+" + param
   const isPercent = param.includes("%")
@@ -75,7 +76,7 @@ const App = () => {
     await worker.initialize("jpn")
     await worker.setParameters({
       tessedit_char_whitelist:
-        "会心率ダメージ攻撃力元素チャージ効率HP防御力熟知+.0①②③④⑤⑥⑦⑧⑨%",
+        "会心率ダメ攻撃元素チャ効率HP防御熟知力カージ+.0①②③④⑤⑥⑦⑧⑨%",
     })
     const {
       data: { text },
