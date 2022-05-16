@@ -58,10 +58,14 @@ const App = () => {
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
   const [textOcr, setTextOcr] = useState<string>("")
+  const [progress, setProgress] = useState(0)
   const [artifacts, setArtifacts] = useState<Artifact[]>([])
   const [score, setScore] = useState(0)
   const worker = createWorker({
-    logger: (m) => console.log(m),
+    logger: (m: { status: string; progress: number }) => {
+      setProgress(Math.round(m.progress * 100))
+      setTextOcr(m.status)
+    },
   })
 
   const tryOcr = async () => {
@@ -109,6 +113,10 @@ const App = () => {
       <button className="btn" onClick={handleClick}>
         Try OCR
       </button>
+      <span>
+        {textOcr} ({progress}%)
+      </span>
+      <progress className="w-56 progress" value={progress} max={100}></progress>
       <span className="whitespace-pre-wrap">
         {JSON.stringify(
           artifacts.map((a) => a.label),
