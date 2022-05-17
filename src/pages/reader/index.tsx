@@ -11,6 +11,53 @@ interface Artifact {
   paramValue: number
 }
 
+const SubStatusType = {
+  HP_ACT: "hp_act",
+  DEF_ACT: "def_act",
+  ATK_ACT: "atk_act",
+  HP_PER: "hp_per",
+  DEF_PER: "def_per",
+  ATK_PER: "atk_per",
+  ELEMENTAL_MASTERY: "elemental_mastery",
+  ENERGY_RECHARGE: "energy_recharge",
+  CRIT_RATE: "crit_rate",
+  CRIT_DAMAGE: "crit_damage",
+  UNDETECTED: "undetected",
+} as const
+
+type SubStatusType = typeof SubStatusType[keyof typeof SubStatusType]
+
+interface SubStatus {
+  label: string
+  type: SubStatusType
+  status: string
+  param: {
+    label: string
+    type: "actual" | "percent"
+    value: number
+  }
+}
+
+const getSubStatusType = (
+  status: string,
+  isPercent: boolean
+): SubStatusType => {
+  if (isPercent) {
+    if (status.includes("HP")) return SubStatusType.HP_PER
+    if (status.includes("防")) return SubStatusType.DEF_PER
+    if (status.includes("攻")) return SubStatusType.ATK_PER
+    if (status.includes("チャージ")) return SubStatusType.ENERGY_RECHARGE
+    if (status.includes("率")) return SubStatusType.CRIT_RATE
+    if (status.includes("ダメージ")) return SubStatusType.CRIT_DAMAGE
+  }
+  if (status.includes("HP")) return SubStatusType.HP_ACT
+  if (status.includes("防")) return SubStatusType.DEF_ACT
+  if (status.includes("攻")) return SubStatusType.ATK_ACT
+  if (status.includes("熟知")) return SubStatusType.ELEMENTAL_MASTERY
+
+  return SubStatusType.UNDETECTED
+}
+
 const reg = new RegExp("[\u{2460}-\u{2468}]", "u")
 
 const trimCircleFromNumber = (text: string): string => {
@@ -24,33 +71,52 @@ const trimCircleFromNumber = (text: string): string => {
     .join("")
 }
 
-const getArtifactType = () => {
-  //
+const getSubStatusData = (line: string): SubStatus => {
+  const [s, p] = line.split("+")
+  const isPercent = p.includes("%")
+  const status = s.replace("カ", "力")
+  const type = getSubStatusType(status, isPercent)
+  const paramLabel = trimCircleFromNumber(p)
+  const label = status + "+" + paramLabel
+  const paramType = isPercent ? "percent" : "actual"
+  const paramValue = +paramLabel.split("%").join("")
+  const param: SubStatus["param"] = {
+    label: paramLabel,
+    type: paramType,
+    value: paramValue,
+  }
+
+  return {
+    label,
+    type,
+    status,
+    param,
+  }
 }
 
-const getArtifactData = (text: string): Artifact => {
-  const line = text.replace(/\s/g, "")
-  const [opt, prm] = line.split("+")
-  const option = opt.replace("カ", "力")
-  const param = trimCircleFromNumber(prm)
-  const label = option + "+" + param
-  const isPercent = param.includes("%")
-  const paramType: Artifact["paramType"] = isPercent ? "percent" : "actual"
-  const paramValue = +param.split("%").join("")
-  return { label, option, param, paramType, paramValue }
+const getSubStatusDatas = (text: string): SubStatus[] => {
+  return text
+    .split("\n")
+    .filter((l) => Boolean(l))
+    .map((l) => getSubStatusData(l.replace(/\s/g, "")))
 }
 
-const getArtifactScore = (datas: Artifact[]): number => {
+const getArtifactScore = (datas: SubStatus[]): number => {
   return datas
-    .map(({ paramType, option, paramValue }) => {
-      const isPercent = paramType === "percent"
-      if (isPercent && (option.includes("攻") || option.includes("会心"))) {
-        if (option.includes("率")) {
-          return paramValue * 2
-        }
-        return paramValue
+    .map(({ type, param }) => {
+      switch (type) {
+        case SubStatusType.CRIT_RATE:
+          return param.value * 2
+
+        case SubStatusType.CRIT_DAMAGE:
+          return param.value
+
+        case SubStatusType.ATK_PER:
+          return param.value
+
+        default:
+          return 0
       }
-      return 0
     })
     .reduce((sum, elem) => sum + elem, 0)
 }
@@ -60,12 +126,12 @@ const App = () => {
   const [url, setUrl] = useState("")
   const [textOcr, setTextOcr] = useState<string>("")
   const [progress, setProgress] = useState(0)
-  const [artifacts, setArtifacts] = useState<Artifact[]>([])
+  const [substats, setSubStats] = useState<SubStatus[]>([])
   const [score, setScore] = useState(0)
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
-      setTextOcr(m.status)
+      // setTextOcr(m.status)
     },
   })
 
@@ -82,12 +148,9 @@ const App = () => {
       data: { text },
     } = await worker.recognize(file)
 
-    const datas: Artifact[] = text
-      .split("\n")
-      .filter((l) => Boolean(l))
-      .map(getArtifactData)
+    const datas = getSubStatusDatas(text)
     const newScore = getArtifactScore(datas)
-    setArtifacts(datas)
+    setSubStats(datas)
     setScore(newScore)
 
     await worker.terminate()
@@ -118,15 +181,10 @@ const App = () => {
         {textOcr} ({progress}%)
       </span>
       <progress className="w-56 progress" value={progress} max={100}></progress>
-      <span className="whitespace-pre-wrap">
-        {JSON.stringify(
-          artifacts.map((a) => a.label),
-          //   artifacts,
-          null,
-          4
-        )}
-      </span>
       <h1>SCORE: {Math.round(score * 10) / 10}</h1>
+      <span className="whitespace-pre-wrap">
+        {JSON.stringify(substats, null, 4)}
+      </span>
     </div>
   )
 }
