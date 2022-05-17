@@ -4,11 +4,14 @@ import { createWorker } from "tesseract.js"
 import type { ImageLike } from "tesseract.js"
 
 interface Artifact {
-  label: string
-  option: string
-  param: string
-  paramType: "actual" | "percent"
-  paramValue: number
+  level: number
+  main: {
+    label: string
+    status: string
+    type: "actual" | "percent"
+    value: number
+  }
+  subs: SubStatus[]
 }
 
 const SubStatusType = {
