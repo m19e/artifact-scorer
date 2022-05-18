@@ -184,9 +184,21 @@ const App = () => {
         {textOcr} ({progress}%)
       </span>
       <progress className="w-56 progress" value={progress} max={100}></progress>
-      <h1>SCORE: {Math.round(score * 10) / 10}</h1>
+      <div className="shadow stats">
+        <div className="text-center stat">
+          <div className="stat-title">ARTIFACT SCORE</div>
+          <div className="stat-value text-primary">
+            {Math.round(score * 10) / 10}
+          </div>
+          <div className="stat-desc">Critical Rate/Damage TYPE</div>
+        </div>
+      </div>
       <span className="whitespace-pre-wrap">
-        {JSON.stringify(substats, null, 4)}
+        {JSON.stringify(
+          substats.map((s) => s.label),
+          null,
+          4
+        )}
       </span>
     </div>
   )
