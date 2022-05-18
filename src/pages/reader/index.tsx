@@ -15,6 +15,38 @@ interface Artifact {
   subs: SubStatus[]
 }
 
+const ScoreType = {
+  CRIT: "会心率/ダメージ型（汎用火力用）",
+  ENERGY_RECHARGE: "元素チャージ効率型（絶縁の旗印）",
+  DEF: "防御型（華館夢醒形骸記）",
+  HP: "HP型（鍾離/胡桃）",
+  ELEMENTAL_MASTERY: "元素熟知型（翠緑の影）",
+} as const
+
+type ScoreType = typeof ScoreType[keyof typeof ScoreType]
+
+interface ScoreTypeData {
+  label: ScoreType
+  type: keyof typeof ScoreType
+  name: string
+  description: string
+}
+
+const ScoreTypeDataList: ScoreTypeData[] = Object.entries(ScoreType).map(
+  ([k, v]) => {
+    const label = v
+    const type = k as keyof typeof ScoreType
+    const [name, d] = v.split("（")
+    const description = d.replace("）", "")
+    return {
+      label,
+      type,
+      name,
+      description,
+    }
+  }
+)
+
 const SubStatusType = {
   HP_ACT: "hp_act",
   DEF_ACT: "def_act",
@@ -105,7 +137,7 @@ const getSubStatusDatas = (text: string): SubStatus[] => {
     .map((l) => getSubStatusData(l.replace(/\s/g, "")))
 }
 
-const getArtifactScore = (datas: SubStatus[]): number => {
+const getArtifactScore = (datas: SubStatus[], sType: ScoreType): number => {
   return datas
     .map(({ type, param }) => {
       switch (type) {
@@ -116,7 +148,34 @@ const getArtifactScore = (datas: SubStatus[]): number => {
           return param.value
 
         case SubStatusType.ATK_PER:
-          return param.value
+          if (sType === ScoreType.CRIT) {
+            return param.value
+          }
+          return 0
+
+        case SubStatusType.ENERGY_RECHARGE:
+          if (sType === ScoreType.ENERGY_RECHARGE) {
+            return param.value
+          }
+          return 0
+
+        case SubStatusType.DEF_PER:
+          if (sType === ScoreType.DEF) {
+            return param.value
+          }
+          return 0
+
+        case SubStatusType.HP_PER:
+          if (sType === ScoreType.HP) {
+            return param.value
+          }
+          return 0
+
+        case SubStatusType.ELEMENTAL_MASTERY:
+          if (sType === ScoreType.ELEMENTAL_MASTERY) {
+            return param.value / 2
+          }
+          return 0
 
         default:
           return 0
@@ -132,6 +191,7 @@ const App = () => {
   const [progress, setProgress] = useState(0)
   const [substats, setSubStats] = useState<SubStatus[]>([])
   const [score, setScore] = useState(0)
+  const [scoreType, setScoreType] = useState<ScoreType>(ScoreType.CRIT)
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
@@ -153,7 +213,7 @@ const App = () => {
     } = await worker.recognize(file)
 
     const datas = getSubStatusDatas(text)
-    const newScore = getArtifactScore(datas)
+    const newScore = getArtifactScore(datas, scoreType)
     setSubStats(datas)
     setScore(newScore)
 
@@ -174,31 +234,76 @@ const App = () => {
   return (
     <div className="flex flex-col gap-4 items-center p-8">
       <Dropzone onDrop={handleDrop} />
-      {!!url && <img src={url} />}
-      <button className="btn" onClick={handleClick}>
-        Try OCR
-      </button>
-      <span>
-        {textOcr} ({progress}%)
-      </span>
-      <progress className="w-56 progress" value={progress} max={100}></progress>
-      <div className="shadow stats">
-        <div className="text-center stat">
-          <div className="stat-title">ARTIFACT SCORE</div>
-          <div className="stat-value text-primary">
-            {Math.round(score * 10) / 10} (
-            {Math.round(((score * 10) / 60.3) * 100) / 10}%)
+      <div className="inline-flex gap-4 items-center">
+        <div className="flex flex-col items-center py-2 px-4 rounded shadow">
+          <div className="h-6">
+            {textOcr !== "" ? (
+              <span className="text-base-content">
+                {textOcr} ({progress}%)
+              </span>
+            ) : (
+              <span className="text-base-content">Progress</span>
+            )}
           </div>
-          <div className="stat-desc">Critical Rate/Damage TYPE</div>
+          <progress
+            className="w-56 progress"
+            value={progress}
+            max={100}
+          ></progress>
+        </div>
+        <button className="btn" onClick={handleClick}>
+          recognize
+        </button>
+      </div>
+      <select
+        className="w-full max-w-sm select select-bordered"
+        defaultValue={0}
+        onChange={(e) => {
+          const type = e.currentTarget.value as ScoreType
+          if (substats.length) {
+            setScore(getArtifactScore(substats, type))
+          }
+          setScoreType(type)
+        }}
+      >
+        {ScoreTypeDataList.map((data) => (
+          <option key={data.type} value={data.label}>
+            {data.label}
+          </option>
+        ))}
+      </select>
+      {!!url && <img src={url} />}
+      <div className="flex gap-4 items-center">
+        {!!substats.length && (
+          <div className="shadow stats">
+            <div className="text-center stat">
+              <div className="stat-title">ARTIFACT SCORE</div>
+              <div className="stat-value">
+                {Math.round(score * 10) / 10}
+                {(() => {
+                  if (score >= 45) {
+                    return <span className="text-error">(SS)</span>
+                  }
+                  if (score >= 35) {
+                    return <span className="text-warning">(S)</span>
+                  }
+                  if (score >= 25) {
+                    return <span className="text-primary">(A)</span>
+                  }
+                  return <span className="text-info">(B)</span>
+                })()}
+                {/* ({Math.round(((score * 10) / 60.3) * 100) / 10}%) */}
+              </div>
+              {/* <div className="stat-desc">Critical Rate/Damage TYPE</div> */}
+            </div>
+          </div>
+        )}
+        <div className="flex flex-col">
+          {substats.map((s) => (
+            <span key={s.label}>・{s.label}</span>
+          ))}
         </div>
       </div>
-      <span className="whitespace-pre-wrap">
-        {JSON.stringify(
-          substats.map((s) => s.label),
-          null,
-          4
-        )}
-      </span>
     </div>
   )
 }
