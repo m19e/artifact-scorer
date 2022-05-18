@@ -1,7 +1,8 @@
 import { useState } from "react"
-import type { ChangeEventHandler } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike } from "tesseract.js"
+
+import { Dropzone } from "@/components/molecules/Dropzone"
 
 interface Artifact {
   level: number
@@ -159,12 +160,9 @@ const App = () => {
     await worker.terminate()
   }
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (!e.target.files) {
-      return
-    }
-    setUrl(URL.createObjectURL(e.target.files[0]))
-    setFile(e.target.files[0])
+  const handleDrop = (file: File) => {
+    setUrl(URL.createObjectURL(file))
+    setFile(file)
   }
 
   const handleClick = async () => {
@@ -175,7 +173,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col gap-4 items-center p-8">
-      <input type="file" onChange={handleChange} />
+      <Dropzone onDrop={handleDrop} />
       {!!url && <img src={url} />}
       <button className="btn" onClick={handleClick}>
         Try OCR
