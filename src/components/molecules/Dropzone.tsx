@@ -3,18 +3,14 @@ import type { VFC } from "react"
 import { useDropzone } from "react-dropzone"
 
 interface Props {
-  onDrop: (url: string) => void
+  onDrop: (file: File) => void
 }
 
 export const Dropzone: VFC<Props> = ({ onDrop }) => {
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (!acceptedFiles.length) return
-      const files = acceptedFiles.map((file) => ({
-        file,
-        url: URL.createObjectURL(file),
-      }))
-      onDrop(files[0].url)
+      onDrop(acceptedFiles[0])
     },
     [onDrop]
   )
