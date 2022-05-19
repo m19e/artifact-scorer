@@ -74,6 +74,19 @@ interface SubStatus {
   }
 }
 
+const SubStatusMap = new Map<keyof typeof SubStatusType, { max: number }>([
+  ["HP_ACT", { max: 299 }],
+  ["DEF_ACT", { max: 23 }],
+  ["ATK_ACT", { max: 19 }],
+  ["HP_PER", { max: 5.8 }],
+  ["DEF_PER", { max: 7.3 }],
+  ["ATK_PER", { max: 5.8 }],
+  ["ELEMENTAL_MASTERY", { max: 23 }],
+  ["ENERGY_RECHARGE", { max: 6.5 }],
+  ["CRIT_RATE", { max: 3.9 }],
+  ["CRIT_DAMAGE", { max: 7.8 }],
+])
+
 const getSubStatusType = (
   status: string,
   isPercent: boolean
@@ -182,6 +195,15 @@ const getArtifactScore = (datas: SubStatus[], sType: ScoreType): number => {
       }
     })
     .reduce((sum, elem) => sum + elem, 0)
+}
+
+const getSubStatusScore = (data: SubStatus): number => {
+  const type = data.type.toUpperCase()
+  const stat = SubStatusMap.get(type as keyof typeof SubStatusType)
+  if (!stat) {
+    return 0
+  }
+  return Math.round((data.param.value / (stat.max * 6)) * 100 * 10) / 10
 }
 
 const App = () => {
@@ -300,7 +322,9 @@ const App = () => {
         )}
         <div className="flex flex-col">
           {substats.map((s) => (
-            <span key={s.label}>・{s.label}</span>
+            <span key={s.label}>
+              ・{s.label} ({getSubStatusScore(s)}%)
+            </span>
           ))}
         </div>
       </div>
