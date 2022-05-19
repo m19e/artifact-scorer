@@ -169,7 +169,10 @@ const getSubStatusDatas = (text: string): SubStatus[] => {
     .map((l) => getSubStatusData(l.replace(/\s/g, "")))
 }
 
-const getArtifactScore = (datas: SubStatus[], calcType: CalcType): number => {
+const getArtifactScore = (
+  datas: SubStatus[],
+  calcType: CalcTypeData["type"]
+): number => {
   return datas
     .map(({ type, param }) => {
       switch (type) {
@@ -180,31 +183,31 @@ const getArtifactScore = (datas: SubStatus[], calcType: CalcType): number => {
           return param.value
 
         case SubStatusType.ATK_PER:
-          if (calcType === CalcType.CRIT) {
+          if (calcType === "CRIT") {
             return param.value
           }
           return 0
 
         case SubStatusType.ENERGY_RECHARGE:
-          if (calcType === CalcType.ENERGY_RECHARGE) {
+          if (calcType === "ENERGY_RECHARGE") {
             return param.value
           }
           return 0
 
         case SubStatusType.DEF_PER:
-          if (calcType === CalcType.DEF) {
+          if (calcType === "DEF") {
             return param.value
           }
           return 0
 
         case SubStatusType.HP_PER:
-          if (calcType === CalcType.HP) {
+          if (calcType === "HP") {
             return param.value
           }
           return 0
 
         case SubStatusType.ELEMENTAL_MASTERY:
-          if (calcType === CalcType.ELEMENTAL_MASTERY) {
+          if (calcType === "ELEMENTAL_MASTERY") {
             return param.value / 2
           }
           return 0
@@ -232,7 +235,7 @@ const App = () => {
   const [progress, setProgress] = useState(0)
   const [substats, setSubStats] = useState<SubStatus[]>([])
   const [score, setScore] = useState(0)
-  const [calcType, setCalcType] = useState<CalcType>(CalcType.CRIT)
+  const [calcType, setCalcType] = useState<CalcTypeData["type"]>("CRIT")
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
@@ -300,7 +303,7 @@ const App = () => {
         className="w-full max-w-sm select select-bordered"
         defaultValue={0}
         onChange={(e) => {
-          const type = e.currentTarget.value as CalcType
+          const type = e.currentTarget.value as CalcTypeData["type"]
           if (substats.length) {
             setScore(getArtifactScore(substats, type))
           }
@@ -308,7 +311,7 @@ const App = () => {
         }}
       >
         {CalcTypeDataList.map((data) => (
-          <option key={data.type} value={data.label}>
+          <option key={data.type} value={data.type}>
             {data.label}
           </option>
         ))}
