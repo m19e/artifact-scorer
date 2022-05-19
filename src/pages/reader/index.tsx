@@ -349,6 +349,12 @@ const App = () => {
           </option>
         ))}
       </select>
+      <div className="flex flex-col w-full max-w-sm">
+        <div className="w-full max-w-sm artifact-heading">
+          <span>{CalcTypeMap[calcType].name}</span>
+        </div>
+        <div className="w-full max-w-sm h-48 bg-gradient-to-br from-gray-600 to-orange-300"></div>
+      </div>
       {!!url && <img src={url} />}
       <div className="flex gap-4 items-center">
         {!!substats.length && (
