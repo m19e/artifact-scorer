@@ -197,7 +197,7 @@ const getArtifactScore = (datas: SubStatus[], sType: ScoreType): number => {
     .reduce((sum, elem) => sum + elem, 0)
 }
 
-const getSubStatusScore = (data: SubStatus): number => {
+const getSubStatusRate = (data: SubStatus): number => {
   const type = data.type.toUpperCase()
   const stat = SubStatusMap.get(type as keyof typeof SubStatusType)
   if (!stat) {
@@ -323,7 +323,7 @@ const App = () => {
         <div className="flex flex-col">
           {substats.map((s) => (
             <span key={s.label}>
-              ・{s.label} ({getSubStatusScore(s)}%)
+              ・{s.label} ({getSubStatusRate(s)}%)
             </span>
           ))}
         </div>
