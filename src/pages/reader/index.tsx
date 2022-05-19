@@ -74,18 +74,19 @@ interface SubStatus {
   }
 }
 
-const SubStatusMap = new Map<SubStatusType, { max: number }>([
-  ["HP_ACT", { max: 299 }],
-  ["DEF_ACT", { max: 23 }],
-  ["ATK_ACT", { max: 19 }],
-  ["HP_PER", { max: 5.8 }],
-  ["DEF_PER", { max: 7.3 }],
-  ["ATK_PER", { max: 5.8 }],
-  ["ELEMENTAL_MASTERY", { max: 23 }],
-  ["ENERGY_RECHARGE", { max: 6.5 }],
-  ["CRIT_RATE", { max: 3.9 }],
-  ["CRIT_DAMAGE", { max: 7.8 }],
-])
+const SubStatusMap: { [key in SubStatusType]: { max: number } } = {
+  HP_ACT: { max: 299 },
+  DEF_ACT: { max: 23 },
+  ATK_ACT: { max: 19 },
+  HP_PER: { max: 5.8 },
+  DEF_PER: { max: 7.3 },
+  ATK_PER: { max: 5.8 },
+  ELEMENTAL_MASTERY: { max: 23 },
+  ENERGY_RECHARGE: { max: 6.5 },
+  CRIT_RATE: { max: 3.9 },
+  CRIT_DAMAGE: { max: 7.8 },
+  UNDETECTED: { max: 0 },
+}
 
 const getSubStatusType = (
   status: string,
@@ -198,8 +199,12 @@ const getArtifactScore = (datas: SubStatus[], sType: ScoreType): number => {
 }
 
 const getSubStatusRate = (data: SubStatus): number => {
-  const stat = SubStatusMap.get(data.type) ?? { max: 0 }
-  return Math.round((data.param.value / (stat.max * 6)) * 100 * 10) / 10
+  const {
+    type,
+    param: { value },
+  } = data
+  const { max } = SubStatusMap[type]
+  return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
 
 const App = () => {
