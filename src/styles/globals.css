@@ -35,4 +35,16 @@
   @apply text-base sm:text-lg md:text-xl;
 }
 
+.artifact-heading {
+  background-image: url(/header-left.jpg), url(/header-right.jpg),
+    url(/header-center.jpg) !important;
+  background-repeat: no-repeat, no-repeat, repeat !important;
+  background-position: left, right, center !important;
+  background-size: contain, contain, contain !important;
+  padding: 12px 36px;
+  font-size: 20px;
+
+  @apply font-bold text-white;
+}
+
 @tailwind utilities;
