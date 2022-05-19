@@ -237,7 +237,7 @@ const App = () => {
   const [progress, setProgress] = useState(0)
   const [substats, setSubStats] = useState<SubStatus[]>([])
   const [score, setScore] = useState(0)
-  const [calcType, setCalcType] = useState<CalcTypeData["type"]>("CRIT")
+  const [calcType, setCalcType] = useState<CalcTypeData>(CalcTypeMap.CRIT)
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
@@ -259,7 +259,7 @@ const App = () => {
     } = await worker.recognize(file)
 
     const datas = getSubStatusDatas(text)
-    const newScore = getArtifactScore(datas, calcType)
+    const newScore = getArtifactScore(datas, calcType.type)
     setSubStats(datas)
     setScore(newScore)
 
@@ -309,7 +309,7 @@ const App = () => {
           if (substats.length) {
             setScore(getArtifactScore(substats, type))
           }
-          setCalcType(type)
+          setCalcType(CalcTypeMap[type])
         }}
       >
         {CalcTypeDataList.map((data) => (
@@ -320,7 +320,7 @@ const App = () => {
       </select>
       <div className="flex flex-col w-full max-w-sm">
         <div className="w-full max-w-sm artifact-heading">
-          <span>{CalcTypeMap[calcType].name}</span>
+          <span>{calcType.name}</span>
         </div>
         <div className="w-full max-w-sm h-48 bg-gradient-to-br from-gray-600 to-orange-300"></div>
       </div>
