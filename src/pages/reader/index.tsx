@@ -48,17 +48,17 @@ const ScoreTypeDataList: ScoreTypeData[] = Object.entries(ScoreType).map(
 )
 
 const SubStatusType = {
-  HP_ACT: "hp_act",
-  DEF_ACT: "def_act",
-  ATK_ACT: "atk_act",
-  HP_PER: "hp_per",
-  DEF_PER: "def_per",
-  ATK_PER: "atk_per",
-  ELEMENTAL_MASTERY: "elemental_mastery",
-  ENERGY_RECHARGE: "energy_recharge",
-  CRIT_RATE: "crit_rate",
-  CRIT_DAMAGE: "crit_damage",
-  UNDETECTED: "undetected",
+  HP_ACT: "HP_ACT",
+  DEF_ACT: "DEF_ACT",
+  ATK_ACT: "ATK_ACT",
+  HP_PER: "HP_PER",
+  DEF_PER: "DEF_PER",
+  ATK_PER: "ATK_PER",
+  ELEMENTAL_MASTERY: "ELEMENTAL_MASTERY",
+  ENERGY_RECHARGE: "ENERGY_RECHARGE",
+  CRIT_RATE: "CRIT_RATE",
+  CRIT_DAMAGE: "CRIT_DAMAGE",
+  UNDETECTED: "UNDETECTED",
 } as const
 
 type SubStatusType = typeof SubStatusType[keyof typeof SubStatusType]
@@ -74,7 +74,7 @@ interface SubStatus {
   }
 }
 
-const SubStatusMap = new Map<keyof typeof SubStatusType, { max: number }>([
+const SubStatusMap = new Map<SubStatusType, { max: number }>([
   ["HP_ACT", { max: 299 }],
   ["DEF_ACT", { max: 23 }],
   ["ATK_ACT", { max: 19 }],
@@ -198,11 +198,7 @@ const getArtifactScore = (datas: SubStatus[], sType: ScoreType): number => {
 }
 
 const getSubStatusRate = (data: SubStatus): number => {
-  const type = data.type.toUpperCase()
-  const stat = SubStatusMap.get(type as keyof typeof SubStatusType)
-  if (!stat) {
-    return 0
-  }
+  const stat = SubStatusMap.get(data.type) ?? { max: 0 }
   return Math.round((data.param.value / (stat.max * 6)) * 100 * 10) / 10
 }
 
