@@ -32,20 +32,38 @@ interface ScoreTypeData {
   description: string
 }
 
-const ScoreTypeDataList: ScoreTypeData[] = Object.entries(ScoreType).map(
-  ([k, v]) => {
-    const label = v
-    const type = k as keyof typeof ScoreType
-    const [name, d] = v.split("（")
-    const description = d.replace("）", "")
-    return {
-      label,
-      type,
-      name,
-      description,
-    }
-  }
-)
+const ScoreTypeDataList: ScoreTypeData[] = [
+  {
+    label: ScoreType.CRIT,
+    type: "CRIT",
+    name: "会心率/ダメージ型",
+    description: "汎用火力用",
+  },
+  {
+    label: ScoreType.ENERGY_RECHARGE,
+    type: "ENERGY_RECHARGE",
+    name: "元素チャージ効率型",
+    description: "絶縁の旗印",
+  },
+  {
+    label: ScoreType.DEF,
+    type: "DEF",
+    name: "防御型",
+    description: "華館夢醒形骸記",
+  },
+  {
+    label: ScoreType.HP,
+    type: "HP",
+    name: "HP型",
+    description: "鍾離/胡桃",
+  },
+  {
+    label: ScoreType.ELEMENTAL_MASTERY,
+    type: "ELEMENTAL_MASTERY",
+    name: "元素熟知型",
+    description: "翠緑の影",
+  },
+]
 
 const SubStatusType = {
   HP_ACT: "HP_ACT",
