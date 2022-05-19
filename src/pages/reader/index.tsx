@@ -15,7 +15,7 @@ interface Artifact {
   subs: SubStatus[]
 }
 
-const ScoreType = {
+const CalcType = {
   CRIT: "会心率/ダメージ型（汎用火力用）",
   ENERGY_RECHARGE: "元素チャージ効率型（絶縁の旗印）",
   DEF: "防御型（華館夢醒形骸記）",
@@ -23,42 +23,42 @@ const ScoreType = {
   ELEMENTAL_MASTERY: "元素熟知型（翠緑の影）",
 } as const
 
-type ScoreType = typeof ScoreType[keyof typeof ScoreType]
+type CalcType = typeof CalcType[keyof typeof CalcType]
 
-interface ScoreTypeData {
-  label: ScoreType
-  type: keyof typeof ScoreType
+interface CalcTypeData {
+  label: CalcType
+  type: keyof typeof CalcType
   name: string
   description: string
 }
 
-const ScoreTypeDataList: ScoreTypeData[] = [
+const CalcTypeDataList: CalcTypeData[] = [
   {
-    label: ScoreType.CRIT,
+    label: CalcType.CRIT,
     type: "CRIT",
     name: "会心率/ダメージ型",
     description: "汎用火力用",
   },
   {
-    label: ScoreType.ENERGY_RECHARGE,
+    label: CalcType.ENERGY_RECHARGE,
     type: "ENERGY_RECHARGE",
     name: "元素チャージ効率型",
     description: "絶縁の旗印",
   },
   {
-    label: ScoreType.DEF,
+    label: CalcType.DEF,
     type: "DEF",
     name: "防御型",
     description: "華館夢醒形骸記",
   },
   {
-    label: ScoreType.HP,
+    label: CalcType.HP,
     type: "HP",
     name: "HP型",
     description: "鍾離/胡桃",
   },
   {
-    label: ScoreType.ELEMENTAL_MASTERY,
+    label: CalcType.ELEMENTAL_MASTERY,
     type: "ELEMENTAL_MASTERY",
     name: "元素熟知型",
     description: "翠緑の影",
@@ -169,7 +169,7 @@ const getSubStatusDatas = (text: string): SubStatus[] => {
     .map((l) => getSubStatusData(l.replace(/\s/g, "")))
 }
 
-const getArtifactScore = (datas: SubStatus[], sType: ScoreType): number => {
+const getArtifactScore = (datas: SubStatus[], calcType: CalcType): number => {
   return datas
     .map(({ type, param }) => {
       switch (type) {
@@ -180,31 +180,31 @@ const getArtifactScore = (datas: SubStatus[], sType: ScoreType): number => {
           return param.value
 
         case SubStatusType.ATK_PER:
-          if (sType === ScoreType.CRIT) {
+          if (calcType === CalcType.CRIT) {
             return param.value
           }
           return 0
 
         case SubStatusType.ENERGY_RECHARGE:
-          if (sType === ScoreType.ENERGY_RECHARGE) {
+          if (calcType === CalcType.ENERGY_RECHARGE) {
             return param.value
           }
           return 0
 
         case SubStatusType.DEF_PER:
-          if (sType === ScoreType.DEF) {
+          if (calcType === CalcType.DEF) {
             return param.value
           }
           return 0
 
         case SubStatusType.HP_PER:
-          if (sType === ScoreType.HP) {
+          if (calcType === CalcType.HP) {
             return param.value
           }
           return 0
 
         case SubStatusType.ELEMENTAL_MASTERY:
-          if (sType === ScoreType.ELEMENTAL_MASTERY) {
+          if (calcType === CalcType.ELEMENTAL_MASTERY) {
             return param.value / 2
           }
           return 0
@@ -232,7 +232,7 @@ const App = () => {
   const [progress, setProgress] = useState(0)
   const [substats, setSubStats] = useState<SubStatus[]>([])
   const [score, setScore] = useState(0)
-  const [scoreType, setScoreType] = useState<ScoreType>(ScoreType.CRIT)
+  const [calcType, setCalcType] = useState<CalcType>(CalcType.CRIT)
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
@@ -254,7 +254,7 @@ const App = () => {
     } = await worker.recognize(file)
 
     const datas = getSubStatusDatas(text)
-    const newScore = getArtifactScore(datas, scoreType)
+    const newScore = getArtifactScore(datas, calcType)
     setSubStats(datas)
     setScore(newScore)
 
@@ -300,14 +300,14 @@ const App = () => {
         className="w-full max-w-sm select select-bordered"
         defaultValue={0}
         onChange={(e) => {
-          const type = e.currentTarget.value as ScoreType
+          const type = e.currentTarget.value as CalcType
           if (substats.length) {
             setScore(getArtifactScore(substats, type))
           }
-          setScoreType(type)
+          setCalcType(type)
         }}
       >
-        {ScoreTypeDataList.map((data) => (
+        {CalcTypeDataList.map((data) => (
           <option key={data.type} value={data.label}>
             {data.label}
           </option>
