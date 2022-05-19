@@ -314,9 +314,7 @@ const App = () => {
                   }
                   return <span className="text-info">(B)</span>
                 })()}
-                {/* ({Math.round(((score * 10) / 60.3) * 100) / 10}%) */}
               </div>
-              {/* <div className="stat-desc">Critical Rate/Damage TYPE</div> */}
             </div>
           </div>
         )}
