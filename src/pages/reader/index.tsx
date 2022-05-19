@@ -65,6 +65,39 @@ const CalcTypeDataList: CalcTypeData[] = [
   },
 ]
 
+const CalcTypeMap: { [key in CalcTypeData["type"]]: CalcTypeData } = {
+  CRIT: {
+    label: CalcType.CRIT,
+    type: "CRIT",
+    name: "会心率/ダメージ型",
+    description: "汎用火力用",
+  },
+  ENERGY_RECHARGE: {
+    label: CalcType.ENERGY_RECHARGE,
+    type: "ENERGY_RECHARGE",
+    name: "元素チャージ効率型",
+    description: "絶縁の旗印",
+  },
+  DEF: {
+    label: CalcType.DEF,
+    type: "DEF",
+    name: "防御型",
+    description: "華館夢醒形骸記",
+  },
+  HP: {
+    label: CalcType.HP,
+    type: "HP",
+    name: "HP型",
+    description: "鍾離/胡桃",
+  },
+  ELEMENTAL_MASTERY: {
+    label: CalcType.ELEMENTAL_MASTERY,
+    type: "ELEMENTAL_MASTERY",
+    name: "元素熟知型",
+    description: "翠緑の影",
+  },
+}
+
 const SubStatusType = {
   HP_ACT: "HP_ACT",
   DEF_ACT: "DEF_ACT",
