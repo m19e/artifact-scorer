@@ -56,7 +56,7 @@ const trimCircleFromNumber = (text: string): string => {
   return Array.from(text)
     .map((c) => {
       if (c.match(reg)) {
-        return String(+c.codePointAt(0)!.toString(16) - 2459)
+        return String(+c.charCodeAt(0).toString(16) - 2459)
       }
       return c
     })
