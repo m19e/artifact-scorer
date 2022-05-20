@@ -27,6 +27,174 @@ interface Artifact {
   subs: SubStatus[]
 }
 
+const ArtifactType = {
+  FLOWER: "生の花",
+  PLUME: "死の羽",
+  SANDS: "時の砂",
+  GOBLET: "空の杯",
+  CIRCLET: "理の冠",
+} as const
+
+type ArtifactTypeKey = keyof typeof ArtifactType
+
+type ArtifactTypeValue = typeof ArtifactType[ArtifactTypeKey]
+
+const MainStatus = {
+  HP_ACT: "HP_ACT",
+  ATK_ACT: "ATK_ACT",
+  ATK_PER: "ATK_PER",
+  HP_PER: "HP_PER",
+  DEF_PER: "DEF_PER",
+  ENERGY_RECHARGE: "ENERGY_RECHARGE",
+  ELEMENTAL_MASTERY: "ELEMENTAL_MASTERY",
+  ELEMENTAL_DMG_BONUS: "ELEMENTAL_DMG_BONUS",
+  PHYSICAL_DMG_BONUS: "PHYSICAL_DMG_BONUS",
+  CRIT_RATE: "CRIT_RATE",
+  CRIT_DAMAGE: "CRIT_DAMAGE",
+  HEALING_BONUS: "HEALING_BONUS",
+} as const
+
+type MainStatusType = typeof MainStatus[keyof typeof MainStatus]
+
+interface MainStatusData {
+  type: MainStatusType
+  label: string
+  max: number
+  min: number
+}
+
+const MainStatusMap: { [key in MainStatusType]: MainStatusData } = {
+  HP_ACT: {
+    type: "HP_ACT",
+    label: "HP(実数)",
+    max: 4780,
+    min: 717,
+  },
+  ATK_ACT: {
+    type: "ATK_ACT",
+    label: "攻撃力(実数)",
+    max: 311,
+    min: 47,
+  },
+  ATK_PER: {
+    type: "ATK_PER",
+    label: "攻撃力(%)",
+    max: 46.6,
+    min: 7,
+  },
+  ENERGY_RECHARGE: {
+    type: "ENERGY_RECHARGE",
+    label: "元素チャージ効率",
+    max: 51.8,
+    min: 7.8,
+  },
+  ELEMENTAL_DMG_BONUS: {
+    type: "ELEMENTAL_DMG_BONUS",
+    label: "元素ダメージ",
+    max: 46.6,
+    min: 7,
+  },
+  PHYSICAL_DMG_BONUS: {
+    type: "PHYSICAL_DMG_BONUS",
+    label: "物理ダメージ",
+    max: 58.3,
+    min: 8.7,
+  },
+  CRIT_RATE: {
+    type: "CRIT_RATE",
+    label: "会心率",
+    max: 31.1,
+    min: 4.7,
+  },
+  CRIT_DAMAGE: {
+    type: "CRIT_DAMAGE",
+    label: "会心ダメージ",
+    max: 62.2,
+    min: 9.3,
+  },
+  HEALING_BONUS: {
+    type: "HEALING_BONUS",
+    label: "与える治療効果",
+    max: 35.9,
+    min: 5.4,
+  },
+  HP_PER: {
+    type: "HP_PER",
+    label: "HP(%)",
+    max: 46.6,
+    min: 7,
+  },
+  DEF_PER: {
+    type: "DEF_PER",
+    label: "防御力(%)",
+    max: 58.3,
+    min: 8.7,
+  },
+  ELEMENTAL_MASTERY: {
+    type: "ELEMENTAL_MASTERY",
+    label: "元素熟知",
+    max: 187,
+    min: 28,
+  },
+}
+
+interface ArtifactTypeData {
+  type: ArtifactTypeKey
+  name: ArtifactTypeValue
+  main: MainStatusData[]
+}
+
+const ArtifactTypeMap: { [key in ArtifactTypeKey]: ArtifactTypeData } = {
+  FLOWER: {
+    type: "FLOWER",
+    name: ArtifactType.FLOWER,
+    main: [MainStatusMap.HP_ACT],
+  },
+  PLUME: {
+    type: "PLUME",
+    name: ArtifactType.PLUME,
+    main: [MainStatusMap.ATK_ACT],
+  },
+  SANDS: {
+    type: "SANDS",
+    name: ArtifactType.SANDS,
+    main: [
+      MainStatusMap.ATK_PER,
+      MainStatusMap.ENERGY_RECHARGE,
+      MainStatusMap.HP_PER,
+      MainStatusMap.DEF_PER,
+      MainStatusMap.ELEMENTAL_MASTERY,
+    ],
+  },
+  GOBLET: {
+    type: "GOBLET",
+    name: ArtifactType.GOBLET,
+    main: [
+      MainStatusMap.ELEMENTAL_DMG_BONUS,
+      MainStatusMap.PHYSICAL_DMG_BONUS,
+      MainStatusMap.ATK_PER,
+      MainStatusMap.HP_PER,
+      MainStatusMap.DEF_PER,
+      MainStatusMap.ELEMENTAL_MASTERY,
+    ],
+  },
+  CIRCLET: {
+    type: "CIRCLET",
+    name: ArtifactType.CIRCLET,
+    main: [
+      MainStatusMap.CRIT_RATE,
+      MainStatusMap.CRIT_DAMAGE,
+      MainStatusMap.HEALING_BONUS,
+      MainStatusMap.ATK_PER,
+      MainStatusMap.HP_PER,
+      MainStatusMap.DEF_PER,
+      MainStatusMap.ELEMENTAL_MASTERY,
+    ],
+  },
+}
+
+const ArtifactTypeList = Object.values(ArtifactTypeMap)
+
 const getSubStatusType = ({
   status,
   isPercent,
