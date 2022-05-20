@@ -27,7 +27,13 @@ interface Artifact {
   subs: SubStatus[]
 }
 
-const getSubStatusType = (status: string, isPercent: boolean): TSubStatus => {
+const getSubStatusType = ({
+  status,
+  isPercent,
+}: {
+  status: string
+  isPercent: boolean
+}): TSubStatus => {
   if (isPercent) {
     if (status.includes("HP")) return SubStatusType.HP_PER
     if (status.includes("防")) return SubStatusType.DEF_PER
@@ -61,7 +67,7 @@ const getSubStatusData = (line: string): SubStatus => {
   const [s, p] = line.split("+")
   const isPercent = p.includes("%")
   const status = s.replace("カ", "力")
-  const type = getSubStatusType(status, isPercent)
+  const type = getSubStatusType({ status, isPercent })
   const paramLabel = trimCircleFromNumber(p)
   const label = status + "+" + paramLabel
   const paramType = isPercent ? "percent" : "actual"
@@ -87,10 +93,13 @@ const getSubStatusDatas = (text: string): SubStatus[] => {
     .map((l) => getSubStatusData(l.replace(/\s/g, "")))
 }
 
-const getArtifactScore = (
-  datas: SubStatus[],
+const getArtifactScore = ({
+  datas,
+  calcType,
+}: {
+  datas: SubStatus[]
   calcType: CalcTypeData["type"]
-): number => {
+}): number => {
   return datas
     .map(({ type, param }) => {
       switch (type) {
@@ -175,7 +184,7 @@ const App = () => {
     } = await worker.recognize(file)
 
     const datas = getSubStatusDatas(text)
-    const newScore = getArtifactScore(datas, calcType.type)
+    const newScore = getArtifactScore({ datas, calcType: calcType.type })
     setSubStats(datas)
     setScore(newScore)
 
@@ -223,7 +232,7 @@ const App = () => {
         onChange={(e) => {
           const type = e.currentTarget.value as CalcTypeData["type"]
           if (substats.length) {
-            setScore(getArtifactScore(substats, type))
+            setScore(getArtifactScore({ datas: substats, calcType: type }))
           }
           setCalcType(CalcTypeMap[type])
         }}
