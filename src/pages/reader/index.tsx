@@ -418,7 +418,7 @@ const App = () => {
           <span>{calcMode.name}</span>
         </div>
         <div className="w-full max-w-sm h-48 bg-gradient-to-br from-gray-600 to-orange-300">
-          <div className="flex h-full">
+          <div className="flex justify-between h-full">
             <div className="flex flex-col justify-between p-4">
               <select
                 className="w-24 select select-sm"
@@ -449,6 +449,36 @@ const App = () => {
                   ))}
                 </select>
                 <span className="text-5xl text-white">{mainValue}</span>
+              </div>
+            </div>
+            <div className="flex flex-col justify-between p-4">
+              {!!substats.length && (
+                <div className="shadow stats">
+                  <div className="stat">
+                    <div className="stat-title">聖遺物スコア</div>
+                    <div className="stat-value">
+                      {Math.round(score * 10) / 10}
+                      {(() => {
+                        if (score >= 45) {
+                          return <span className="text-error">(SS)</span>
+                        }
+                        if (score >= 35) {
+                          return <span className="text-warning">(S)</span>
+                        }
+                        if (score >= 25) {
+                          return <span className="text-primary">(A)</span>
+                        }
+                        return <span className="text-info">(B)</span>
+                      })()}
+                    </div>
+                    <div className="stat-desc text-base-100">
+                      **transparent**
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="flex justify-end">
+                <div className="w-20 btn btn-sm">share</div>
               </div>
             </div>
           </div>
