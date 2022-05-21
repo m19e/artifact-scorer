@@ -331,6 +331,8 @@ const App = () => {
   const [substats, setSubStats] = useState<SubStatus[]>([])
   const [score, setScore] = useState(0)
   const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
+  const [artType, setArtType] = useState<ArtifactTypeKey>("FLOWER")
+  const [mainValue, setMainValue] = useState(MainStatusMap.ATK_ACT.max)
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
@@ -415,7 +417,42 @@ const App = () => {
         <div className="w-full max-w-sm artifact-heading">
           <span>{calcMode.name}</span>
         </div>
-        <div className="w-full max-w-sm h-48 bg-gradient-to-br from-gray-600 to-orange-300"></div>
+        <div className="w-full max-w-sm h-48 bg-gradient-to-br from-gray-600 to-orange-300">
+          <div className="flex h-full">
+            <div className="flex flex-col justify-between p-4">
+              <select
+                className="w-24 select select-sm"
+                onChange={(e) => {
+                  const type = e.currentTarget.value as ArtifactTypeKey
+                  setArtType(type)
+                  setMainValue(ArtifactTypeMap[type].main[0].max)
+                }}
+              >
+                {ArtifactTypeList.map((a) => (
+                  <option key={a.name} value={a.type}>
+                    {a.name}
+                  </option>
+                ))}
+              </select>
+              <div className="flex flex-col">
+                <select
+                  className="select select-sm"
+                  onChange={(e) => {
+                    const type = e.currentTarget.value as MainStatusType
+                    setMainValue(MainStatusMap[type].max)
+                  }}
+                >
+                  {ArtifactTypeMap[artType].main.map((m, i) => (
+                    <option key={m.type + i} value={m.type}>
+                      {m.label}
+                    </option>
+                  ))}
+                </select>
+                <span className="text-5xl text-white">{mainValue}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {!!url && <img src={url} />}
       <div className="flex gap-4 items-center">
