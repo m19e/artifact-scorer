@@ -407,6 +407,7 @@ const App = () => {
   const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
   const [artType, setArtType] = useState<ArtifactTypeKey>("FLOWER")
   const [mainValue, setMainValue] = useState(MainStatusMap.ATK_ACT.max)
+  const [artSet, setArtSet] = useState<ArtifactSetName>("剣闘士のフィナーレ")
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
@@ -487,9 +488,22 @@ const App = () => {
           </option>
         ))}
       </select>
+      <select
+        className="w-full max-w-sm select select-bordered"
+        onChange={(e) => {
+          const name = e.currentTarget.value as ArtifactSetName
+          setArtSet(name)
+        }}
+      >
+        {ArtifactSetNames.map((name) => (
+          <option key={name} value={name}>
+            {name}
+          </option>
+        ))}
+      </select>
       <div className="flex flex-col w-full max-w-sm">
         <div className="w-full max-w-sm artifact-heading">
-          <span>{calcMode.name}</span>
+          <span>{artSet}</span>
         </div>
         <div className="w-full max-w-sm h-48 bg-gradient-to-br from-gray-600 to-orange-300">
           <div className="flex justify-between h-full">
