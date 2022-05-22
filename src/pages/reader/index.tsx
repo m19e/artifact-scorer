@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useCallback } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike } from "tesseract.js"
 
@@ -415,7 +415,7 @@ const App = () => {
     },
   })
 
-  const tryOcr = async () => {
+  const tryOcr = useCallback(async () => {
     await worker.load()
     await worker.loadLanguage("jpn")
 
@@ -427,14 +427,13 @@ const App = () => {
     const {
       data: { text },
     } = await worker.recognize(file)
+    await worker.terminate()
 
     const datas = getSubStatusDatas(text)
     const newScore = getArtifactScore({ datas, calcType: calcMode.type })
     setSubStats(datas)
     setScore(newScore)
-
-    await worker.terminate()
-  }
+  }, [worker, file, calcMode])
 
   const handleDrop = (file: File) => {
     setUrl(URL.createObjectURL(file))
