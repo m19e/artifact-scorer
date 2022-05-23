@@ -448,7 +448,21 @@ const App = () => {
 
   return (
     <div className="flex flex-col gap-4 items-center p-8">
-      <Dropzone onDrop={handleDrop} />
+      {url !== "" ? (
+        <div className="flex gap-4 items-center">
+          <img src={url} />
+          <div
+            className="btn"
+            onClick={() => {
+              setUrl("")
+            }}
+          >
+            delete
+          </div>
+        </div>
+      ) : (
+        <Dropzone onDrop={handleDrop} />
+      )}
       <div className="inline-flex gap-4 items-center">
         <div className="flex flex-col items-center py-2 px-4 rounded shadow">
           <div className="h-6">
@@ -470,7 +484,6 @@ const App = () => {
           recognize
         </button>
       </div>
-      {!!url && <img src={url} />}
       <select
         className="w-full max-w-sm select select-bordered"
         defaultValue={0}
