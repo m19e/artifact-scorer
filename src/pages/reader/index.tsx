@@ -576,8 +576,8 @@ const App = () => {
                         return <span className="text-info">(B)</span>
                       })()}
                     </div>
-                    <div className="stat-desc text-base-100">
-                      **transparent**
+                    <div className="pt-1 text-right stat-desc">
+                      {calcMode.name}
                     </div>
                   </div>
                 </div>
