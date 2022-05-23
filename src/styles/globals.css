@@ -41,10 +41,8 @@
   background-repeat: no-repeat, no-repeat, repeat !important;
   background-position: left, right, center !important;
   background-size: contain, contain, contain !important;
-  padding: 12px 28px;
-  font-size: 20px;
 
-  @apply font-bold text-white;
+  @apply font-bold text-white text-xl py-1 px-5;
 }
 
 @tailwind utilities;
