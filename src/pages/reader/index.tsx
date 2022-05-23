@@ -406,7 +406,7 @@ const App = () => {
   const [score, setScore] = useState(0)
   const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
   const [artType, setArtType] = useState<ArtifactTypeKey>("FLOWER")
-  const [mainValue, setMainValue] = useState(MainStatusMap.ATK_ACT.max)
+  const [mainValue, setMainValue] = useState(MainStatusMap.HP_ACT.max)
   const [artSet, setArtSet] = useState<ArtifactSetName>("剣闘士のフィナーレ")
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
