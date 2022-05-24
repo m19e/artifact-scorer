@@ -110,9 +110,9 @@ const ArtifactType = {
   CIRCLET: "理の冠",
 } as const
 
-type ArtifactTypeKey = keyof typeof ArtifactType
+type ArtifactTypeID = keyof typeof ArtifactType
 
-type ArtifactTypeValue = typeof ArtifactType[ArtifactTypeKey]
+type ArtifactTypeName = typeof ArtifactType[ArtifactTypeID]
 
 const MainStatus = {
   HP_ACT: "HP_ACT",
@@ -214,12 +214,28 @@ const MainStatusMap: { [key in MainStatusType]: MainStatusData } = {
 }
 
 interface ArtifactTypeData {
-  type: ArtifactTypeKey
-  name: ArtifactTypeValue
+  type: ArtifactTypeID
+  name: ArtifactTypeName
   main: MainStatusData[]
 }
 
-const ArtifactTypeMap: { [key in ArtifactTypeKey]: ArtifactTypeData } = {
+interface Artifact {
+  id: string
+  level: number
+  set: ArtifactSetData
+  type: {
+    id: ArtifactTypeID
+    name: ArtifactTypeName
+  }
+  main: {
+    type: MainStatusType
+    name: string
+    value: number
+  }
+  subs: SubStatus[]
+}
+
+const ArtifactTypeMap: { [key in ArtifactTypeID]: ArtifactTypeData } = {
   FLOWER: {
     type: "FLOWER",
     name: ArtifactType.FLOWER,
@@ -398,22 +414,6 @@ const getSubStatusRate = (data: SubStatus): number => {
   return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
 
-interface Artifact {
-  id: string
-  level: number
-  set: ArtifactSetData
-  type: {
-    id: ArtifactTypeKey
-    name: ArtifactTypeValue
-  }
-  main: {
-    type: MainStatusType
-    name: string
-    value: number
-  }
-  subs: SubStatus[]
-}
-
 const App = () => {
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
@@ -422,7 +422,7 @@ const App = () => {
   const [substats, setSubStats] = useState<SubStatus[]>([])
   const [score, setScore] = useState(0)
   const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
-  const [artType, setArtType] = useState<ArtifactTypeKey>("FLOWER")
+  const [artID, setArtID] = useState<ArtifactTypeID>("FLOWER")
   const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.type)
   const [artSet, setArtSet] = useState<ArtifactSetID>("GLADIATORS_FINALE")
   const worker = createWorker({
@@ -545,9 +545,9 @@ const App = () => {
               <select
                 className="w-24 h-6 min-h-0 text-base text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
                 onChange={(e) => {
-                  const type = e.currentTarget.value as ArtifactTypeKey
-                  setArtType(type)
-                  setMainType(ArtifactTypeMap[type].main[0].type)
+                  const id = e.currentTarget.value as ArtifactTypeID
+                  setArtID(id)
+                  setMainType(ArtifactTypeMap[id].main[0].type)
                 }}
               >
                 {ArtifactTypeList.map((a) => (
@@ -564,7 +564,7 @@ const App = () => {
                     setMainType(type)
                   }}
                 >
-                  {ArtifactTypeMap[artType].main.map((m, i) => (
+                  {ArtifactTypeMap[artID].main.map((m, i) => (
                     <option key={m.type + i} value={m.type}>
                       {m.label}
                     </option>
@@ -665,8 +665,8 @@ const App = () => {
                 name: ArtifactSetMap[artSet].name,
               },
               type: {
-                id: artType,
-                name: ArtifactTypeMap[artType].name,
+                id: artID,
+                name: ArtifactTypeMap[artID].name,
               },
               main: {
                 type: mainType,
