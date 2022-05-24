@@ -90,12 +90,17 @@ type ArtifactSetID = keyof typeof ArtifactSetMap
 
 type ArtifactSetName = typeof ArtifactSetMap[ArtifactSetID]["name"]
 
-const ArtifactSetDatas = Object.entries(ArtifactSetMap).map(
-  ([key, { name }]) => {
-    const id = key as ArtifactSetID
-    return { id, name }
-  }
-)
+interface ArtifactSetData {
+  id: ArtifactSetID
+  name: ArtifactSetName
+}
+
+const ArtifactSetDataList: ArtifactSetData[] = Object.entries(
+  ArtifactSetMap
+).map(([key, { name }]) => {
+  const id = key as ArtifactSetID
+  return { id, name }
+})
 
 const ArtifactType = {
   FLOWER: "生の花",
@@ -393,10 +398,6 @@ const getSubStatusRate = (data: SubStatus): number => {
   return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
 
-interface ArtifactSetData {
-  id: ArtifactSetID
-  name: ArtifactSetName
-}
 interface Artifact {
   id: string
   level: number
@@ -531,7 +532,7 @@ const App = () => {
               setArtSet(id)
             }}
           >
-            {ArtifactSetDatas.map(({ id, name }) => (
+            {ArtifactSetDataList.map(({ id, name }) => (
               <option key={id} value={id}>
                 {name}
               </option>
