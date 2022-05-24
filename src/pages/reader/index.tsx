@@ -18,10 +18,17 @@ import { Dropzone } from "@/components/molecules/Dropzone"
 
 interface Artifact {
   level: number
+  set: {
+    id: ArtifactSetID
+    name: ArtifactSetName
+  }
+  type: {
+    id: ArtifactTypeKey
+    name: ArtifactTypeValue
+  }
   main: {
-    label: string
-    status: string
-    type: "actual" | "percent"
+    type: MainStatusType
+    name: string
     value: number
   }
   subs: SubStatus[]
@@ -95,6 +102,8 @@ const ArtifactSetMap = {
     name: "来歆の余響",
   },
 } as const
+
+type ArtifactSetID = keyof typeof ArtifactSetMap
 
 type ArtifactSetName =
   typeof ArtifactSetMap[keyof typeof ArtifactSetMap]["name"]
