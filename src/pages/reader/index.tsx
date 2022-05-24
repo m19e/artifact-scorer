@@ -52,15 +52,15 @@ const ArtifactSetMap = {
   RETRACING_BOLIDE: {
     name: "逆飛びの流星",
   },
-  // THUNDERSOOTHER: {
-  //   name: "雷を鎮める尊者",
-  // },
+  THUNDERSOOTHER: {
+    name: "雷を鎮める尊者",
+  },
   THUNDERING_FURY: {
     name: "雷のような怒り",
   },
-  // LAVAWALKER: {
-  //   name: "烈火を渡る賢者",
-  // },
+  LAVAWALKER: {
+    name: "烈火を渡る賢者",
+  },
   CRIMSON_WITCH_OF_FLAMES: {
     name: "燃え盛る炎の魔女",
   },
