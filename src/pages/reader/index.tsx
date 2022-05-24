@@ -13,26 +13,9 @@ import {
   SubStatusType,
   SubStatusMap,
 } from "@/consts/Scorer"
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import { Dropzone } from "@/components/molecules/Dropzone"
-
-interface Artifact {
-  level: number
-  set: {
-    id: ArtifactSetID
-    name: ArtifactSetName
-  }
-  type: {
-    id: ArtifactTypeKey
-    name: ArtifactTypeValue
-  }
-  main: {
-    type: MainStatusType
-    name: string
-    value: number
-  }
-  subs: SubStatus[]
-}
 
 const ArtifactSetMap = {
   GLADIATORS_FINALE: {
@@ -105,10 +88,14 @@ const ArtifactSetMap = {
 
 type ArtifactSetID = keyof typeof ArtifactSetMap
 
-type ArtifactSetName =
-  typeof ArtifactSetMap[keyof typeof ArtifactSetMap]["name"]
+type ArtifactSetName = typeof ArtifactSetMap[ArtifactSetID]["name"]
 
-const ArtifactSetNames = Object.values(ArtifactSetMap).map((s) => s.name)
+const ArtifactSetDatas = Object.entries(ArtifactSetMap).map(
+  ([key, { name }]) => {
+    const id = key as ArtifactSetID
+    return { id, name }
+  }
+)
 
 const ArtifactType = {
   FLOWER: "生の花",
@@ -406,6 +393,26 @@ const getSubStatusRate = (data: SubStatus): number => {
   return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
 
+interface ArtifactSetData {
+  id: ArtifactSetID
+  name: ArtifactSetName
+}
+interface Artifact {
+  id: string
+  level: number
+  set: ArtifactSetData
+  type: {
+    id: ArtifactTypeKey
+    name: ArtifactTypeValue
+  }
+  main: {
+    type: MainStatusType
+    name: string
+    value: number
+  }
+  subs: SubStatus[]
+}
+
 const App = () => {
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
@@ -415,14 +422,19 @@ const App = () => {
   const [score, setScore] = useState(0)
   const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
   const [artType, setArtType] = useState<ArtifactTypeKey>("FLOWER")
-  const [mainValue, setMainValue] = useState(MainStatusMap.HP_ACT.max)
-  const [artSet, setArtSet] = useState<ArtifactSetName>("剣闘士のフィナーレ")
+  const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.type)
+  const [artSet, setArtSet] = useState<ArtifactSetID>("GLADIATORS_FINALE")
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
       // setTextOcr(m.status)
     },
   })
+
+  const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
+    "artifacts",
+    []
+  )
 
   const tryOcr = useCallback(async () => {
     await worker.load()
@@ -515,12 +527,12 @@ const App = () => {
           <select
             className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
             onChange={(e) => {
-              const name = e.currentTarget.value as ArtifactSetName
-              setArtSet(name)
+              const id = e.currentTarget.value as ArtifactSetID
+              setArtSet(id)
             }}
           >
-            {ArtifactSetNames.map((name) => (
-              <option key={name} value={name}>
+            {ArtifactSetDatas.map(({ id, name }) => (
+              <option key={id} value={id}>
                 {name}
               </option>
             ))}
@@ -534,7 +546,7 @@ const App = () => {
                 onChange={(e) => {
                   const type = e.currentTarget.value as ArtifactTypeKey
                   setArtType(type)
-                  setMainValue(ArtifactTypeMap[type].main[0].max)
+                  setMainType(ArtifactTypeMap[type].main[0].type)
                 }}
               >
                 {ArtifactTypeList.map((a) => (
@@ -548,7 +560,7 @@ const App = () => {
                   className="h-6 min-h-0 text-base text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
                   onChange={(e) => {
                     const type = e.currentTarget.value as MainStatusType
-                    setMainValue(MainStatusMap[type].max)
+                    setMainType(type)
                   }}
                 >
                   {ArtifactTypeMap[artType].main.map((m, i) => (
@@ -558,7 +570,7 @@ const App = () => {
                   ))}
                 </select>
                 <span className="pl-2.5 font-mono text-5xl text-white">
-                  {mainValue}
+                  {MainStatusMap[mainType].max}
                 </span>
                 <span className="pl-2.5 -mt-1 text-2xl tracking-widest text-yellow-400">
                   ★★★★★
@@ -639,6 +651,52 @@ const App = () => {
             </div>
           </div>
         )}
+      </div>
+      <div className="flex flex-col items-center w-full max-w-sm">
+        <div
+          className="w-24 btn"
+          onClick={() => {
+            const newArt: Artifact = {
+              id: Date.now().toString(16),
+              level: 20,
+              set: {
+                id: artSet,
+                name: ArtifactSetMap[artSet].name,
+              },
+              type: {
+                id: artType,
+                name: ArtifactTypeMap[artType].name,
+              },
+              main: {
+                type: mainType,
+                name: MainStatusMap[mainType].label,
+                value: MainStatusMap[mainType].max,
+              },
+              subs: substats,
+            }
+            setStoredArts((prev) => [newArt, ...prev])
+          }}
+        >
+          save
+        </div>
+        {storedArts.map(({ id, set, type, main }) => (
+          <div key={id} className="flex gap-2 items-center bg-base-200">
+            <span className="whitespace-pre-wrap">
+              {JSON.stringify({ id, set, type, main }, null, 2)}
+            </span>
+            <div className="flex flex-col gap-2">
+              <div className="btn btn-info btn-disabled">import</div>
+              <div
+                className="btn btn-error"
+                onClick={() => {
+                  setStoredArts((prev) => prev.filter((a) => a.id !== id))
+                }}
+              >
+                delete
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
