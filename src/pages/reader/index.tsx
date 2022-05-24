@@ -450,7 +450,7 @@ const App = () => {
     <div className="flex flex-col gap-4 items-center p-8">
       {url !== "" ? (
         <div className="flex gap-4 items-center">
-          <img src={url} />
+          <img src={url} alt={url} />
           <div
             className="btn"
             onClick={() => {
