@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
+import type { Dispatch, SetStateAction } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike } from "tesseract.js"
 
@@ -214,7 +215,7 @@ const MainStatusMap: { [key in MainStatusType]: MainStatusData } = {
 }
 
 interface ArtifactTypeData {
-  type: ArtifactTypeID
+  id: ArtifactTypeID
   name: ArtifactTypeName
   main: MainStatusData[]
 }
@@ -237,17 +238,17 @@ interface Artifact {
 
 const ArtifactTypeMap: { [key in ArtifactTypeID]: ArtifactTypeData } = {
   FLOWER: {
-    type: "FLOWER",
+    id: "FLOWER",
     name: ArtifactType.FLOWER,
     main: [MainStatusMap.HP_ACT],
   },
   PLUME: {
-    type: "PLUME",
+    id: "PLUME",
     name: ArtifactType.PLUME,
     main: [MainStatusMap.ATK_ACT],
   },
   SANDS: {
-    type: "SANDS",
+    id: "SANDS",
     name: ArtifactType.SANDS,
     main: [
       MainStatusMap.ATK_PER,
@@ -258,7 +259,7 @@ const ArtifactTypeMap: { [key in ArtifactTypeID]: ArtifactTypeData } = {
     ],
   },
   GOBLET: {
-    type: "GOBLET",
+    id: "GOBLET",
     name: ArtifactType.GOBLET,
     main: [
       MainStatusMap.ELEMENTAL_DMG_BONUS,
@@ -270,7 +271,7 @@ const ArtifactTypeMap: { [key in ArtifactTypeID]: ArtifactTypeData } = {
     ],
   },
   CIRCLET: {
-    type: "CIRCLET",
+    id: "CIRCLET",
     name: ArtifactType.CIRCLET,
     main: [
       MainStatusMap.CRIT_RATE,
@@ -414,17 +415,115 @@ const getSubStatusRate = (data: SubStatus): number => {
   return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
 
+type SetValue<T> = Dispatch<SetStateAction<T>>
+
+interface ArtifactState {
+  artSetID: ArtifactSetID
+  artTypeID: ArtifactTypeID
+  mainType: MainStatusType
+  substats: SubStatus[]
+  calcMode: CalcTypeData
+  score: number
+  artifact: Artifact | undefined
+}
+interface ArtifactAction {
+  setArtSetID: SetValue<ArtifactSetID>
+  setSubStats: SetValue<SubStatus[]>
+  setCalcType: (type: CalcTypeData["type"]) => void
+  setArtTypeID: (id: ArtifactTypeID) => void
+  setMainType: SetValue<MainStatusType>
+}
+
+const useArtifact = (): [ArtifactState, ArtifactAction] => {
+  const [artSetID, setArtSetID] = useState<ArtifactSetID>("GLADIATORS_FINALE")
+  const [artTypeID, setArtTID] = useState<ArtifactTypeID>("FLOWER")
+  const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.type)
+  const [substats, setSubs] = useState<SubStatus[]>([])
+
+  const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
+  const [score, setScore] = useState(0)
+
+  const artifactRef = useRef<Artifact>()
+
+  useEffect(() => {
+    artifactRef.current = {
+      id: "",
+      level: 20,
+      set: {
+        id: artSetID,
+        name: ArtifactSetMap[artSetID].name,
+      },
+      type: {
+        id: artTypeID,
+        name: ArtifactTypeMap[artTypeID].name,
+      },
+      main: {
+        type: mainType,
+        name: MainStatusMap[mainType].label,
+        value: MainStatusMap[mainType].max,
+      },
+      subs: substats,
+    }
+  }, [artSetID, artTypeID, mainType, substats])
+
+  const setSubStats = useCallback<SetValue<SubStatus[]>>(
+    (newSubs) => {
+      setSubs(newSubs)
+      const datas = typeof newSubs === "function" ? newSubs(substats) : newSubs
+      const newScore = getArtifactScore({ datas, calcType: calcMode.type })
+      setScore(newScore)
+    },
+    [substats, calcMode]
+  )
+
+  const setCalcType = useCallback(
+    (calcType: CalcTypeData["type"]) => {
+      if (substats.length) {
+        setScore(getArtifactScore({ datas: substats, calcType }))
+      }
+      setCalcMode(CalcTypeMap[calcType])
+    },
+    [substats]
+  )
+
+  const setArtTypeID = (id: ArtifactTypeID) => {
+    setArtTID(id)
+    setMainType(ArtifactTypeMap[id].main[0].type)
+  }
+
+  const states = {
+    artSetID,
+    artTypeID,
+    mainType,
+    substats,
+    calcMode,
+    score,
+    artifact: artifactRef.current,
+  }
+  const actions = {
+    setArtSetID,
+    setSubStats,
+    setCalcType,
+    setArtTypeID,
+    setMainType,
+  }
+
+  return [states, actions]
+}
+
 const App = () => {
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
   const [textOcr, setTextOcr] = useState<string>("")
   const [progress, setProgress] = useState(0)
-  const [substats, setSubStats] = useState<SubStatus[]>([])
-  const [score, setScore] = useState(0)
-  const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
-  const [artID, setArtID] = useState<ArtifactTypeID>("FLOWER")
-  const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.type)
-  const [artSet, setArtSet] = useState<ArtifactSetID>("GLADIATORS_FINALE")
+
+  // const [substats, setSubStats] = useState<SubStatus[]>([])
+  // const [score, setScore] = useState(0)
+  // const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
+  // const [artTypeID, setArtTypeID] = useState<ArtifactTypeID>("FLOWER")
+  // const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.type)
+  // const [artSet, setArtSet] = useState<ArtifactSetID>("GLADIATORS_FINALE")
+  const [states, actions] = useArtifact()
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
@@ -452,10 +551,8 @@ const App = () => {
     await worker.terminate()
 
     const datas = getSubStatusDatas(text)
-    const newScore = getArtifactScore({ datas, calcType: calcMode.type })
-    setSubStats(datas)
-    setScore(newScore)
-  }, [worker, file, calcMode])
+    actions.setSubStats(datas)
+  }, [worker, file])
 
   const handleDrop = (file: File) => {
     setUrl(URL.createObjectURL(file))
@@ -467,6 +564,9 @@ const App = () => {
     setTextOcr("Recognizing...")
     await tryOcr()
   }
+
+  const { artSetID, artTypeID, mainType, substats, artifact, calcMode, score } =
+    states
 
   return (
     <div className="flex flex-col gap-4 items-center p-8">
@@ -511,10 +611,7 @@ const App = () => {
         defaultValue={0}
         onChange={(e) => {
           const type = e.currentTarget.value as CalcTypeData["type"]
-          if (substats.length) {
-            setScore(getArtifactScore({ datas: substats, calcType: type }))
-          }
-          setCalcMode(CalcTypeMap[type])
+          actions.setCalcType(type)
         }}
       >
         {CalcTypeDataList.map((data) => (
@@ -527,10 +624,9 @@ const App = () => {
         <div className="w-full max-w-sm h-10 artifact-heading">
           <select
             className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
-            onChange={(e) => {
-              const id = e.currentTarget.value as ArtifactSetID
-              setArtSet(id)
-            }}
+            onChange={(e) =>
+              actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
+            }
           >
             {ArtifactSetDataList.map(({ id, name }) => (
               <option key={id} value={id}>
@@ -545,13 +641,11 @@ const App = () => {
               <select
                 className="w-24 h-6 min-h-0 text-base text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
                 onChange={(e) => {
-                  const id = e.currentTarget.value as ArtifactTypeID
-                  setArtID(id)
-                  setMainType(ArtifactTypeMap[id].main[0].type)
+                  actions.setArtTypeID(e.currentTarget.value as ArtifactTypeID)
                 }}
               >
                 {ArtifactTypeList.map((a) => (
-                  <option key={a.name} value={a.type}>
+                  <option key={a.name} value={a.id}>
                     {a.name}
                   </option>
                 ))}
@@ -560,11 +654,10 @@ const App = () => {
                 <select
                   className="h-6 min-h-0 text-base text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
                   onChange={(e) => {
-                    const type = e.currentTarget.value as MainStatusType
-                    setMainType(type)
+                    actions.setMainType(e.currentTarget.value as MainStatusType)
                   }}
                 >
-                  {ArtifactTypeMap[artID].main.map((m, i) => (
+                  {ArtifactTypeMap[artTypeID].main.map((m, i) => (
                     <option key={m.type + i} value={m.type}>
                       {m.label}
                     </option>
@@ -657,25 +750,9 @@ const App = () => {
         <div
           className="w-24 btn"
           onClick={() => {
-            const newArt: Artifact = {
-              id: Date.now().toString(16),
-              level: 20,
-              set: {
-                id: artSet,
-                name: ArtifactSetMap[artSet].name,
-              },
-              type: {
-                id: artID,
-                name: ArtifactTypeMap[artID].name,
-              },
-              main: {
-                type: mainType,
-                name: MainStatusMap[mainType].label,
-                value: MainStatusMap[mainType].max,
-              },
-              subs: substats,
+            if (artifact) {
+              setStoredArts((prev) => [artifact, ...prev])
             }
-            setStoredArts((prev) => [newArt, ...prev])
           }}
         >
           save
