@@ -537,13 +537,11 @@ const App = () => {
   const [textOcr, setTextOcr] = useState<string>("")
   const [progress, setProgress] = useState(0)
 
-  // const [substats, setSubStats] = useState<SubStatus[]>([])
-  // const [score, setScore] = useState(0)
-  // const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
-  // const [artTypeID, setArtTypeID] = useState<ArtifactTypeID>("FLOWER")
-  // const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.type)
-  // const [artSet, setArtSet] = useState<ArtifactSetID>("GLADIATORS_FINALE")
   const [states, actions] = useArtifact()
+  const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
+    "artifacts",
+    []
+  )
   const worker = createWorker({
     logger: (m: { status: string; progress: number }) => {
       setProgress(Math.round(m.progress * 100))
@@ -551,10 +549,6 @@ const App = () => {
     },
   })
 
-  const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
-    "artifacts",
-    []
-  )
 
   const tryOcr = useCallback(async () => {
     await worker.load()
