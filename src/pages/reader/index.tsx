@@ -750,10 +750,8 @@ const App = () => {
         <div
           className="w-24 btn"
           onClick={() => {
-            setStoredArts((prev) => [
-              { ...artifact, id: Date.now().toString(16) },
-              ...prev,
-            ])
+            const id = Date.now().toString(16)
+            setStoredArts((prev) => [{ ...artifact, id }, ...prev])
           }}
         >
           save
