@@ -549,7 +549,6 @@ const App = () => {
     },
   })
 
-
   const tryOcr = useCallback(async () => {
     await worker.load()
     await worker.loadLanguage("jpn")
@@ -566,7 +565,7 @@ const App = () => {
 
     const datas = getSubStatusDatas(text)
     actions.setSubStats(datas)
-  }, [worker, file])
+  }, [worker, file, actions])
 
   const handleDrop = (file: File) => {
     setUrl(URL.createObjectURL(file))
