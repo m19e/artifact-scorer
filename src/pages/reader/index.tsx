@@ -582,190 +582,196 @@ const App = () => {
     states
 
   return (
-    <div className="flex flex-col gap-4 items-center p-8">
-      {url !== "" ? (
-        <div className="flex gap-4 items-center">
-          <img src={url} alt={url} />
-          <div
-            className="btn"
-            onClick={() => {
-              setUrl("")
-            }}
-          >
-            delete
+    <div className="flex justify-center">
+      <div className="flex flex-col gap-4 max-w-sm">
+        {url !== "" ? (
+          <div className="flex gap-4 items-center">
+            <img src={url} alt={url} />
+            <div
+              className="btn"
+              onClick={() => {
+                setUrl("")
+              }}
+            >
+              delete
+            </div>
           </div>
-        </div>
-      ) : (
-        <Dropzone onDrop={handleDrop} />
-      )}
-      <div className="inline-flex gap-4 items-center">
-        <div className="flex flex-col items-center py-2 px-4 rounded shadow">
-          <div className="h-6">
-            {textOcr !== "" ? (
-              <span className="text-base-content">
-                {textOcr} ({progress}%)
-              </span>
-            ) : (
-              <span className="text-base-content">Progress</span>
-            )}
+        ) : (
+          <Dropzone onDrop={handleDrop} />
+        )}
+        <div className="inline-flex gap-4 items-center">
+          <div className="flex flex-col items-center py-2 px-4 rounded shadow">
+            <div className="h-6">
+              {textOcr !== "" ? (
+                <span className="text-base-content">
+                  {textOcr} ({progress}%)
+                </span>
+              ) : (
+                <span className="text-base-content">Progress</span>
+              )}
+            </div>
+            <progress
+              className="w-56 progress"
+              value={progress}
+              max={100}
+            ></progress>
           </div>
-          <progress
-            className="w-56 progress"
-            value={progress}
-            max={100}
-          ></progress>
+          <button className="btn" onClick={handleClick}>
+            recognize
+          </button>
         </div>
-        <button className="btn" onClick={handleClick}>
-          recognize
-        </button>
-      </div>
-      <select
-        className="w-full max-w-sm select select-bordered"
-        onChange={(e) => {
-          const type = e.currentTarget.value as CalcTypeData["type"]
-          actions.setCalcType(type)
-        }}
-      >
-        {CalcTypeDataList.map((data) => (
-          <option key={data.type} value={data.type}>
-            {data.label}
-          </option>
-        ))}
-      </select>
-      <div className="flex flex-col w-full max-w-sm">
-        <div className="w-full max-w-sm h-10 artifact-heading">
-          <select
-            className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
-            onChange={(e) =>
-              actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
-            }
-          >
-            {ArtifactSetDataList.map(({ id, name }) => (
-              <option key={id} value={id} selected={id === artSetID}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="w-full max-w-sm h-44 bg-gradient-to-br from-gray-600 to-orange-300">
-          <div className="flex justify-between h-full">
-            <div className="flex flex-col justify-between py-1 px-2">
-              <select
-                className="w-24 h-6 min-h-0 text-base text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
-                onChange={(e) => {
-                  actions.setArtTypeID(e.currentTarget.value as ArtifactTypeID)
-                }}
-              >
-                {ArtifactTypeList.map((a) => (
-                  <option key={a.name} value={a.id}>
-                    {a.name}
-                  </option>
-                ))}
-              </select>
-              <div className="flex flex-col">
+        <select
+          className="select select-bordered"
+          onChange={(e) => {
+            const type = e.currentTarget.value as CalcTypeData["type"]
+            actions.setCalcType(type)
+          }}
+        >
+          {CalcTypeDataList.map((data) => (
+            <option key={data.type} value={data.type}>
+              {data.label}
+            </option>
+          ))}
+        </select>
+        <div className="flex flex-col">
+          <div className="h-10 artifact-heading">
+            <select
+              className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
+              onChange={(e) =>
+                actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
+              }
+            >
+              {ArtifactSetDataList.map(({ id, name }) => (
+                <option key={id} value={id} selected={id === artSetID}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
+            <div className="flex justify-between h-full">
+              <div className="flex flex-col justify-between py-1 px-2">
                 <select
-                  className="h-6 min-h-0 text-base text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                  className="w-24 h-6 min-h-0 text-base text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
                   onChange={(e) => {
-                    actions.setMainType(e.currentTarget.value as MainStatusType)
+                    actions.setArtTypeID(
+                      e.currentTarget.value as ArtifactTypeID
+                    )
                   }}
                 >
-                  {ArtifactTypeMap[artTypeID].main.map((m, i) => (
-                    <option key={m.type + i} value={m.type}>
-                      {m.label}
+                  {ArtifactTypeList.map((a) => (
+                    <option key={a.name} value={a.id}>
+                      {a.name}
                     </option>
                   ))}
                 </select>
-                <span className="pl-2.5 font-mono text-5xl text-white">
-                  {MainStatusMap[mainType].max}
-                </span>
-                <span className="pl-2.5 -mt-1 text-2xl tracking-widest text-yellow-400">
-                  ★★★★★
-                </span>
-              </div>
-            </div>
-            <div className="flex flex-col justify-center py-1 px-2">
-              {!!substats.length && (
-                <div className="shadow stats">
-                  <div className="stat">
-                    <div className="stat-title">聖遺物スコア</div>
-                    <div className="stat-value">
-                      {Math.round(score * 10) / 10}
-                      {(() => {
-                        if (score >= 45) {
-                          return <span className="text-error">(SS)</span>
-                        }
-                        if (score >= 35) {
-                          return <span className="text-warning">(S)</span>
-                        }
-                        if (score >= 25) {
-                          return <span className="text-primary">(A)</span>
-                        }
-                        return <span className="text-info">(B)</span>
-                      })()}
-                    </div>
-                    <div className="pt-1 text-right stat-desc">
-                      {calcMode.name}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        {!!substats.length && (
-          <div className="flex flex-col py-3 w-full bg-orange-100">
-            <div className="flex justify-between items-center px-4 w-full">
-              <div className="px-1.5 h-6 text-white bg-slate-700 rounded">
-                <span className="text-2xl font-black leading-5 text-white">
-                  +20
-                </span>
-              </div>
-              <TwitterShareButton url="" />
-            </div>
-            <div className="flex flex-col py-2 px-4">
-              {substats.map((s) => (
-                <div
-                  key={s.label}
-                  className="flex justify-between text-lg text-slate-700 whitespace-pre-wrap"
-                >
-                  <span className="font-black"> ・ {s.label}</span>
-                  <span className="text-opacity-0">
-                    ({getSubStatusRate(s)}%)
+                <div className="flex flex-col">
+                  <select
+                    className="h-6 min-h-0 text-base text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                    onChange={(e) => {
+                      actions.setMainType(
+                        e.currentTarget.value as MainStatusType
+                      )
+                    }}
+                  >
+                    {ArtifactTypeMap[artTypeID].main.map((m, i) => (
+                      <option key={m.type + i} value={m.type}>
+                        {m.label}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="pl-2.5 font-mono text-5xl text-white">
+                    {MainStatusMap[mainType].max}
+                  </span>
+                  <span className="pl-2.5 -mt-1 text-2xl tracking-widest text-yellow-400">
+                    ★★★★★
                   </span>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-      <div className="flex flex-col items-center w-full max-w-sm">
-        <div
-          className="w-24 btn"
-          onClick={() => {
-            const id = Date.now().toString(16)
-            setStoredArts((prev) => [{ ...artifact, id }, ...prev])
-          }}
-        >
-          save
-        </div>
-        {storedArts.map(({ id, set, type, main }) => (
-          <div key={id} className="flex gap-2 items-center bg-base-200">
-            <span className="whitespace-pre-wrap">
-              {JSON.stringify({ id, set, type, main }, null, 2)}
-            </span>
-            <div className="flex flex-col gap-2">
-              <div className="btn btn-info btn-disabled">import</div>
-              <div
-                className="btn btn-error"
-                onClick={() => {
-                  setStoredArts((prev) => prev.filter((a) => a.id !== id))
-                }}
-              >
-                delete
+              </div>
+              <div className="flex flex-col justify-center py-1 px-2">
+                {!!substats.length && (
+                  <div className="shadow stats">
+                    <div className="stat">
+                      <div className="stat-title">聖遺物スコア</div>
+                      <div className="stat-value">
+                        {Math.round(score * 10) / 10}
+                        {(() => {
+                          if (score >= 45) {
+                            return <span className="text-error">(SS)</span>
+                          }
+                          if (score >= 35) {
+                            return <span className="text-warning">(S)</span>
+                          }
+                          if (score >= 25) {
+                            return <span className="text-primary">(A)</span>
+                          }
+                          return <span className="text-info">(B)</span>
+                        })()}
+                      </div>
+                      <div className="pt-1 text-right stat-desc">
+                        {calcMode.name}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
-        ))}
+          {!!substats.length && (
+            <div className="flex flex-col py-3 bg-orange-100">
+              <div className="flex justify-between items-center px-4">
+                <div className="px-1.5 h-6 text-white bg-slate-700 rounded">
+                  <span className="text-2xl font-black leading-5 text-white">
+                    +20
+                  </span>
+                </div>
+                <TwitterShareButton url="" />
+              </div>
+              <div className="flex flex-col py-2 px-4">
+                {substats.map((s) => (
+                  <div
+                    key={s.label}
+                    className="flex justify-between text-lg text-slate-700 whitespace-pre-wrap"
+                  >
+                    <span className="font-black"> ・ {s.label}</span>
+                    <span className="text-opacity-0">
+                      ({getSubStatusRate(s)}%)
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col items-center">
+          <div
+            className="w-24 btn"
+            onClick={() => {
+              const id = Date.now().toString(16)
+              setStoredArts((prev) => [{ ...artifact, id }, ...prev])
+            }}
+          >
+            save
+          </div>
+          {storedArts.map(({ id, set, type, main }) => (
+            <div key={id} className="flex gap-2 items-center bg-base-200">
+              <span className="whitespace-pre-wrap">
+                {JSON.stringify({ id, set, type, main }, null, 2)}
+              </span>
+              <div className="flex flex-col gap-2">
+                <div className="btn btn-info btn-disabled">import</div>
+                <div
+                  className="btn btn-error"
+                  onClick={() => {
+                    setStoredArts((prev) => prev.filter((a) => a.id !== id))
+                  }}
+                >
+                  delete
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
