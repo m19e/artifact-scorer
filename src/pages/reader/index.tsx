@@ -424,7 +424,7 @@ interface ArtifactState {
   substats: SubStatus[]
   calcMode: CalcTypeData
   score: number
-  artifact: Artifact | undefined
+  artifact: Artifact
 }
 interface ArtifactAction {
   setArtSetID: SetValue<ArtifactSetID>
@@ -432,6 +432,25 @@ interface ArtifactAction {
   setCalcType: (type: CalcTypeData["type"]) => void
   setArtTypeID: (id: ArtifactTypeID) => void
   setMainType: SetValue<MainStatusType>
+}
+
+const DEFAULT_ARTIFACT_DATA: Artifact = {
+  id: "",
+  level: 20,
+  set: {
+    id: "GLADIATORS_FINALE",
+    name: "剣闘士のフィナーレ",
+  },
+  type: {
+    id: "FLOWER",
+    name: "生の花",
+  },
+  main: {
+    type: "HP_ACT",
+    name: MainStatusMap["HP_ACT"].label,
+    value: MainStatusMap["HP_ACT"].max,
+  },
+  subs: [],
 }
 
 const useArtifact = (): [ArtifactState, ArtifactAction] => {
@@ -443,7 +462,7 @@ const useArtifact = (): [ArtifactState, ArtifactAction] => {
   const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
   const [score, setScore] = useState(0)
 
-  const artifactRef = useRef<Artifact>()
+  const artifactRef = useRef<Artifact>(DEFAULT_ARTIFACT_DATA)
 
   useEffect(() => {
     artifactRef.current = {
@@ -750,9 +769,10 @@ const App = () => {
         <div
           className="w-24 btn"
           onClick={() => {
-            if (artifact) {
-              setStoredArts((prev) => [artifact, ...prev])
-            }
+            setStoredArts((prev) => [
+              { ...artifact, id: Date.now().toString(16) },
+              ...prev,
+            ])
           }}
         >
           save
