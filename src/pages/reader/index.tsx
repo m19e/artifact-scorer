@@ -621,7 +621,6 @@ const App = () => {
       </div>
       <select
         className="w-full max-w-sm select select-bordered"
-        defaultValue={0}
         onChange={(e) => {
           const type = e.currentTarget.value as CalcTypeData["type"]
           actions.setCalcType(type)
@@ -642,7 +641,7 @@ const App = () => {
             }
           >
             {ArtifactSetDataList.map(({ id, name }) => (
-              <option key={id} value={id}>
+              <option key={id} value={id} selected={id === artSetID}>
                 {name}
               </option>
             ))}
