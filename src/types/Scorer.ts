@@ -1,10 +1,12 @@
 import { CalcType, SubStatusType } from "@/consts/Scorer"
 
-type CalcType = typeof CalcType[keyof typeof CalcType]
+type CalcTypeKey = keyof typeof CalcType
+
+type CalcType = typeof CalcType[CalcTypeKey]
 
 export interface CalcTypeData {
   label: CalcType
-  type: keyof typeof CalcType
+  type: CalcTypeKey
   name: string
   description: string
 }
