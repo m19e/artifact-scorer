@@ -583,7 +583,7 @@ const App = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col gap-4 max-w-sm">
+      <div className="flex flex-col gap-4 py-4 max-w-sm">
         {url !== "" ? (
           <div className="flex gap-4 items-center">
             <img src={url} alt={url} />
@@ -753,11 +753,19 @@ const App = () => {
           >
             save
           </div>
-          {storedArts.map(({ id, set, type, main }) => (
+          {storedArts.map(({ id, set, type, main, subs }) => (
             <div key={id} className="flex gap-2 items-center bg-base-200">
-              <span className="whitespace-pre-wrap">
-                {JSON.stringify({ id, set, type, main }, null, 2)}
-              </span>
+              <div className="flex flex-col">
+                <h1>
+                  {set.name} - {type.name} - {main.name}
+                </h1>
+                {subs.map((sub) => (
+                  <span key={sub.type} className="whitespace-pre-wrap">
+                    {" ・ "}
+                    {sub.label}
+                  </span>
+                ))}
+              </div>
               <div className="flex flex-col gap-2">
                 <div className="btn btn-info btn-disabled">import</div>
                 <div
