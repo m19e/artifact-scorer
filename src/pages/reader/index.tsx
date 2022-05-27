@@ -20,77 +20,33 @@ import { Dropzone } from "@/components/molecules/Dropzone"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 
 const ArtifactSetMap = {
-  GLADIATORS_FINALE: {
-    name: "剣闘士のフィナーレ",
-  },
-  WANDERERS_TROUPE: {
-    name: "大地を流浪する楽団",
-  },
-  NOBLESSE_OBLIGE: {
-    name: "旧貴族のしつけ",
-  },
-  BLOODSTAINED_CHIVALRY: {
-    name: "血染めの騎士道",
-  },
-  MAIDEN_BELOVED: {
-    name: "愛される少女",
-  },
-  VIRIDESCENT_VENERER: {
-    name: "翠緑の影",
-  },
-  ARCHAIC_PETRA: {
-    name: "悠久の磐岩",
-  },
-  RETRACING_BOLIDE: {
-    name: "逆飛びの流星",
-  },
-  THUNDERSOOTHER: {
-    name: "雷を鎮める尊者",
-  },
-  THUNDERING_FURY: {
-    name: "雷のような怒り",
-  },
-  LAVAWALKER: {
-    name: "烈火を渡る賢者",
-  },
-  CRIMSON_WITCH_OF_FLAMES: {
-    name: "燃え盛る炎の魔女",
-  },
-  BLIZZARD_STRAYER: {
-    name: "氷風を彷徨う勇士",
-  },
-  HEART_OF_DEPTH: {
-    name: "沈淪の心",
-  },
-  TENACITY_OF_THE_MILLELITH: {
-    name: "千岩牢固",
-  },
-  PALE_FLAME: {
-    name: "蒼白の炎",
-  },
-  SHIMENAWAS_REMINISCENCE: {
-    name: "追憶のしめ縄",
-  },
-  EMBLEM_OF_SEVERED_FATE: {
-    name: "絶縁の旗印",
-  },
-  HUSK_OF_OPULENT_DREAMS: {
-    name: "華館夢醒形骸記",
-  },
-  OCEAN_HUED_CLAM: {
-    name: "海染硨磲",
-  },
-  VERMILLION_HEREAFTER: {
-    name: "辰砂往生録",
-  },
-  ECHOES_OF_AN_OFFERING: {
-    name: "来歆の余響",
-  },
+  GLADIATORS_FINALE: "剣闘士のフィナーレ",
+  WANDERERS_TROUPE: "大地を流浪する楽団",
+  NOBLESSE_OBLIGE: "旧貴族のしつけ",
+  BLOODSTAINED_CHIVALRY: "血染めの騎士道",
+  MAIDEN_BELOVED: "愛される少女",
+  VIRIDESCENT_VENERER: "翠緑の影",
+  ARCHAIC_PETRA: "悠久の磐岩",
+  RETRACING_BOLIDE: "逆飛びの流星",
+  THUNDERSOOTHER: "雷を鎮める尊者",
+  THUNDERING_FURY: "雷のような怒り",
+  LAVAWALKER: "烈火を渡る賢者",
+  CRIMSON_WITCH_OF_FLAMES: "燃え盛る炎の魔女",
+  BLIZZARD_STRAYER: "氷風を彷徨う勇士",
+  HEART_OF_DEPTH: "沈淪の心",
+  TENACITY_OF_THE_MILLELITH: "千岩牢固",
+  PALE_FLAME: "蒼白の炎",
+  SHIMENAWAS_REMINISCENCE: "追憶のしめ縄",
+  EMBLEM_OF_SEVERED_FATE: "絶縁の旗印",
+  HUSK_OF_OPULENT_DREAMS: "華館夢醒形骸記",
+  OCEAN_HUED_CLAM: "海染硨磲",
+  VERMILLION_HEREAFTER: "辰砂往生録",
+  ECHOES_OF_AN_OFFERING: "来歆の余響",
 } as const
 
 type ArtifactSetID = keyof typeof ArtifactSetMap
 
-type ArtifactSetName = typeof ArtifactSetMap[ArtifactSetID]["name"]
+type ArtifactSetName = typeof ArtifactSetMap[ArtifactSetID]
 
 interface ArtifactSetData {
   id: ArtifactSetID
@@ -99,7 +55,7 @@ interface ArtifactSetData {
 
 const ArtifactSetDataList: ArtifactSetData[] = Object.entries(
   ArtifactSetMap
-).map(([key, { name }]) => {
+).map(([key, name]) => {
   const id = key as ArtifactSetID
   return { id, name }
 })
@@ -519,7 +475,7 @@ const useArtifact = (): [ArtifactState, ArtifactAction] => {
       level: 20,
       set: {
         id: artSetID,
-        name: ArtifactSetMap[artSetID].name,
+        name: ArtifactSetMap[artSetID],
       },
       type: {
         id: artTypeID,
