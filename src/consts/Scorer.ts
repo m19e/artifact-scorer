@@ -9,9 +9,9 @@ export const CalcType = {
 } as const
 
 export const SubStatusType = {
-  HP_ACT: "HP_ACT",
-  DEF_ACT: "DEF_ACT",
-  ATK_ACT: "ATK_ACT",
+  HP_FLAT: "HP_FLAT",
+  DEF_FLAT: "DEF_FLAT",
+  ATK_FLAT: "ATK_FLAT",
   HP_PER: "HP_PER",
   DEF_PER: "DEF_PER",
   ATK_PER: "ATK_PER",
@@ -58,9 +58,9 @@ export const CalcTypeMap: { [key in CalcTypeData["type"]]: CalcTypeData } = {
 export const CalcTypeDataList: CalcTypeData[] = Object.values(CalcTypeMap)
 
 export const SubStatusMap: { [key in TSubStatus]: { max: number } } = {
-  HP_ACT: { max: 299 },
-  DEF_ACT: { max: 23 },
-  ATK_ACT: { max: 19 },
+  HP_FLAT: { max: 299 },
+  DEF_FLAT: { max: 23 },
+  ATK_FLAT: { max: 19 },
   HP_PER: { max: 5.8 },
   DEF_PER: { max: 7.3 },
   ATK_PER: { max: 5.8 },

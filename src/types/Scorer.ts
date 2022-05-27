@@ -19,7 +19,7 @@ export interface SubStatus {
   status: string
   param: {
     label: string
-    type: "actual" | "percent"
+    type: "flat" | "percent"
     value: number
   }
 }

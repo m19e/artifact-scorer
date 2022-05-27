@@ -74,8 +74,8 @@ interface ArtifactTypeData {
 }
 
 const MainStatus = {
-  HP_ACT: "HP(実数)",
-  ATK_ACT: "攻撃力(実数)",
+  HP_FLAT: "HP(実数)",
+  ATK_FLAT: "攻撃力(実数)",
   ATK_PER: "攻撃力(%)",
   ENERGY_RECHARGE: "元素チャージ効率",
   PYRO_DMG_BONUS: "炎元素ダメージ",
@@ -104,14 +104,14 @@ interface MainStatusData {
 }
 
 const MainStatusMap: { [key in MainStatusID]: MainStatusData } = {
-  HP_ACT: {
-    id: "HP_ACT",
+  HP_FLAT: {
+    id: "HP_FLAT",
     name: "HP(実数)",
     max: 4780,
     min: 717,
   },
-  ATK_ACT: {
-    id: "ATK_ACT",
+  ATK_FLAT: {
+    id: "ATK_FLAT",
     name: "攻撃力(実数)",
     max: 311,
     min: 47,
@@ -224,12 +224,12 @@ const ArtifactTypeMap: { [key in ArtifactTypeID]: ArtifactTypeData } = {
   FLOWER: {
     id: "FLOWER",
     name: ArtifactType.FLOWER,
-    main: [MainStatusMap.HP_ACT],
+    main: [MainStatusMap.HP_FLAT],
   },
   PLUME: {
     id: "PLUME",
     name: ArtifactType.PLUME,
-    main: [MainStatusMap.ATK_ACT],
+    main: [MainStatusMap.ATK_FLAT],
   },
   SANDS: {
     id: "SANDS",
@@ -292,9 +292,9 @@ const getSubStatusType = ({
     if (status.includes("率")) return SubStatusType.CRIT_RATE
     if (status.includes("ダメージ")) return SubStatusType.CRIT_DAMAGE
   }
-  if (status.includes("HP")) return SubStatusType.HP_ACT
-  if (status.includes("防")) return SubStatusType.DEF_ACT
-  if (status.includes("攻")) return SubStatusType.ATK_ACT
+  if (status.includes("HP")) return SubStatusType.HP_FLAT
+  if (status.includes("防")) return SubStatusType.DEF_FLAT
+  if (status.includes("攻")) return SubStatusType.ATK_FLAT
   if (status.includes("熟知")) return SubStatusType.ELEMENTAL_MASTERY
 
   return SubStatusType.UNDETECTED
@@ -320,7 +320,7 @@ const getSubStatusData = (line: string): SubStatus => {
   const type = getSubStatusType({ status, isPercent })
   const paramLabel = trimCircleFromNumber(p)
   const label = status + "+" + paramLabel
-  const paramType = isPercent ? "percent" : "actual"
+  const paramType = isPercent ? "percent" : "flat"
   const paramValue = +paramLabel.split("%").join("")
   const param: SubStatus["param"] = {
     label: paramLabel,
@@ -445,14 +445,14 @@ const DEFAULT_ARTIFACT_DATA: Artifact = {
     id: "FLOWER",
     name: "生の花",
   },
-  main: MainStatusMap["HP_ACT"],
+  main: MainStatusMap["HP_FLAT"],
   subs: [],
 }
 
 const useArtifact = (): [ArtifactState, ArtifactAction] => {
   const [artSetID, setArtSetID] = useState<ArtifactSetID>("GLADIATORS_FINALE")
   const [artTypeID, setArtTID] = useState<ArtifactTypeID>("FLOWER")
-  const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.id)
+  const [mainType, setMainType] = useState(MainStatusMap.HP_FLAT.id)
   const [substats, setSubs] = useState<SubStatus[]>([])
 
   const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
