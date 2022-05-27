@@ -45,9 +45,7 @@ const ArtifactSet = {
 } as const
 
 type ArtifactSetID = keyof typeof ArtifactSet
-
 type ArtifactSetName = typeof ArtifactSet[ArtifactSetID]
-
 interface ArtifactSetData {
   id: ArtifactSetID
   name: ArtifactSetName
@@ -69,8 +67,11 @@ const ArtifactType = {
 } as const
 
 type ArtifactTypeID = keyof typeof ArtifactType
-
 type ArtifactTypeName = typeof ArtifactType[ArtifactTypeID]
+interface ArtifactTypeData {
+  id: ArtifactTypeID
+  name: ArtifactTypeName
+}
 
 const MainStatus = {
   HP_ACT: "HP(実数)",
@@ -217,18 +218,6 @@ interface ArtifactTypeData {
   id: ArtifactTypeID
   name: ArtifactTypeName
   main: MainStatusData[]
-}
-
-interface Artifact {
-  id: string
-  level: number
-  set: ArtifactSetData
-  type: {
-    id: ArtifactTypeID
-    name: ArtifactTypeName
-  }
-  main: MainStatusData
-  subs: SubStatus[]
 }
 
 const ArtifactTypeMap: { [key in ArtifactTypeID]: ArtifactTypeData } = {
@@ -416,7 +405,14 @@ const getSubStatusRate = (data: SubStatus): number => {
   return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
 
-type SetValue<T> = Dispatch<SetStateAction<T>>
+interface Artifact {
+  id: string
+  level: number
+  set: ArtifactSetData
+  type: Omit<ArtifactTypeData, "main">
+  main: MainStatusData
+  subs: SubStatus[]
+}
 
 interface ArtifactState {
   artSetID: ArtifactSetID
@@ -427,6 +423,9 @@ interface ArtifactState {
   score: number
   artifact: Artifact
 }
+
+type SetValue<T> = Dispatch<SetStateAction<T>>
+
 interface ArtifactAction {
   setArtSetID: SetValue<ArtifactSetID>
   setSubStats: SetValue<SubStatus[]>
