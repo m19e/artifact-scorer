@@ -19,7 +19,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { Dropzone } from "@/components/molecules/Dropzone"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 
-const ArtifactSetMap = {
+const ArtifactSet = {
   GLADIATORS_FINALE: "剣闘士のフィナーレ",
   WANDERERS_TROUPE: "大地を流浪する楽団",
   NOBLESSE_OBLIGE: "旧貴族のしつけ",
@@ -44,21 +44,21 @@ const ArtifactSetMap = {
   ECHOES_OF_AN_OFFERING: "来歆の余響",
 } as const
 
-type ArtifactSetID = keyof typeof ArtifactSetMap
+type ArtifactSetID = keyof typeof ArtifactSet
 
-type ArtifactSetName = typeof ArtifactSetMap[ArtifactSetID]
+type ArtifactSetName = typeof ArtifactSet[ArtifactSetID]
 
 interface ArtifactSetData {
   id: ArtifactSetID
   name: ArtifactSetName
 }
 
-const ArtifactSetDataList: ArtifactSetData[] = Object.entries(
-  ArtifactSetMap
-).map(([key, name]) => {
-  const id = key as ArtifactSetID
-  return { id, name }
-})
+const ArtifactSetList: ArtifactSetData[] = Object.entries(ArtifactSet).map(
+  ([key, name]) => {
+    const id = key as ArtifactSetID
+    return { id, name }
+  }
+)
 
 const ArtifactType = {
   FLOWER: "生の花",
@@ -73,141 +73,141 @@ type ArtifactTypeID = keyof typeof ArtifactType
 type ArtifactTypeName = typeof ArtifactType[ArtifactTypeID]
 
 const MainStatus = {
-  HP_ACT: "HP_ACT",
-  ATK_ACT: "ATK_ACT",
-  ATK_PER: "ATK_PER",
-  HP_PER: "HP_PER",
-  DEF_PER: "DEF_PER",
-  ENERGY_RECHARGE: "ENERGY_RECHARGE",
-  ELEMENTAL_MASTERY: "ELEMENTAL_MASTERY",
-  PYRO_DMG_BONUS: "PYRO_DMG_BONUS",
-  HYDRO_DMG_BONUS: "HYDRO_DMG_BONUS",
-  ANEMO_DMG_BONUS: "ANEMO_DMG_BONUS",
-  ELECTRO_DMG_BONUS: "ELECTRO_DMG_BONUS",
-  DENDRO_DMG_BONUS: "DENDRO_DMG_BONUS",
-  CRYO_DMG_BONUS: "CRYO_DMG_BONUS",
-  GEO_DMG_BONUS: "GEO_DMG_BONUS",
-  PHYSICAL_DMG_BONUS: "PHYSICAL_DMG_BONUS",
-  CRIT_RATE: "CRIT_RATE",
-  CRIT_DAMAGE: "CRIT_DAMAGE",
-  HEALING_BONUS: "HEALING_BONUS",
+  HP_ACT: "HP(実数)",
+  ATK_ACT: "攻撃力(実数)",
+  ATK_PER: "攻撃力(%)",
+  ENERGY_RECHARGE: "元素チャージ効率",
+  PYRO_DMG_BONUS: "炎元素ダメージ",
+  HYDRO_DMG_BONUS: "水元素ダメージ",
+  ANEMO_DMG_BONUS: "風元素ダメージ",
+  ELECTRO_DMG_BONUS: "雷元素ダメージ",
+  DENDRO_DMG_BONUS: "草元素ダメージ",
+  CRYO_DMG_BONUS: "氷元素ダメージ",
+  GEO_DMG_BONUS: "岩元素ダメージ",
+  PHYSICAL_DMG_BONUS: "物理ダメージ",
+  CRIT_RATE: "会心率",
+  CRIT_DAMAGE: "会心ダメージ",
+  HEALING_BONUS: "与える治療効果",
+  HP_PER: "HP(%)",
+  DEF_PER: "防御力(%)",
+  ELEMENTAL_MASTERY: "元素熟知",
 } as const
 
-type MainStatusType = typeof MainStatus[keyof typeof MainStatus]
-
+type MainStatusID = keyof typeof MainStatus
+type MainStatusName = typeof MainStatus[MainStatusID]
 interface MainStatusData {
-  type: MainStatusType
-  label: string
+  id: MainStatusID
+  name: MainStatusName
   max: number
   min: number
 }
 
-const MainStatusMap: { [key in MainStatusType]: MainStatusData } = {
+const MainStatusMap: { [key in MainStatusID]: MainStatusData } = {
   HP_ACT: {
-    type: "HP_ACT",
-    label: "HP(実数)",
+    id: "HP_ACT",
+    name: "HP(実数)",
     max: 4780,
     min: 717,
   },
   ATK_ACT: {
-    type: "ATK_ACT",
-    label: "攻撃力(実数)",
+    id: "ATK_ACT",
+    name: "攻撃力(実数)",
     max: 311,
     min: 47,
   },
   ATK_PER: {
-    type: "ATK_PER",
-    label: "攻撃力(%)",
+    id: "ATK_PER",
+    name: "攻撃力(%)",
     max: 46.6,
     min: 7,
   },
   ENERGY_RECHARGE: {
-    type: "ENERGY_RECHARGE",
-    label: "元素チャージ効率",
+    id: "ENERGY_RECHARGE",
+    name: "元素チャージ効率",
     max: 51.8,
     min: 7.8,
   },
   PYRO_DMG_BONUS: {
-    type: "PYRO_DMG_BONUS",
-    label: "炎元素ダメージ",
+    id: "PYRO_DMG_BONUS",
+    name: "炎元素ダメージ",
     max: 46.6,
     min: 7.0,
   },
   HYDRO_DMG_BONUS: {
-    type: "HYDRO_DMG_BONUS",
-    label: "水元素ダメージ",
+    id: "HYDRO_DMG_BONUS",
+    name: "水元素ダメージ",
     max: 46.6,
     min: 7.0,
   },
   ANEMO_DMG_BONUS: {
-    type: "ANEMO_DMG_BONUS",
-    label: "風元素ダメージ",
+    id: "ANEMO_DMG_BONUS",
+    name: "風元素ダメージ",
     max: 46.6,
     min: 7.0,
   },
   ELECTRO_DMG_BONUS: {
-    type: "ELECTRO_DMG_BONUS",
-    label: "雷元素ダメージ",
+    id: "ELECTRO_DMG_BONUS",
+    name: "雷元素ダメージ",
     max: 46.6,
     min: 7.0,
   },
   DENDRO_DMG_BONUS: {
-    type: "DENDRO_DMG_BONUS",
-    label: "草元素ダメージ",
+    id: "DENDRO_DMG_BONUS",
+    name: "草元素ダメージ",
     max: 46.6,
     min: 7.0,
   },
   CRYO_DMG_BONUS: {
-    type: "CRYO_DMG_BONUS",
-    label: "氷元素ダメージ",
+    id: "CRYO_DMG_BONUS",
+    name: "氷元素ダメージ",
     max: 46.6,
     min: 7.0,
   },
   GEO_DMG_BONUS: {
-    type: "GEO_DMG_BONUS",
-    label: "岩元素ダメージ",
+    id: "GEO_DMG_BONUS",
+    name: "岩元素ダメージ",
     max: 46.6,
     min: 7.0,
   },
   PHYSICAL_DMG_BONUS: {
-    type: "PHYSICAL_DMG_BONUS",
-    label: "物理ダメージ",
+    id: "PHYSICAL_DMG_BONUS",
+    name: "物理ダメージ",
     max: 58.3,
     min: 8.7,
   },
   CRIT_RATE: {
-    type: "CRIT_RATE",
-    label: "会心率",
+    id: "CRIT_RATE",
+    name: "会心率",
     max: 31.1,
     min: 4.7,
   },
   CRIT_DAMAGE: {
-    type: "CRIT_DAMAGE",
-    label: "会心ダメージ",
+    id: "CRIT_DAMAGE",
+    name: "会心ダメージ",
     max: 62.2,
     min: 9.3,
   },
   HEALING_BONUS: {
-    type: "HEALING_BONUS",
-    label: "与える治療効果",
+    id: "HEALING_BONUS",
+    name: "与える治療効果",
     max: 35.9,
     min: 5.4,
   },
   HP_PER: {
-    type: "HP_PER",
-    label: "HP(%)",
+    id: "HP_PER",
+    name: "HP(%)",
     max: 46.6,
     min: 7,
   },
   DEF_PER: {
-    type: "DEF_PER",
-    label: "防御力(%)",
+    id: "DEF_PER",
+    name: "防御力(%)",
     max: 58.3,
     min: 8.7,
   },
   ELEMENTAL_MASTERY: {
-    type: "ELEMENTAL_MASTERY",
-    label: "元素熟知",
+    id: "ELEMENTAL_MASTERY",
+    name: "元素熟知",
     max: 187,
     min: 28,
   },
@@ -227,11 +227,7 @@ interface Artifact {
     id: ArtifactTypeID
     name: ArtifactTypeName
   }
-  main: {
-    type: MainStatusType
-    name: string
-    value: number
-  }
+  main: MainStatusData
   subs: SubStatus[]
 }
 
@@ -425,7 +421,7 @@ type SetValue<T> = Dispatch<SetStateAction<T>>
 interface ArtifactState {
   artSetID: ArtifactSetID
   artTypeID: ArtifactTypeID
-  mainType: MainStatusType
+  mainType: MainStatusID
   substats: SubStatus[]
   calcMode: CalcTypeData
   score: number
@@ -436,7 +432,7 @@ interface ArtifactAction {
   setSubStats: SetValue<SubStatus[]>
   setCalcType: (type: CalcTypeData["type"]) => void
   setArtTypeID: (id: ArtifactTypeID) => void
-  setMainType: SetValue<MainStatusType>
+  setMainType: SetValue<MainStatusID>
 }
 
 const DEFAULT_ARTIFACT_DATA: Artifact = {
@@ -450,18 +446,14 @@ const DEFAULT_ARTIFACT_DATA: Artifact = {
     id: "FLOWER",
     name: "生の花",
   },
-  main: {
-    type: "HP_ACT",
-    name: MainStatusMap["HP_ACT"].label,
-    value: MainStatusMap["HP_ACT"].max,
-  },
+  main: MainStatusMap["HP_ACT"],
   subs: [],
 }
 
 const useArtifact = (): [ArtifactState, ArtifactAction] => {
   const [artSetID, setArtSetID] = useState<ArtifactSetID>("GLADIATORS_FINALE")
   const [artTypeID, setArtTID] = useState<ArtifactTypeID>("FLOWER")
-  const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.type)
+  const [mainType, setMainType] = useState(MainStatusMap.HP_ACT.id)
   const [substats, setSubs] = useState<SubStatus[]>([])
 
   const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
@@ -475,17 +467,13 @@ const useArtifact = (): [ArtifactState, ArtifactAction] => {
       level: 20,
       set: {
         id: artSetID,
-        name: ArtifactSetMap[artSetID],
+        name: ArtifactSet[artSetID],
       },
       type: {
         id: artTypeID,
-        name: ArtifactTypeMap[artTypeID].name,
+        name: ArtifactType[artTypeID],
       },
-      main: {
-        type: mainType,
-        name: MainStatusMap[mainType].label,
-        value: MainStatusMap[mainType].max,
-      },
+      main: MainStatusMap[mainType],
       subs: substats,
     }
   }, [artSetID, artTypeID, mainType, substats])
@@ -512,7 +500,7 @@ const useArtifact = (): [ArtifactState, ArtifactAction] => {
 
   const setArtTypeID = (id: ArtifactTypeID) => {
     setArtTID(id)
-    setMainType(ArtifactTypeMap[id].main[0].type)
+    setMainType(ArtifactTypeMap[id].main[0].id)
   }
 
   const states = {
@@ -645,7 +633,7 @@ const App = () => {
                 actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
               }
             >
-              {ArtifactSetDataList.map(({ id, name }) => (
+              {ArtifactSetList.map(({ id, name }) => (
                 <option key={id} value={id} selected={id === artSetID}>
                   {name}
                 </option>
@@ -673,14 +661,12 @@ const App = () => {
                   <select
                     className="h-6 min-h-0 text-base text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
                     onChange={(e) => {
-                      actions.setMainType(
-                        e.currentTarget.value as MainStatusType
-                      )
+                      actions.setMainType(e.currentTarget.value as MainStatusID)
                     }}
                   >
                     {ArtifactTypeMap[artTypeID].main.map((m, i) => (
-                      <option key={m.type + i} value={m.type}>
-                        {m.label}
+                      <option key={m.id + i} value={m.id}>
+                        {m.name}
                       </option>
                     ))}
                   </select>
