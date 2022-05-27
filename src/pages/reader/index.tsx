@@ -4,14 +4,15 @@ import { createWorker } from "tesseract.js"
 import type { ImageLike } from "tesseract.js"
 
 import type {
-  CalcTypeData,
-  SubStatus,
-  SubStatusType as TSubStatus,
+  CalcModeID,
+  CalcModeData,
+  SubStatusID,
+  SubStatusData,
 } from "@/types/Scorer"
 import {
-  CalcTypeMap,
-  CalcTypeDataList,
-  SubStatusType,
+  CalcModeMap,
+  CalcModeList,
+  SubStatus,
   SubStatusMap,
 } from "@/consts/Scorer"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
@@ -277,27 +278,27 @@ const ArtifactTypeMap: { [key in ArtifactTypeID]: ArtifactTypeData } = {
 
 const ArtifactTypeList = Object.values(ArtifactTypeMap)
 
-const getSubStatusType = ({
+const getSubStatusID = ({
   status,
   isPercent,
 }: {
   status: string
   isPercent: boolean
-}): TSubStatus => {
+}): SubStatusID => {
   if (isPercent) {
-    if (status.includes("HP")) return SubStatusType.HP_PER
-    if (status.includes("防")) return SubStatusType.DEF_PER
-    if (status.includes("攻")) return SubStatusType.ATK_PER
-    if (status.includes("チャージ")) return SubStatusType.ENERGY_RECHARGE
-    if (status.includes("率")) return SubStatusType.CRIT_RATE
-    if (status.includes("ダメージ")) return SubStatusType.CRIT_DAMAGE
+    if (status.includes("HP")) return "HP_PER"
+    if (status.includes("防")) return "DEF_PER"
+    if (status.includes("攻")) return "ATK_PER"
+    if (status.includes("チャージ")) return "ENERGY_RECHARGE"
+    if (status.includes("率")) return "CRIT_RATE"
+    if (status.includes("ダメージ")) return "CRIT_DAMAGE"
   }
-  if (status.includes("HP")) return SubStatusType.HP_FLAT
-  if (status.includes("防")) return SubStatusType.DEF_FLAT
-  if (status.includes("攻")) return SubStatusType.ATK_FLAT
-  if (status.includes("熟知")) return SubStatusType.ELEMENTAL_MASTERY
+  if (status.includes("HP")) return "HP_FLAT"
+  if (status.includes("防")) return "DEF_FLAT"
+  if (status.includes("攻")) return "ATK_FLAT"
+  if (status.includes("熟知")) return "ELEMENTAL_MASTERY"
 
-  return SubStatusType.UNDETECTED
+  return "UNDETECTED"
 }
 
 const reg = new RegExp("[\u{2460}-\u{2468}]", "u")
@@ -313,30 +314,31 @@ const trimCircleFromNumber = (text: string): string => {
     .join("")
 }
 
-const getSubStatusData = (line: string): SubStatus => {
+const getSubStatusData = (line: string): SubStatusData => {
   const [s, p] = line.split("+")
   const isPercent = p.includes("%")
   const status = s.replace("カ", "力")
-  const type = getSubStatusType({ status, isPercent })
+  const id = getSubStatusID({ status, isPercent })
+  const name = SubStatus[id]
   const paramLabel = trimCircleFromNumber(p)
   const label = status + "+" + paramLabel
   const paramType = isPercent ? "percent" : "flat"
   const paramValue = +paramLabel.split("%").join("")
-  const param: SubStatus["param"] = {
+  const param: SubStatusData["param"] = {
     label: paramLabel,
     type: paramType,
     value: paramValue,
   }
 
   return {
+    id,
+    name,
     label,
-    type,
-    status,
     param,
   }
 }
 
-const getSubStatusDatas = (text: string): SubStatus[] => {
+const getSubStatusDatas = (text: string): SubStatusData[] => {
   return text
     .split("\n")
     .filter((l) => Boolean(l))
@@ -345,46 +347,46 @@ const getSubStatusDatas = (text: string): SubStatus[] => {
 
 const getArtifactScore = ({
   datas,
-  calcType,
+  mode,
 }: {
-  datas: SubStatus[]
-  calcType: CalcTypeData["type"]
+  datas: SubStatusData[]
+  mode: CalcModeID
 }): number => {
   return datas
-    .map(({ type, param }) => {
-      switch (type) {
-        case SubStatusType.CRIT_RATE:
+    .map(({ id, param }) => {
+      switch (id) {
+        case "CRIT_RATE":
           return param.value * 2
 
-        case SubStatusType.CRIT_DAMAGE:
+        case "CRIT_DAMAGE":
           return param.value
 
-        case SubStatusType.ATK_PER:
-          if (calcType === "CRIT") {
+        case "ATK_PER":
+          if (mode === "CRIT") {
             return param.value
           }
           return 0
 
-        case SubStatusType.ENERGY_RECHARGE:
-          if (calcType === "ENERGY_RECHARGE") {
+        case "ENERGY_RECHARGE":
+          if (mode === "ENERGY_RECHARGE") {
             return param.value
           }
           return 0
 
-        case SubStatusType.DEF_PER:
-          if (calcType === "DEF") {
+        case "DEF_PER":
+          if (mode === "DEF") {
             return param.value
           }
           return 0
 
-        case SubStatusType.HP_PER:
-          if (calcType === "HP") {
+        case "HP_PER":
+          if (mode === "HP") {
             return param.value
           }
           return 0
 
-        case SubStatusType.ELEMENTAL_MASTERY:
-          if (calcType === "ELEMENTAL_MASTERY") {
+        case "ELEMENTAL_MASTERY":
+          if (mode === "ELEMENTAL_MASTERY") {
             return param.value / 2
           }
           return 0
@@ -396,12 +398,12 @@ const getArtifactScore = ({
     .reduce((sum, elem) => sum + elem, 0)
 }
 
-const getSubStatusRate = (data: SubStatus): number => {
+const getSubStatusRate = (data: SubStatusData): number => {
   const {
-    type,
+    id,
     param: { value },
   } = data
-  const { max } = SubStatusMap[type]
+  const { max } = SubStatusMap[id]
   return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
 
@@ -411,15 +413,15 @@ interface Artifact {
   set: ArtifactSetData
   type: Omit<ArtifactTypeData, "main">
   main: MainStatusData
-  subs: SubStatus[]
+  subs: SubStatusData[]
 }
 
 interface ArtifactState {
   artSetID: ArtifactSetID
   artTypeID: ArtifactTypeID
   mainType: MainStatusID
-  substats: SubStatus[]
-  calcMode: CalcTypeData
+  substats: SubStatusData[]
+  calcMode: CalcModeData
   score: number
   artifact: Artifact
 }
@@ -428,8 +430,8 @@ type SetValue<T> = Dispatch<SetStateAction<T>>
 
 interface ArtifactAction {
   setArtSetID: SetValue<ArtifactSetID>
-  setSubStats: SetValue<SubStatus[]>
-  setCalcType: (type: CalcTypeData["type"]) => void
+  setSubStats: SetValue<SubStatusData[]>
+  setCalcType: (type: CalcModeID) => void
   setArtTypeID: (id: ArtifactTypeID) => void
   setMainType: SetValue<MainStatusID>
 }
@@ -453,9 +455,9 @@ const useArtifact = (): [ArtifactState, ArtifactAction] => {
   const [artSetID, setArtSetID] = useState<ArtifactSetID>("GLADIATORS_FINALE")
   const [artTypeID, setArtTID] = useState<ArtifactTypeID>("FLOWER")
   const [mainType, setMainType] = useState(MainStatusMap.HP_FLAT.id)
-  const [substats, setSubs] = useState<SubStatus[]>([])
+  const [substats, setSubs] = useState<SubStatusData[]>([])
 
-  const [calcMode, setCalcMode] = useState<CalcTypeData>(CalcTypeMap.CRIT)
+  const [calcMode, setCalcMode] = useState<CalcModeData>(CalcModeMap.CRIT)
   const [score, setScore] = useState(0)
 
   const artifactRef = useRef<Artifact>(DEFAULT_ARTIFACT_DATA)
@@ -477,22 +479,22 @@ const useArtifact = (): [ArtifactState, ArtifactAction] => {
     }
   }, [artSetID, artTypeID, mainType, substats])
 
-  const setSubStats = useCallback<SetValue<SubStatus[]>>(
+  const setSubStats = useCallback<SetValue<SubStatusData[]>>(
     (newSubs) => {
       setSubs(newSubs)
       const datas = typeof newSubs === "function" ? newSubs(substats) : newSubs
-      const newScore = getArtifactScore({ datas, calcType: calcMode.type })
+      const newScore = getArtifactScore({ datas, mode: calcMode.id })
       setScore(newScore)
     },
     [substats, calcMode]
   )
 
   const setCalcType = useCallback(
-    (calcType: CalcTypeData["type"]) => {
+    (mode: CalcModeID) => {
       if (substats.length) {
-        setScore(getArtifactScore({ datas: substats, calcType }))
+        setScore(getArtifactScore({ datas: substats, mode }))
       }
-      setCalcMode(CalcTypeMap[calcType])
+      setCalcMode(CalcModeMap[mode])
     },
     [substats]
   )
@@ -614,12 +616,12 @@ const App = () => {
         <select
           className="select select-bordered"
           onChange={(e) => {
-            const type = e.currentTarget.value as CalcTypeData["type"]
+            const type = e.currentTarget.value as CalcModeID
             actions.setCalcType(type)
           }}
         >
-          {CalcTypeDataList.map((data) => (
-            <option key={data.type} value={data.type}>
+          {CalcModeList.map((data) => (
+            <option key={data.id} value={data.id}>
               {data.label}
             </option>
           ))}
@@ -749,7 +751,7 @@ const App = () => {
                   {set.name} - {type.name} - {main.name}
                 </h1>
                 {subs.map((sub) => (
-                  <span key={sub.type} className="whitespace-pre-wrap">
+                  <span key={sub.id} className="whitespace-pre-wrap">
                     {" ・ "}
                     {sub.label}
                   </span>

@@ -1,6 +1,6 @@
-import type { CalcTypeData, SubStatusType as TSubStatus } from "@/types/Scorer"
+import type { CalcModeData, SubStatusID } from "@/types/Scorer"
 
-export const CalcType = {
+export const CalcMode = {
   CRIT: "会心率/ダメージ型（汎用火力用）",
   ENERGY_RECHARGE: "元素チャージ効率型（絶縁の旗印）",
   DEF: "防御型（華館夢醒形骸記）",
@@ -8,56 +8,56 @@ export const CalcType = {
   ELEMENTAL_MASTERY: "元素熟知型（翠緑の影）",
 } as const
 
-export const SubStatusType = {
-  HP_FLAT: "HP_FLAT",
-  DEF_FLAT: "DEF_FLAT",
-  ATK_FLAT: "ATK_FLAT",
-  HP_PER: "HP_PER",
-  DEF_PER: "DEF_PER",
-  ATK_PER: "ATK_PER",
-  ELEMENTAL_MASTERY: "ELEMENTAL_MASTERY",
-  ENERGY_RECHARGE: "ENERGY_RECHARGE",
-  CRIT_RATE: "CRIT_RATE",
-  CRIT_DAMAGE: "CRIT_DAMAGE",
+export const CalcModeMap = {
+  CRIT: {
+    id: "CRIT",
+    label: CalcMode.CRIT,
+    name: "会心率/ダメージ型",
+    desc: "汎用火力用",
+  },
+  ENERGY_RECHARGE: {
+    id: "ENERGY_RECHARGE",
+    label: CalcMode.ENERGY_RECHARGE,
+    name: "元素チャージ効率型",
+    desc: "絶縁の旗印",
+  },
+  DEF: {
+    id: "DEF",
+    label: CalcMode.DEF,
+    name: "防御型",
+    desc: "華館夢醒形骸記",
+  },
+  HP: {
+    id: "HP",
+    label: CalcMode.HP,
+    name: "HP型",
+    desc: "鍾離/胡桃",
+  },
+  ELEMENTAL_MASTERY: {
+    id: "ELEMENTAL_MASTERY",
+    label: CalcMode.ELEMENTAL_MASTERY,
+    name: "元素熟知型",
+    desc: "翠緑の影",
+  },
+} as const
+
+export const CalcModeList: CalcModeData[] = Object.values(CalcModeMap)
+
+export const SubStatus = {
+  HP_FLAT: "HP",
+  DEF_FLAT: "防御力",
+  ATK_FLAT: "攻撃力",
+  HP_PER: "HP",
+  DEF_PER: "防御力",
+  ATK_PER: "攻撃力",
+  ELEMENTAL_MASTERY: "元素熟知",
+  ENERGY_RECHARGE: "元素チャージ効率",
+  CRIT_RATE: "会心率",
+  CRIT_DAMAGE: "会心ダメージ",
   UNDETECTED: "UNDETECTED",
 } as const
 
-export const CalcTypeMap: { [key in CalcTypeData["type"]]: CalcTypeData } = {
-  CRIT: {
-    label: CalcType.CRIT,
-    type: "CRIT",
-    name: "会心率/ダメージ型",
-    description: "汎用火力用",
-  },
-  ENERGY_RECHARGE: {
-    label: CalcType.ENERGY_RECHARGE,
-    type: "ENERGY_RECHARGE",
-    name: "元素チャージ効率型",
-    description: "絶縁の旗印",
-  },
-  DEF: {
-    label: CalcType.DEF,
-    type: "DEF",
-    name: "防御型",
-    description: "華館夢醒形骸記",
-  },
-  HP: {
-    label: CalcType.HP,
-    type: "HP",
-    name: "HP型",
-    description: "鍾離/胡桃",
-  },
-  ELEMENTAL_MASTERY: {
-    label: CalcType.ELEMENTAL_MASTERY,
-    type: "ELEMENTAL_MASTERY",
-    name: "元素熟知型",
-    description: "翠緑の影",
-  },
-}
-
-export const CalcTypeDataList: CalcTypeData[] = Object.values(CalcTypeMap)
-
-export const SubStatusMap: { [key in TSubStatus]: { max: number } } = {
+export const SubStatusMap: { [key in SubStatusID]: { max: number } } = {
   HP_FLAT: { max: 299 },
   DEF_FLAT: { max: 23 },
   ATK_FLAT: { max: 19 },

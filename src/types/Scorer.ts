@@ -1,22 +1,23 @@
-import { CalcType, SubStatusType } from "@/consts/Scorer"
+import { CalcModeMap, SubStatus } from "@/consts/Scorer"
 
-type CalcTypeKey = keyof typeof CalcType
-
-type CalcType = typeof CalcType[CalcTypeKey]
-
-export interface CalcTypeData {
-  label: CalcType
-  type: CalcTypeKey
-  name: string
-  description: string
+export type CalcModeID = keyof typeof CalcModeMap
+type CalcModeObject = typeof CalcModeMap[CalcModeID]
+export type CalcModeName = CalcModeObject["name"]
+export type CalcModeDesc = CalcModeObject["desc"]
+export type CalcModeLabel = CalcModeObject["label"]
+export interface CalcModeData {
+  id: CalcModeID
+  name: CalcModeName
+  desc: CalcModeDesc
+  label: CalcModeLabel
 }
 
-export type SubStatusType = typeof SubStatusType[keyof typeof SubStatusType]
-
-export interface SubStatus {
+export type SubStatusID = keyof typeof SubStatus
+export type SubStatusName = typeof SubStatus[SubStatusID]
+export interface SubStatusData {
+  id: SubStatusID
+  name: SubStatusName
   label: string
-  type: SubStatusType
-  status: string
   param: {
     label: string
     type: "flat" | "percent"
