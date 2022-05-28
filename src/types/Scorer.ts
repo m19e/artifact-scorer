@@ -1,4 +1,10 @@
-import { CalcModeMap, SubStatus } from "@/consts/Scorer"
+import {
+  CalcModeMap,
+  ArtifactSet,
+  ArtifactType,
+  MainStatus,
+  SubStatus,
+} from "@/consts/Scorer"
 
 export type CalcModeID = keyof typeof CalcModeMap
 type CalcModeObject = typeof CalcModeMap[CalcModeID]
@@ -10,6 +16,30 @@ export interface CalcModeData {
   name: CalcModeName
   desc: CalcModeDesc
   label: CalcModeLabel
+}
+
+export type ArtifactSetID = keyof typeof ArtifactSet
+type ArtifactSetName = typeof ArtifactSet[ArtifactSetID]
+export interface ArtifactSetData {
+  id: ArtifactSetID
+  name: ArtifactSetName
+}
+
+export type ArtifactTypeID = keyof typeof ArtifactType
+type ArtifactTypeName = typeof ArtifactType[ArtifactTypeID]
+export interface ArtifactTypeData {
+  id: ArtifactTypeID
+  name: ArtifactTypeName
+  main: MainStatusData[]
+}
+
+export type MainStatusID = keyof typeof MainStatus
+type MainStatusName = typeof MainStatus[MainStatusID]
+export interface MainStatusData {
+  id: MainStatusID
+  name: MainStatusName
+  max: number
+  min: number
 }
 
 export type SubStatusID = keyof typeof SubStatus
