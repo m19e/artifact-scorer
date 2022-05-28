@@ -380,61 +380,63 @@ const App = () => {
             </option>
           ))}
         </select>
-        <div className="flex flex-col">
-          <div className="h-10 artifact-heading">
-            <select
-              className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
-              onChange={(e) =>
-                actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
-              }
-            >
-              {ArtifactSetList.map(({ id, name }) => (
-                <option key={id} value={id} selected={id === artSetID}>
-                  {name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
-            <div className="flex justify-between h-full">
-              <div className="flex flex-col justify-between py-1 px-2">
-                <select
-                  className="w-24 h-6 min-h-0 text-base text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
-                  onChange={(e) => {
-                    actions.setArtTypeID(
-                      e.currentTarget.value as ArtifactTypeID
-                    )
-                  }}
-                >
-                  {ArtifactTypeList.map((a) => (
-                    <option key={a.name} value={a.id}>
-                      {a.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="flex flex-col">
+        {!!substats.length && (
+          <div className="flex flex-col">
+            <div className="h-10 artifact-heading">
+              <select
+                className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
+                onChange={(e) =>
+                  actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
+                }
+              >
+                {ArtifactSetList.map(({ id, name }) => (
+                  <option key={id} value={id} selected={id === artSetID}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
+              <div className="flex justify-between h-full">
+                <div className="flex flex-col justify-between py-1 px-2">
                   <select
-                    className="h-6 min-h-0 text-base text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                    className="w-24 h-6 min-h-0 text-base text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
                     onChange={(e) => {
-                      actions.setMainType(e.currentTarget.value as MainStatusID)
+                      actions.setArtTypeID(
+                        e.currentTarget.value as ArtifactTypeID
+                      )
                     }}
                   >
-                    {ArtifactTypeMap[artTypeID].main.map((m, i) => (
-                      <option key={m.id + i} value={m.id}>
-                        {m.name}
+                    {ArtifactTypeList.map((a) => (
+                      <option key={a.name} value={a.id}>
+                        {a.name}
                       </option>
                     ))}
                   </select>
-                  <span className="pl-2.5 font-mono text-5xl text-white">
-                    {MainStatusMap[mainType].max}
-                  </span>
-                  <span className="pl-2.5 -mt-1 text-2xl tracking-widest text-yellow-400">
-                    ★★★★★
-                  </span>
+                  <div className="flex flex-col">
+                    <select
+                      className="h-6 min-h-0 text-base text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                      onChange={(e) => {
+                        actions.setMainType(
+                          e.currentTarget.value as MainStatusID
+                        )
+                      }}
+                    >
+                      {ArtifactTypeMap[artTypeID].main.map((m, i) => (
+                        <option key={m.id + i} value={m.id}>
+                          {m.name}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="pl-2.5 font-mono text-5xl text-white">
+                      {MainStatusMap[mainType].max}
+                    </span>
+                    <span className="pl-2.5 -mt-1 text-2xl tracking-widest text-yellow-400">
+                      ★★★★★
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col justify-center py-1 px-2">
-                {!!substats.length && (
+                <div className="flex flex-col justify-center py-1 px-2">
                   <div className="shadow stats">
                     <div className="stat">
                       <div className="stat-title">聖遺物スコア</div>
@@ -458,11 +460,9 @@ const App = () => {
                       </div>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             </div>
-          </div>
-          {!!substats.length && (
             <div className="flex flex-col py-3 bg-orange-100">
               <div className="flex justify-between items-center px-4">
                 <div className="px-1.5 h-6 text-white bg-slate-700 rounded">
@@ -486,8 +486,8 @@ const App = () => {
                 ))}
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <div className="flex flex-col items-center">
           <div
             className="w-24 btn"
