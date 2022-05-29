@@ -32,6 +32,49 @@ import { useLocalStorage } from "@/hooks/useLocalStorage"
 import { Dropzone } from "@/components/molecules/Dropzone"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 
+const SubStatusOption = {
+  HP_FLAT: {
+    label: "HP",
+    option: "HP(実数)",
+  },
+  DEF_FLAT: {
+    label: "防御力",
+    option: "防御力(実数)",
+  },
+  ATK_FLAT: {
+    label: "攻撃力",
+    option: "攻撃力(実数)",
+  },
+  HP_PER: {
+    label: "HP",
+    option: "HP(%)",
+  },
+  DEF_PER: {
+    label: "防御力",
+    option: "防御力(%)",
+  },
+  ATK_PER: {
+    label: "攻撃力",
+    option: "攻撃力(%)",
+  },
+  ELEMENTAL_MASTERY: { label: "元素熟知", option: "元素熟知" },
+  ENERGY_RECHARGE: { label: "元素チャージ効率", option: "元素チャージ効率" },
+  CRIT_RATE: { label: "会心率", option: "会心率" },
+  CRIT_DAMAGE: { label: "会心ダメージ", option: "会心ダメージ" },
+} as const
+type SubStatusOptionID = keyof typeof SubStatusOption
+type SubStatusOptionData = {
+  id: SubStatusOptionID
+  label: typeof SubStatusOption[SubStatusOptionID]["label"]
+  option: typeof SubStatusOption[SubStatusOptionID]["option"]
+}
+const SubStatusOptionList: SubStatusOptionData[] = Object.entries(
+  SubStatusOption
+).map(([key, opt]) => {
+  const id = key as SubStatusOptionID
+  return { id, ...opt }
+})
+
 const getSubStatusID = ({
   status,
   isPercent,
@@ -473,17 +516,76 @@ const App = () => {
                 <TwitterShareButton url="" />
               </div>
               <div className="flex flex-col py-2 px-4">
-                {substats.map((s) => (
-                  <div
-                    key={s.label}
-                    className="flex justify-between text-lg text-slate-700 whitespace-pre-wrap"
-                  >
-                    <span className="font-black"> ・ {s.label}</span>
-                    <span className="text-opacity-0">
-                      ({getSubStatusRate(s)}%)
-                    </span>
-                  </div>
-                ))}
+                {substats.map((s, index) => {
+                  const isPer = s.param.type === "percent"
+                  const step = isPer ? 0.1 : 1
+
+                  return (
+                    <div key={s.label} className="flex justify-between">
+                      <div className="flex gap-1 items-center">
+                        <span className="font-black">・</span>
+                        <select
+                          className="pr-7 pl-0 h-5 min-h-0 text-lg leading-4 text-slate-700 bg-opacity-0 select select-xs select-ghost"
+                          defaultValue={s.id}
+                          onChange={(e) => {
+                            const id = e.currentTarget
+                              .value as SubStatusOptionID
+                            const label = SubStatusOption[id].label
+                            const isPercent = [
+                              "HP_PER",
+                              "DEF_PER",
+                              "ATK_PER",
+                              "ENERGY_RECHARGE",
+                              "CRIT_RATE",
+                              "CRIT_DAMAGE",
+                            ].includes(id)
+                            const t = isPercent ? "%" : ""
+                            const paramLabel = "" + s.param.value + t
+                            const data = getSubStatusData(
+                              label + "+" + paramLabel
+                            )
+                            actions.setSubStats((prev) =>
+                              prev.map((sub, i) => (index === i ? data : sub))
+                            )
+                          }}
+                        >
+                          {SubStatusOptionList.map((opt) => (
+                            <option key={opt.label} value={opt.id}>
+                              {opt.option}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="inline-flex font-black">
+                          {/* <span>+</span> */}
+                          <input
+                            type="number"
+                            inputMode="decimal"
+                            className="px-0 w-14 text-lg font-black leading-4 text-slate-700 input input-xs input-ghost"
+                            min={0}
+                            step={step}
+                            value={s.param.value}
+                            onChange={(e) => {
+                              const value = e.currentTarget.valueAsNumber
+                              actions.setSubStats((prev) =>
+                                prev.map((sub, i) => {
+                                  if (index === i) {
+                                    const param = { ...sub.param, value }
+                                    return { ...sub, param }
+                                  }
+                                  return sub
+                                })
+                              )
+                            }}
+                          />
+                          <span>{isPer ? "%" : ""}</span>
+                        </div>
+                      </div>
+                      <span className="text-lg text-slate-500">
+                        ({getSubStatusRate(s)}%)
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
