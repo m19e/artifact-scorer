@@ -400,7 +400,7 @@ const App = () => {
               <div className="flex justify-between h-full">
                 <div className="flex flex-col justify-between py-1 px-2">
                   <select
-                    className="w-24 h-6 min-h-0 text-base text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
+                    className="w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
                     onChange={(e) => {
                       actions.setArtTypeID(
                         e.currentTarget.value as ArtifactTypeID
@@ -415,7 +415,7 @@ const App = () => {
                   </select>
                   <div className="flex flex-col">
                     <select
-                      className="h-6 min-h-0 text-base text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                      className="h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
                       onChange={(e) => {
                         actions.setMainType(
                           e.currentTarget.value as MainStatusID
