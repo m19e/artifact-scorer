@@ -33,46 +33,27 @@ import { Dropzone } from "@/components/molecules/Dropzone"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 
 const SubStatusOption = {
-  HP_FLAT: {
-    label: "HP",
-    option: "HP(実数)",
-  },
-  DEF_FLAT: {
-    label: "防御力",
-    option: "防御力(実数)",
-  },
-  ATK_FLAT: {
-    label: "攻撃力",
-    option: "攻撃力(実数)",
-  },
-  HP_PER: {
-    label: "HP",
-    option: "HP(%)",
-  },
-  DEF_PER: {
-    label: "防御力",
-    option: "防御力(%)",
-  },
-  ATK_PER: {
-    label: "攻撃力",
-    option: "攻撃力(%)",
-  },
-  ELEMENTAL_MASTERY: { label: "元素熟知", option: "元素熟知" },
-  ENERGY_RECHARGE: { label: "元素チャージ効率", option: "元素チャージ効率" },
-  CRIT_RATE: { label: "会心率", option: "会心率" },
-  CRIT_DAMAGE: { label: "会心ダメージ", option: "会心ダメージ" },
+  HP_FLAT: "HP(実数)",
+  DEF_FLAT: "防御力(実数)",
+  ATK_FLAT: "攻撃力(実数)",
+  HP_PER: "HP(%)",
+  DEF_PER: "防御力(%)",
+  ATK_PER: "攻撃力(%)",
+  ELEMENTAL_MASTERY: "元素熟知",
+  ENERGY_RECHARGE: "元素チャージ効率",
+  CRIT_RATE: "会心率",
+  CRIT_DAMAGE: "会心ダメージ",
 } as const
 type SubStatusOptionID = keyof typeof SubStatusOption
 type SubStatusOptionData = {
   id: SubStatusOptionID
-  label: typeof SubStatusOption[SubStatusOptionID]["label"]
-  option: typeof SubStatusOption[SubStatusOptionID]["option"]
+  name: typeof SubStatusOption[SubStatusOptionID]
 }
 const SubStatusOptionList: SubStatusOptionData[] = Object.entries(
   SubStatusOption
-).map(([key, opt]) => {
+).map(([key, name]) => {
   const id = key as SubStatusOptionID
-  return { id, ...opt }
+  return { id, name }
 })
 
 const getSubStatusID = ({
@@ -530,7 +511,7 @@ const App = () => {
                           onChange={(e) => {
                             const id = e.currentTarget
                               .value as SubStatusOptionID
-                            const label = SubStatusOption[id].label
+                            const name = SubStatus[id]
                             const isPercent = [
                               "HP_PER",
                               "DEF_PER",
@@ -539,10 +520,11 @@ const App = () => {
                               "CRIT_RATE",
                               "CRIT_DAMAGE",
                             ].includes(id)
-                            const t = isPercent ? "%" : ""
-                            const paramLabel = "" + s.param.value + t
+                            const paramLabel = `${s.param.value}${
+                              isPercent ? "%" : ""
+                            }`
                             const data = getSubStatusData(
-                              label + "+" + paramLabel
+                              name + "+" + paramLabel
                             )
                             actions.setSubStats((prev) =>
                               prev.map((sub, i) => (index === i ? data : sub))
@@ -550,8 +532,8 @@ const App = () => {
                           }}
                         >
                           {SubStatusOptionList.map((opt) => (
-                            <option key={opt.label} value={opt.id}>
-                              {opt.option}
+                            <option key={opt.name} value={opt.id}>
+                              {opt.name}
                             </option>
                           ))}
                         </select>
