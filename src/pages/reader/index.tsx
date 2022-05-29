@@ -116,6 +116,39 @@ const getSubStatusData = (line: string): SubStatusData => {
   }
 }
 
+const updateSubStatusByID = ({
+  id,
+  src,
+}: {
+  id: SubStatusOptionID
+  src: SubStatusData
+}): SubStatusData => {
+  const { value } = src.param
+  const isPercent = [
+    "HP_PER",
+    "DEF_PER",
+    "ATK_PER",
+    "ENERGY_RECHARGE",
+    "CRIT_RATE",
+    "CRIT_DAMAGE",
+  ].includes(id)
+  const name = SubStatus[id]
+  const paramLabel = `${value}${isPercent ? "%" : ""}`
+  const param: SubStatusData["param"] = {
+    label: paramLabel,
+    type: isPercent ? "percent" : "flat",
+    value,
+  }
+  const label = name + "+" + paramLabel
+
+  return {
+    id,
+    name,
+    label,
+    param,
+  }
+}
+
 const getSubStatusDatas = (text: string): SubStatusData[] => {
   return text
     .split("\n")
@@ -511,21 +544,7 @@ const App = () => {
                           onChange={(e) => {
                             const id = e.currentTarget
                               .value as SubStatusOptionID
-                            const name = SubStatus[id]
-                            const isPercent = [
-                              "HP_PER",
-                              "DEF_PER",
-                              "ATK_PER",
-                              "ENERGY_RECHARGE",
-                              "CRIT_RATE",
-                              "CRIT_DAMAGE",
-                            ].includes(id)
-                            const paramLabel = `${s.param.value}${
-                              isPercent ? "%" : ""
-                            }`
-                            const data = getSubStatusData(
-                              name + "+" + paramLabel
-                            )
+                            const data = updateSubStatusByID({ id, src: s })
                             actions.setSubStats((prev) =>
                               prev.map((sub, i) => (index === i ? data : sub))
                             )
