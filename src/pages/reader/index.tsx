@@ -56,27 +56,28 @@ const SubStatusOptionList: SubStatusOptionData[] = Object.entries(
   return { id, name }
 })
 
-const getSubStatusID = ({
-  status,
-  isPercent,
-}: {
-  status: string
-  isPercent: boolean
-}): SubStatusID => {
-  if (isPercent) {
-    if (status.includes("HP")) return "HP_PER"
-    if (status.includes("防")) return "DEF_PER"
-    if (status.includes("攻")) return "ATK_PER"
-    if (status.includes("チャージ")) return "ENERGY_RECHARGE"
-    if (status.includes("率")) return "CRIT_RATE"
-    if (status.includes("ダメージ")) return "CRIT_DAMAGE"
-  }
-  if (status.includes("HP")) return "HP_FLAT"
-  if (status.includes("防")) return "DEF_FLAT"
-  if (status.includes("攻")) return "ATK_FLAT"
-  if (status.includes("熟知")) return "ELEMENTAL_MASTERY"
+const parseSubStatusText = (
+  line: string
+): { id: SubStatusID; paramLabel: string; isPer: boolean } => {
+  const [status, p] = line.split("+")
+  const paramLabel = trimCircleFromNumber(p)
+  const isPer = p.includes("%")
 
-  return "UNDETECTED"
+  let id: SubStatusID = "UNDETECTED"
+  if (isPer) {
+    if (status.includes("HP")) id = "HP_PER"
+    if (status.includes("防")) id = "DEF_PER"
+    if (status.includes("攻")) id = "ATK_PER"
+    if (status.includes("チャージ")) id = "ENERGY_RECHARGE"
+    if (status.includes("率")) id = "CRIT_RATE"
+    if (status.includes("ダメージ")) id = "CRIT_DAMAGE"
+  }
+  if (status.includes("HP")) id = "HP_FLAT"
+  if (status.includes("防")) id = "DEF_FLAT"
+  if (status.includes("攻")) id = "ATK_FLAT"
+  if (status.includes("熟知")) id = "ELEMENTAL_MASTERY"
+
+  return { id, isPer, paramLabel }
 }
 
 const reg = new RegExp("[\u{2460}-\u{2468}]", "u")
@@ -93,14 +94,10 @@ const trimCircleFromNumber = (text: string): string => {
 }
 
 const getSubStatusData = (line: string): SubStatusData => {
-  const [s, p] = line.split("+")
-  const isPercent = p.includes("%")
-  const status = s.replace("カ", "力")
-  const id = getSubStatusID({ status, isPercent })
+  const { id, paramLabel, isPer } = parseSubStatusText(line)
   const name = SubStatus[id]
-  const paramLabel = trimCircleFromNumber(p)
-  const label = status + "+" + paramLabel
-  const paramType = isPercent ? "percent" : "flat"
+  const label = name + "+" + paramLabel
+  const paramType = isPer ? "percent" : "flat"
   const paramValue = +paramLabel.split("%").join("")
   const param: SubStatusData["param"] = {
     label: paramLabel,
