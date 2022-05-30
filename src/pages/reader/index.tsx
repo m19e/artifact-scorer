@@ -63,19 +63,21 @@ const parseSubStatusText = (
   const paramLabel = trimCircleFromNumber(p)
   const isPer = p.includes("%")
 
-  let id: SubStatusID = "UNDETECTED"
-  if (isPer) {
-    if (status.includes("HP")) id = "HP_PER"
-    if (status.includes("防")) id = "DEF_PER"
-    if (status.includes("攻")) id = "ATK_PER"
-    if (status.includes("チャージ")) id = "ENERGY_RECHARGE"
-    if (status.includes("率")) id = "CRIT_RATE"
-    if (status.includes("ダメージ")) id = "CRIT_DAMAGE"
-  }
-  if (status.includes("HP")) id = "HP_FLAT"
-  if (status.includes("防")) id = "DEF_FLAT"
-  if (status.includes("攻")) id = "ATK_FLAT"
-  if (status.includes("熟知")) id = "ELEMENTAL_MASTERY"
+  const id: SubStatusID = (() => {
+    if (isPer) {
+      if (status.includes("HP")) return "HP_PER"
+      if (status.includes("防")) return "DEF_PER"
+      if (status.includes("攻")) return "ATK_PER"
+      if (status.includes("チャージ")) return "ENERGY_RECHARGE"
+      if (status.includes("率")) return "CRIT_RATE"
+      if (status.includes("ダメージ")) return "CRIT_DAMAGE"
+    }
+    if (status.includes("HP")) return "HP_FLAT"
+    if (status.includes("防")) return "DEF_FLAT"
+    if (status.includes("攻")) return "ATK_FLAT"
+    if (status.includes("熟知")) return "ELEMENTAL_MASTERY"
+    return "UNDETECTED"
+  })()
 
   return { id, isPer, paramLabel }
 }
