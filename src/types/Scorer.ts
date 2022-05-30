@@ -47,9 +47,7 @@ export type SubStatusName = typeof SubStatus[SubStatusID]
 export interface SubStatusData {
   id: SubStatusID
   name: SubStatusName
-  label: string
   param: {
-    label: string
     type: "flat" | "percent"
     value: number
   }

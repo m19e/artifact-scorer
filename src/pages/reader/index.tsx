@@ -96,11 +96,9 @@ const trimCircleFromNumber = (text: string): string => {
 const getSubStatusData = (line: string): SubStatusData => {
   const { id, paramLabel, isPer } = parseSubStatusText(line)
   const name = SubStatus[id]
-  const label = name + "+" + paramLabel
   const paramType = isPer ? "percent" : "flat"
   const paramValue = +paramLabel.split("%").join("")
   const param: SubStatusData["param"] = {
-    label: paramLabel,
     type: paramType,
     value: paramValue,
   }
@@ -108,7 +106,6 @@ const getSubStatusData = (line: string): SubStatusData => {
   return {
     id,
     name,
-    label,
     param,
   }
 }
@@ -130,18 +127,14 @@ const updateSubStatusByID = ({
     "CRIT_DAMAGE",
   ].includes(id)
   const name = SubStatus[id]
-  const paramLabel = `${value}${isPercent ? "%" : ""}`
   const param: SubStatusData["param"] = {
-    label: paramLabel,
     type: isPercent ? "percent" : "flat",
     value,
   }
-  const label = name + "+" + paramLabel
 
   return {
     id,
     name,
-    label,
     param,
   }
 }
@@ -532,7 +525,7 @@ const App = () => {
                   const step = isPer ? 0.1 : 1
 
                   return (
-                    <div key={s.label} className="flex justify-between">
+                    <div key={s.param.value} className="flex justify-between">
                       <div className="flex gap-1 items-center">
                         <span className="font-black">・</span>
                         <select
@@ -609,7 +602,8 @@ const App = () => {
                 {subs.map((sub) => (
                   <span key={sub.id} className="whitespace-pre-wrap">
                     {" ・ "}
-                    {sub.label}
+                    {sub.name}+{sub.param.value}
+                    {sub.param.type === "percent" ? "%" : ""}
                   </span>
                 ))}
               </div>
