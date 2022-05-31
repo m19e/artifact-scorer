@@ -527,7 +527,7 @@ const App = () => {
                   const step = isPer ? 0.1 : 1
 
                   return (
-                    <div key={s.param.value} className="flex justify-between">
+                    <div key={s.id} className="flex justify-between">
                       <div className="flex gap-1 items-center">
                         <span className="font-black">・</span>
                         <select
