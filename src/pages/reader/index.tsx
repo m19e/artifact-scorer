@@ -206,6 +206,9 @@ const getSubStatusRate = (data: SubStatusData): number => {
     id,
     param: { value },
   } = data
+  if (Number.isNaN(value)) {
+    return 0
+  }
   const { max } = SubStatusMap[id]
   return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
