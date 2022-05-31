@@ -493,7 +493,7 @@ const App = () => {
                     <div className="stat">
                       <div className="stat-title">聖遺物スコア</div>
                       <div className="stat-value">
-                        {Math.round(score * 10) / 10}
+                        {score.toFixed(1)}
                         {(() => {
                           if (score >= 45) {
                             return <span className="text-error">(SS)</span>
