@@ -156,6 +156,7 @@ const getArtifactScore = ({
   mode: CalcModeID
 }): number => {
   return datas
+    .filter(({ param }) => !Number.isNaN(param.value))
     .map(({ id, param }) => {
       switch (id) {
         case "CRIT_RATE":
