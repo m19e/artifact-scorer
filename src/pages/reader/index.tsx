@@ -43,6 +43,7 @@ const SubStatusOption = {
   ENERGY_RECHARGE: "元素チャージ効率",
   CRIT_RATE: "会心率",
   CRIT_DAMAGE: "会心ダメージ",
+  UNDETECTED: "なし",
 } as const
 type SubStatusOptionID = keyof typeof SubStatusOption
 type SubStatusOptionData = {
