@@ -95,11 +95,17 @@ const trimCircleFromNumber = (text: string): string => {
     .join("")
 }
 
+const getParamValue = (label: string): number => {
+  const trim = +label.replace("%", "")
+  if (Number.isNaN(trim)) return 0
+  return +trim.toFixed(1)
+}
+
 const getSubStatusData = (line: string): SubStatusData => {
   const { id, paramLabel, isPer } = parseSubStatusText(line)
   const name = SubStatus[id]
   const paramType = isPer ? "percent" : "flat"
-  const paramValue = +paramLabel.split("%").join("")
+  const paramValue = getParamValue(paramLabel)
   const param: SubStatusData["param"] = {
     type: paramType,
     value: paramValue,
