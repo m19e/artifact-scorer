@@ -444,12 +444,13 @@ const App = () => {
             <div className="h-10 artifact-heading">
               <select
                 className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
+                defaultValue={artSetID}
                 onChange={(e) =>
                   actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
                 }
               >
                 {ArtifactSetList.map(({ id, name }) => (
-                  <option key={id} value={id} selected={id === artSetID}>
+                  <option key={id} value={id}>
                     {name}
                   </option>
                 ))}
