@@ -57,6 +57,10 @@ const SubStatusOptionList: SubStatusOptionData[] = Object.entries(
   return { id, name }
 })
 
+const checkIsPercent = (line: string): boolean => {
+  return Array.from(line).slice(-1)[0] === "%"
+}
+
 const parseSubStatusText = (
   line: string
 ): { id: SubStatusID; paramLabel: string; isPer: boolean } => {
