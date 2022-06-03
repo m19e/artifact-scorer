@@ -57,40 +57,12 @@ const SubStatusOptionList: SubStatusOptionData[] = Object.entries(
   return { id, name }
 })
 
-const checkIsPercent = (line: string): boolean => {
-  return Array.from(line).slice(-1)[0] === "%"
-}
-
-const parseSubStatusText = (
-  line: string
-): { id: SubStatusID; paramLabel: string; isPer: boolean } => {
-  const [status, p] = line.split("+")
-  const paramLabel = trimCircleFromNumber(p)
-  const isPer = p.includes("%")
-
-  const id: SubStatusID = (() => {
-    if (isPer) {
-      if (status.includes("HP")) return "HP_PER"
-      if (status.includes("防")) return "DEF_PER"
-      if (status.includes("攻")) return "ATK_PER"
-      if (status.includes("チャージ")) return "ENERGY_RECHARGE"
-      if (status.includes("率")) return "CRIT_RATE"
-      if (status.includes("ダメージ")) return "CRIT_DAMAGE"
-    }
-    if (status.includes("HP")) return "HP_FLAT"
-    if (status.includes("防")) return "DEF_FLAT"
-    if (status.includes("攻")) return "ATK_FLAT"
-    if (status.includes("熟知")) return "ELEMENTAL_MASTERY"
-    return "UNDETECTED"
-  })()
-
-  return { id, isPer, paramLabel }
-}
-
 const reg = new RegExp("[\u{2460}-\u{2468}]", "u")
-
+const isValidCharParamValue = (char: string): boolean =>
+  char === "0" || char === "%" || char === "." || Boolean(char.match(reg))
 const trimCircleFromNumber = (text: string): string => {
   return Array.from(text)
+    .filter(isValidCharParamValue)
     .map((c) => {
       if (c.match(reg)) {
         return String(+c.charCodeAt(0).toString(16) - 2459)
@@ -100,10 +72,53 @@ const trimCircleFromNumber = (text: string): string => {
     .join("")
 }
 
+const checkIsPercent = (trim: string): boolean => {
+  const endsWithPer = trim.endsWith("%")
+  const includesPer = trim.includes("%")
+  const includesDot = trim.includes(".")
+  const endsWith96 = trim.endsWith("96")
+
+  return endsWithPer || includesPer || (includesDot && endsWith96)
+}
+
+const isMatch = (target: string, match: string): boolean => {
+  return Array.from(match).some((m) => target.includes(m))
+}
+
+const parseSubStatusText = (
+  line: string
+): { id: SubStatusID; paramLabel: string; isPer: boolean } => {
+  const paramLabel = trimCircleFromNumber(line)
+  const isPer = checkIsPercent(paramLabel)
+
+  const id: SubStatusID = (() => {
+    if (isPer) {
+      if (isMatch(line, "会心")) {
+        if (isMatch(line, "率")) return "CRIT_RATE"
+        if (isMatch(line, "ダメージ")) return "CRIT_DAMAGE"
+        return "CRIT_RATE"
+      }
+      if (isMatch(line, "攻撃")) return "ATK_PER"
+      if (isMatch(line, "HP")) return "HP_PER"
+      if (isMatch(line, "防御")) return "DEF_PER"
+      if (isMatch(line, "元素チャージ効率")) return "ENERGY_RECHARGE"
+    }
+
+    if (isMatch(line, "HP")) return "HP_FLAT"
+    if (isMatch(line, "防御")) return "DEF_FLAT"
+    if (isMatch(line, "攻撃")) return "ATK_FLAT"
+    if (isMatch(line, "元素熟知")) return "ELEMENTAL_MASTERY"
+
+    return "UNDETECTED"
+  })()
+
+  return { id, isPer, paramLabel }
+}
+
 const getParamValue = (label: string): number => {
   const trim = +label.replace("%", "")
   if (Number.isNaN(trim)) return 0
-  return +trim.toFixed(1)
+  return +(Math.trunc(trim * 10) / 10).toFixed(1)
 }
 
 const getSubStatusData = (line: string): SubStatusData => {
