@@ -369,14 +369,14 @@ const App = () => {
     "artifacts",
     []
   )
-  const worker = createWorker({
-    logger: (m: { status: string; progress: number }) => {
-      setProgress(Math.round(m.progress * 100))
-      // setTextOcr(m.status)
-    },
-  })
 
   const tryOcr = useCallback(async () => {
+    const worker = createWorker({
+      logger: (m: { status: string; progress: number }) => {
+        setProgress(Math.round(m.progress * 100))
+        // setTextOcr(m.status)
+      },
+    })
     await worker.load()
     await worker.loadLanguage("jpn")
 
@@ -392,7 +392,7 @@ const App = () => {
 
     const datas = getSubStatusDatas(text)
     actions.setSubStats(datas)
-  }, [worker, file, actions])
+  }, [file, actions])
 
   const handleDrop = (file: File) => {
     setUrl(URL.createObjectURL(file))
