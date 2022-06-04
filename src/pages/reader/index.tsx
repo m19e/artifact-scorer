@@ -30,6 +30,7 @@ import {
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import { Dropzone } from "@/components/molecules/Dropzone"
+import { Progress } from "@/components/atoms/Progress"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 
@@ -426,22 +427,7 @@ const App = () => {
           <Dropzone onDrop={handleDrop} />
         )}
         <div className="inline-flex gap-4 items-center">
-          <div className="flex flex-col items-center py-2 px-4 rounded shadow">
-            <div className="h-6">
-              {textOcr !== "" ? (
-                <span className="text-base-content">
-                  {textOcr} ({progress}%)
-                </span>
-              ) : (
-                <span className="text-base-content">Progress</span>
-              )}
-            </div>
-            <progress
-              className="w-56 progress"
-              value={progress}
-              max={100}
-            ></progress>
-          </div>
+          <Progress label={textOcr} progress={progress} />
           <button className="btn" onClick={handleClick}>
             recognize
           </button>
