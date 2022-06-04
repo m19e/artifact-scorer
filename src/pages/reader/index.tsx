@@ -77,9 +77,10 @@ const checkIsPercent = (trim: string): boolean => {
   const endsWithPer = trim.endsWith("%")
   const includesPer = trim.includes("%")
   const includesDot = trim.includes(".")
-  const endsWith96 = trim.endsWith("96")
+  // const endsWith6 = trim.endsWith("6")
+  // const endsWithDot6 = trim.endsWith(".6")
 
-  return endsWithPer || includesPer || (includesDot && endsWith96)
+  return endsWithPer || includesPer || includesDot
 }
 
 const isMatch = (target: string, match: string): boolean => {
