@@ -30,6 +30,7 @@ import {
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import { Dropzone } from "@/components/molecules/Dropzone"
+import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 
 const SubStatusOption = {
@@ -517,29 +518,7 @@ const App = () => {
                   </div>
                 </div>
                 <div className="flex flex-col justify-center py-1 px-2">
-                  <div className="shadow stats">
-                    <div className="stat">
-                      <div className="stat-title">聖遺物スコア</div>
-                      <div className="stat-value">
-                        {score.toFixed(1)}
-                        {(() => {
-                          if (score >= 45) {
-                            return <span className="text-error">【SS】</span>
-                          }
-                          if (score >= 35) {
-                            return <span className="text-warning">【S】</span>
-                          }
-                          if (score >= 25) {
-                            return <span className="text-primary">【A】</span>
-                          }
-                          return <span className="text-info">【B】</span>
-                        })()}
-                      </div>
-                      <div className="pt-1 text-right stat-desc">
-                        {calcMode.name}
-                      </div>
-                    </div>
-                  </div>
+                  <ArtifactScoreBox score={score} calc={calcMode.name} />
                 </div>
               </div>
             </div>
