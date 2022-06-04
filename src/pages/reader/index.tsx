@@ -33,16 +33,16 @@ import { Dropzone } from "@/components/molecules/Dropzone"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 
 const SubStatusOption = {
+  CRIT_RATE: "会心率",
+  CRIT_DAMAGE: "会心ダメージ",
+  ATK_PER: "攻撃力(%)",
+  ENERGY_RECHARGE: "元素チャージ効率",
+  DEF_PER: "防御力(%)",
+  HP_PER: "HP(%)",
+  ELEMENTAL_MASTERY: "元素熟知",
   HP_FLAT: "HP(実数)",
   DEF_FLAT: "防御力(実数)",
   ATK_FLAT: "攻撃力(実数)",
-  HP_PER: "HP(%)",
-  DEF_PER: "防御力(%)",
-  ATK_PER: "攻撃力(%)",
-  ELEMENTAL_MASTERY: "元素熟知",
-  ENERGY_RECHARGE: "元素チャージ効率",
-  CRIT_RATE: "会心率",
-  CRIT_DAMAGE: "会心ダメージ",
   UNDETECTED: "なし",
 } as const
 type SubStatusOptionID = keyof typeof SubStatusOption
