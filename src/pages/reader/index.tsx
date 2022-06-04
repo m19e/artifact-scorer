@@ -524,15 +524,15 @@ const App = () => {
                         {score.toFixed(1)}
                         {(() => {
                           if (score >= 45) {
-                            return <span className="text-error">(SS)</span>
+                            return <span className="text-error">【SS】</span>
                           }
                           if (score >= 35) {
-                            return <span className="text-warning">(S)</span>
+                            return <span className="text-warning">【S】</span>
                           }
                           if (score >= 25) {
-                            return <span className="text-primary">(A)</span>
+                            return <span className="text-primary">【A】</span>
                           }
-                          return <span className="text-info">(B)</span>
+                          return <span className="text-info">【B】</span>
                         })()}
                       </div>
                       <div className="pt-1 text-right stat-desc">
