@@ -1,10 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react"
-import type { VFC, Dispatch, SetStateAction } from "react"
+import type { Dispatch, SetStateAction } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
-
-import ReactEasyCrop from "react-easy-crop"
-import type { Area, Point } from "react-easy-crop/types"
 
 import type {
   CalcModeID,
@@ -33,6 +30,7 @@ import {
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import { Dropzone } from "@/components/molecules/Dropzone"
+import { RectCropper } from "@/components/molecules/RectCropper"
 import { Progress } from "@/components/atoms/Progress"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
@@ -361,36 +359,6 @@ const useArtifact = (): [ArtifactState, ArtifactAction] => {
   }
 
   return [states, actions]
-}
-
-const RectCropper: VFC<{
-  url: string
-  onCrop: (rect: Rectangle) => void
-}> = ({ url, onCrop }) => {
-  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
-  const [zoom, setZoom] = useState(1)
-
-  const handleCropComplete = useCallback(
-    (_: Area, area: Area) => {
-      const { x: left, y: top, width, height } = area
-      onCrop({ left, top, width, height })
-    },
-    [onCrop]
-  )
-
-  return (
-    <ReactEasyCrop
-      image={url}
-      crop={crop}
-      zoom={zoom}
-      aspect={2 / 1}
-      zoomSpeed={1 / 5}
-      maxZoom={5}
-      onCropChange={setCrop}
-      onZoomChange={setZoom}
-      onCropComplete={handleCropComplete}
-    />
-  )
 }
 
 const App = () => {
