@@ -288,16 +288,18 @@ const DEFAULT_ARTIFACT_DATA: Artifact = {
   subs: [],
 }
 
-const useArtifact = (): [ArtifactState, ArtifactAction] => {
-  const [artSetID, setArtSetID] = useState<ArtifactSetID>("GLADIATORS_FINALE")
-  const [artTypeID, setArtTID] = useState<ArtifactTypeID>("FLOWER")
-  const [mainType, setMainType] = useState(MainStatusMap.HP_FLAT.id)
+const useArtifact = (
+  initialArt: Artifact = DEFAULT_ARTIFACT_DATA
+): [ArtifactState, ArtifactAction] => {
+  const [artSetID, setArtSetID] = useState<ArtifactSetID>(initialArt.set.id)
+  const [artTypeID, setArtTID] = useState<ArtifactTypeID>(initialArt.type.id)
+  const [mainType, setMainType] = useState(initialArt.main.id)
   const [substats, setSubs] = useState<SubStatusData[]>([])
 
   const [calcMode, setCalcMode] = useState<CalcModeData>(CalcModeMap.CRIT)
   const [score, setScore] = useState(0)
 
-  const artifactRef = useRef<Artifact>(DEFAULT_ARTIFACT_DATA)
+  const artifactRef = useRef<Artifact>(initialArt)
 
   useEffect(() => {
     artifactRef.current = {
