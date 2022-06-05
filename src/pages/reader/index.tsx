@@ -63,7 +63,7 @@ const reg = new RegExp("[\u{2460}-\u{2468}]", "u")
 const isValidCharParamValue = (char: string): boolean =>
   char === "0" || char === "%" || char === "." || Boolean(char.match(reg))
 const trimCircleFromNumber = (text: string): string => {
-  return Array.from(text)
+  const label = Array.from(text)
     .filter(isValidCharParamValue)
     .map((c) => {
       if (c.match(reg)) {
@@ -72,6 +72,8 @@ const trimCircleFromNumber = (text: string): string => {
       return c
     })
     .join("")
+
+  return label.startsWith(".") ? label.substring(1) : label
 }
 
 const checkIsPercent = (trim: string): boolean => {
