@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from "react"
-import type { Dispatch, SetStateAction } from "react"
+import type { VFC, Dispatch, SetStateAction } from "react"
 import { createWorker } from "tesseract.js"
-import type { ImageLike } from "tesseract.js"
+import type { ImageLike, Rectangle } from "tesseract.js"
+
+import ReactEasyCrop from "react-easy-crop"
+import type { Area, Point } from "react-easy-crop/types"
 
 import type {
   CalcModeID,
@@ -360,11 +363,48 @@ const useArtifact = (): [ArtifactState, ArtifactAction] => {
   return [states, actions]
 }
 
+const RectCropper: VFC<{
+  url: string
+  onCrop: (rect: Rectangle) => void
+}> = ({ url, onCrop }) => {
+  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+
+  const handleCropComplete = useCallback(
+    (_: Area, area: Area) => {
+      const { x: left, y: top, width, height } = area
+      onCrop({ left, top, width, height })
+    },
+    [onCrop]
+  )
+
+  return (
+    <ReactEasyCrop
+      image={url}
+      crop={crop}
+      zoom={zoom}
+      aspect={2 / 1}
+      zoomSpeed={1 / 5}
+      maxZoom={5}
+      onCropChange={setCrop}
+      onZoomChange={setZoom}
+      onCropComplete={handleCropComplete}
+    />
+  )
+}
+
 const App = () => {
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
   const [textOcr, setTextOcr] = useState<string>("")
   const [progress, setProgress] = useState(0)
+
+  const [rectangle, setRectangle] = useState<Rectangle>({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+  })
 
   const [states, actions] = useArtifact()
   const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
@@ -389,18 +429,19 @@ const App = () => {
     })
     const {
       data: { text },
-    } = await worker.recognize(file)
+    } = await worker.recognize(file, {
+      rectangle,
+    })
     await worker.terminate()
 
     const datas = getSubStatusDatas(text)
     actions.setSubStats(datas)
-  }, [file, actions])
+  }, [file, rectangle, actions])
 
   const handleDrop = (file: File) => {
     setUrl(URL.createObjectURL(file))
     setFile(file)
   }
-
   const handleClick = async () => {
     if (!file) return
     setTextOcr("Recognizing...")
@@ -413,9 +454,11 @@ const App = () => {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-4 py-4 max-w-sm">
-        {url !== "" ? (
-          <div className="flex gap-4 items-center">
-            <img src={url} alt={url} />
+        {url ? (
+          <div className="flex gap-4 items-center w-full">
+            <div className="relative w-96 h-48 bg-base-300">
+              <RectCropper url={url} onCrop={setRectangle} />
+            </div>
             <div
               className="btn"
               onClick={() => {
