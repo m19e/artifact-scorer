@@ -426,7 +426,7 @@ const App = () => {
       <div className="flex flex-col gap-4 py-4 max-w-sm">
         {url ? (
           <div className="flex gap-4 items-center w-full">
-            <div className="flex-1 h-72 sm:w-72 bg-base-300">
+            <div className="overflow-hidden flex-1 h-72 rounded-xl sm:w-72 bg-base-300">
               <RectCropper url={url} onCrop={setRectangle} />
             </div>
             <div
