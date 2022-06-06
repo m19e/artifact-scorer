@@ -22,16 +22,18 @@ export const RectCropper: VFC<Props> = ({ url, onCrop }) => {
   )
 
   return (
-    <ReactEasyCrop
-      image={url}
-      crop={crop}
-      zoom={zoom}
-      aspect={2 / 1}
-      zoomSpeed={1 / 5}
-      maxZoom={5}
-      onCropChange={setCrop}
-      onZoomChange={setZoom}
-      onCropComplete={handleCropComplete}
-    />
+    <div className="relative w-full h-full">
+      <ReactEasyCrop
+        image={url}
+        crop={crop}
+        zoom={zoom}
+        aspect={2 / 1}
+        zoomSpeed={1 / 5}
+        maxZoom={5}
+        onCropChange={setCrop}
+        onZoomChange={setZoom}
+        onCropComplete={handleCropComplete}
+      />
+    </div>
   )
 }
