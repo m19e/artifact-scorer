@@ -7,7 +7,7 @@ interface Props {
 export const TwitterShareButton: VFC<Props> = ({ url }) => {
   return (
     <a
-      className="flex justify-center items-center w-10 h-10 text-white rounded-lg shadow"
+      className="flex justify-center items-center w-8 h-8 text-white rounded-md shadow"
       style={{ backgroundColor: "#00acee" }}
       href={url}
       target="_blank"
