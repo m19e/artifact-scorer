@@ -550,7 +550,7 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col py-3 bg-orange-100">
+            <div className="flex flex-col gap-2 py-3 bg-orange-100">
               <div className="flex justify-between items-center px-4">
                 <div className="pr-1 h-5 text-white bg-slate-700 rounded">
                   <div className="-mt-1.5">
@@ -559,7 +559,7 @@ const App = () => {
                 </div>
                 <TwitterShareButton url="" />
               </div>
-              <div className="flex flex-col py-2 px-4">
+              <div className="flex flex-col pr-4 pl-3.5">
                 {substats.map((s, index) => {
                   const isPer = s.param.type === "percent"
                   const step = isPer ? 0.1 : 1
@@ -567,7 +567,9 @@ const App = () => {
                   return (
                     <div key={s.id + index} className="flex justify-between">
                       <div className="flex gap-1 items-center">
-                        <span className="font-black">・</span>
+                        <span className="font-black whitespace-pre-wrap">
+                          {" ・"}
+                        </span>
                         <select
                           className="pr-7 pl-0 h-5 min-h-0 text-lg leading-4 text-slate-700 bg-opacity-0 select select-xs select-ghost"
                           defaultValue={s.id}
