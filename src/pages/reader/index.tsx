@@ -552,10 +552,10 @@ const App = () => {
             </div>
             <div className="flex flex-col py-3 bg-orange-100">
               <div className="flex justify-between items-center px-4">
-                <div className="px-1.5 h-6 text-white bg-slate-700 rounded">
-                  <span className="text-2xl font-black leading-5 text-white">
-                    +20
-                  </span>
+                <div className="pr-1 h-5 text-white bg-slate-700 rounded">
+                  <div className="-mt-1.5">
+                    <span className="text-xl font-black text-white">+20</span>
+                  </div>
                 </div>
                 <TwitterShareButton url="" />
               </div>
