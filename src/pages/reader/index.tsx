@@ -511,32 +511,32 @@ const App = () => {
                     <span className="pl-2.5 font-mono text-5xl text-white">
                       {MainStatusMap[mainType].max}
                     </span>
-                    <div className="pl-2.5 -mt-1 rating">
+                    <div className="gap-1 my-2.5 rating">
                       <input
                         type="radio"
                         name="rating-2"
-                        className="bg-yellow-400 mask mask-star-2"
+                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
                       />
                       <input
                         type="radio"
                         name="rating-2"
-                        className="bg-yellow-400 mask mask-star-2"
+                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
+                      />
+                      <input
+                        type="radio"
+                        name="rating-2"
+                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
+                      />
+                      <input
+                        type="radio"
+                        name="rating-2"
+                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
+                      />
+                      <input
+                        type="radio"
+                        name="rating-2"
+                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
                         checked
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="bg-yellow-400 mask mask-star-2"
                       />
                     </div>
                   </div>
