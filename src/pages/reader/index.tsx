@@ -511,9 +511,34 @@ const App = () => {
                     <span className="pl-2.5 font-mono text-5xl text-white">
                       {MainStatusMap[mainType].max}
                     </span>
-                    <span className="pl-2.5 -mt-1 text-2xl tracking-widest text-yellow-400">
-                      ★★★★★
-                    </span>
+                    <div className="pl-2.5 -mt-1 rating">
+                      <input
+                        type="radio"
+                        name="rating-2"
+                        className="bg-yellow-400 mask mask-star-2"
+                      />
+                      <input
+                        type="radio"
+                        name="rating-2"
+                        className="bg-yellow-400 mask mask-star-2"
+                        checked
+                      />
+                      <input
+                        type="radio"
+                        name="rating-2"
+                        className="bg-yellow-400 mask mask-star-2"
+                      />
+                      <input
+                        type="radio"
+                        name="rating-2"
+                        className="bg-yellow-400 mask mask-star-2"
+                      />
+                      <input
+                        type="radio"
+                        name="rating-2"
+                        className="bg-yellow-400 mask mask-star-2"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="flex flex-col justify-center py-1 px-2">
