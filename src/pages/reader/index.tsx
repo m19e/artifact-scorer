@@ -450,8 +450,7 @@ const App = () => {
         <select
           className="select select-bordered"
           onChange={(e) => {
-            const type = e.currentTarget.value as CalcModeID
-            actions.setCalcType(type)
+            actions.setCalcType(e.currentTarget.value as CalcModeID)
           }}
         >
           {CalcModeList.map((data) => (
