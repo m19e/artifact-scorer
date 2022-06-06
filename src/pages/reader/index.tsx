@@ -478,37 +478,41 @@ const App = () => {
             </div>
             <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
               <div className="flex justify-between h-full">
-                <div className="flex flex-col justify-between py-1 px-2">
-                  <select
-                    className="w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
-                    onChange={(e) => {
-                      actions.setArtTypeID(
-                        e.currentTarget.value as ArtifactTypeID
-                      )
-                    }}
-                  >
-                    {ArtifactTypeList.map((a) => (
-                      <option key={a.name} value={a.id}>
-                        {a.name}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="flex flex-col">
+                <div className="flex flex-col justify-between pl-5">
+                  <div className="pt-1">
                     <select
-                      className="h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                      className="pl-0 w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
                       onChange={(e) => {
-                        actions.setMainType(
-                          e.currentTarget.value as MainStatusID
+                        actions.setArtTypeID(
+                          e.currentTarget.value as ArtifactTypeID
                         )
                       }}
                     >
-                      {ArtifactTypeMap[artTypeID].main.map((m, i) => (
-                        <option key={m.id + i} value={m.id}>
-                          {m.name}
+                      {ArtifactTypeList.map((a) => (
+                        <option key={a.name} value={a.id}>
+                          {a.name}
                         </option>
                       ))}
                     </select>
-                    <span className="pl-2.5 font-mono text-5xl text-white">
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="-ml-0.5">
+                      <select
+                        className="pl-0 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                        onChange={(e) => {
+                          actions.setMainType(
+                            e.currentTarget.value as MainStatusID
+                          )
+                        }}
+                      >
+                        {ArtifactTypeMap[artTypeID].main.map((m, i) => (
+                          <option key={m.id + i} value={m.id}>
+                            {m.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <span className="font-mono text-4xl leading-7 text-white">
                       {MainStatusMap[mainType].max}
                     </span>
                     <div className="gap-1 my-2.5 rating">
