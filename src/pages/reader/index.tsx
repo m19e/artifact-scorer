@@ -462,19 +462,21 @@ const App = () => {
         {!!substats.length && (
           <div className="flex flex-col">
             <div className="artifact-heading">
-              <select
-                className="pl-0 mt-1.5 ml-6 h-8 min-h-0 text-3xl font-bold leading-7 text-white bg-opacity-0 select select-ghost"
-                defaultValue={artSetID}
-                onChange={(e) =>
-                  actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
-                }
-              >
-                {ArtifactSetList.map(({ id, name }) => (
-                  <option key={id} value={id}>
-                    {name}
-                  </option>
-                ))}
-              </select>
+              <div className="mt-1.5 ml-6">
+                <select
+                  className="pl-0 h-8 min-h-0 text-3xl font-bold leading-7 text-white bg-opacity-0 select select-ghost"
+                  defaultValue={artSetID}
+                  onChange={(e) =>
+                    actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
+                  }
+                >
+                  {ArtifactSetList.map(({ id, name }) => (
+                    <option key={id} value={id}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
               <div className="flex justify-between h-full">
