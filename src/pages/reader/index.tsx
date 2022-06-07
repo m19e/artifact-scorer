@@ -614,7 +614,7 @@ const App = () => {
                         </div>
                       </div>
                       <span className="text-lg text-slate-500">
-                        ({getSubStatusRate(s)}%)
+                        ({getSubStatusRate(s).toFixed()}%)
                       </span>
                     </div>
                   )
