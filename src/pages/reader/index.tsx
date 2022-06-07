@@ -413,7 +413,6 @@ const App = () => {
     setFile(file)
   }
   const handleClick = async () => {
-    if (!file) return
     setTextOcr("Recognizing...")
     await tryOcr()
   }
@@ -443,7 +442,7 @@ const App = () => {
         )}
         <div className="inline-flex gap-4 items-center">
           <Progress label={textOcr} progress={progress} />
-          <button className="btn" onClick={handleClick}>
+          <button className="btn" disabled={!url} onClick={handleClick}>
             recognize
           </button>
         </div>
