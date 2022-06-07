@@ -626,17 +626,16 @@ const App = () => {
           </div>
         )}
         <div className="flex flex-col items-center">
-          <div
+          <button
             className="w-24 btn"
+            disabled={!substats.length}
             onClick={() => {
-              if (substats.length) {
-                const id = Date.now().toString(16)
-                setStoredArts((prev) => [{ ...artifact, id }, ...prev])
-              }
+              const id = Date.now().toString(16)
+              setStoredArts((prev) => [{ ...artifact, id }, ...prev])
             }}
           >
             save
-          </div>
+          </button>
           {storedArts.map(({ id, set, type, main, subs }) => (
             <div key={id} className="flex gap-2 items-center bg-base-200">
               <div className="flex flex-col">
