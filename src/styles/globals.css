@@ -42,7 +42,7 @@
   background-position: left, right, center !important;
   background-size: contain, contain, contain !important;
 
-  @apply font-bold text-white text-xl py-1 px-4;
+  @apply w-full h-12;
 }
 
 @tailwind utilities;

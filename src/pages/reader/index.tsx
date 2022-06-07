@@ -461,7 +461,7 @@ const App = () => {
         </select>
         {!!substats.length && (
           <div className="flex flex-col">
-            <div className="h-10 artifact-heading">
+            <div className="artifact-heading">
               <select
                 className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
                 defaultValue={artSetID}
