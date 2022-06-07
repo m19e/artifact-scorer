@@ -481,7 +481,7 @@ const App = () => {
             <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
               <div className="flex justify-between h-full">
                 <div className="flex flex-col justify-between ml-6">
-                  <div className="pt-1">
+                  <div className="mt-1">
                     <select
                       className="pl-0 w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
                       onChange={(e) => {
