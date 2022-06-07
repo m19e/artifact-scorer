@@ -547,7 +547,7 @@ const App = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col justify-center py-1 px-2">
+                <div className="flex flex-col justify-center mr-4">
                   <ArtifactScoreBox score={score} calc={calcMode.name} />
                 </div>
               </div>
