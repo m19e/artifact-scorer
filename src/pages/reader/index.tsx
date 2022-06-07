@@ -428,12 +428,7 @@ const App = () => {
             <div className="overflow-hidden flex-1 h-72 rounded-xl sm:w-72 bg-base-300">
               <RectCropper url={url} onCrop={setRectangle} />
             </div>
-            <div
-              className="btn"
-              onClick={() => {
-                setUrl("")
-              }}
-            >
+            <div className="btn" onClick={() => setUrl("")}>
               delete
             </div>
           </div>
