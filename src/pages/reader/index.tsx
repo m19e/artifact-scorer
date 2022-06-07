@@ -443,9 +443,9 @@ const App = () => {
         </div>
         <select
           className="select select-bordered"
-          onChange={(e) => {
+          onChange={(e) =>
             actions.setCalcType(e.currentTarget.value as CalcModeID)
-          }}
+          }
         >
           {CalcModeList.map((data) => (
             <option key={data.id} value={data.id}>
@@ -478,11 +478,11 @@ const App = () => {
                   <div className="mt-1">
                     <select
                       className="pl-0 w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
-                      onChange={(e) => {
+                      onChange={(e) =>
                         actions.setArtTypeID(
                           e.currentTarget.value as ArtifactTypeID
                         )
-                      }}
+                      }
                     >
                       {ArtifactTypeList.map((a) => (
                         <option key={a.name} value={a.id}>
@@ -495,11 +495,11 @@ const App = () => {
                     <div className="-ml-0.5">
                       <select
                         className="pl-0 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
-                        onChange={(e) => {
+                        onChange={(e) =>
                           actions.setMainType(
                             e.currentTarget.value as MainStatusID
                           )
-                        }}
+                        }
                       >
                         {ArtifactTypeMap[artTypeID].main.map((m, i) => (
                           <option key={m.id + i} value={m.id}>
@@ -648,9 +648,9 @@ const App = () => {
                 <div className="btn btn-info btn-disabled">import</div>
                 <div
                   className="btn btn-error"
-                  onClick={() => {
+                  onClick={() =>
                     setStoredArts((prev) => prev.filter((a) => a.id !== id))
-                  }}
+                  }
                 >
                   delete
                 </div>
