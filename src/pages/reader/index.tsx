@@ -463,7 +463,7 @@ const App = () => {
           <div className="flex flex-col">
             <div className="artifact-heading">
               <select
-                className="pl-1 w-52 text-xl bg-opacity-0 select select-ghost select-sm"
+                className="pl-0 mt-1.5 ml-6 h-8 min-h-0 text-3xl font-bold leading-7 text-white bg-opacity-0 select select-ghost"
                 defaultValue={artSetID}
                 onChange={(e) =>
                   actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
