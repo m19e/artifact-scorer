@@ -303,8 +303,8 @@ const useArtifact = (
 
   useEffect(() => {
     artifactRef.current = {
-      id: "",
-      level: 20,
+      id: initialArt.id,
+      level: initialArt.level,
       set: {
         id: artSetID,
         name: ArtifactSet[artSetID],
@@ -316,7 +316,7 @@ const useArtifact = (
       main: MainStatusMap[mainType],
       subs: substats,
     }
-  }, [artSetID, artTypeID, mainType, substats])
+  }, [initialArt, artSetID, artTypeID, mainType, substats])
 
   const setSubStats = useCallback<SetValue<SubStatusData[]>>(
     (newSubs) => {
