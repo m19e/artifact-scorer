@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react"
+import { Fragment, useState, useRef, useEffect, useCallback } from "react"
 import type { Dispatch, SetStateAction } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
@@ -34,6 +34,7 @@ import { RectCropper } from "@/components/molecules/RectCropper"
 import { Progress } from "@/components/atoms/Progress"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
+import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
 
 const SubStatusOption = {
   CRIT_RATE: "会心率",
@@ -630,35 +631,117 @@ const App = () => {
           >
             save
           </button>
-          {storedArts.map(({ id, set, type, main, subs }) => (
-            <div key={id} className="flex gap-2 items-center bg-base-200">
-              <div className="flex flex-col">
-                <h1>
-                  {set.name} - {type.name} - {main.name}
-                </h1>
-                {subs.map((sub) => (
-                  <span key={sub.id} className="whitespace-pre-wrap">
-                    {" ・ "}
-                    {sub.name}+{sub.param.value}
-                    {sub.param.type === "percent" ? "%" : ""}
+          {storedArts.map(({ id, type, set, main, subs }) => (
+            <div key={id} className="dropdown dropdown-top">
+              <label tabIndex={0} className="p-0 w-14 h-14 btn btn-sm">
+                <ArtTypeIcon name={type.name} />
+              </label>
+              <div
+                tabIndex={0}
+                className="flex flex-col px-4 pt-4 min-w-max shadow dropdown-content bg-base-100 text-base-content rounded-box"
+              >
+                <div className="flex flex-col items-center font-bold">
+                  <h1>
+                    {set.name} / {type.name}
+                  </h1>
+                  <span>
+                    {main.name}+{main.max}
                   </span>
-                ))}
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="btn btn-info btn-disabled">import</div>
-                <div
-                  className="btn btn-error"
-                  onClick={() =>
-                    setStoredArts((prev) => prev.filter((a) => a.id !== id))
-                  }
-                >
-                  delete
+                </div>
+                <div className="my-2 h-0 divider"></div>
+                <div className="flex flex-col">
+                  {subs.map((sub) => (
+                    <div key={sub.id} className="flex justify-between">
+                      <span>{sub.name}</span>
+                      <span>
+                        +{sub.param.value}
+                        {sub.param.type === "percent" ? "%" : ""}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="my-2 h-0 divider"></div>
+                <div className="flex justify-end mb-2">
+                  <label
+                    htmlFor={"modal-remove-" + id}
+                    className="hover:bg-opacity-20 modal-button text-error text-opacity-75 hover:bg-error btn btn-sm btn-error btn-circle btn-ghost"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                  </label>
+
+                  <button className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+      {storedArts.map((art) => (
+        <Fragment key={art.id}>
+          <input
+            type="checkbox"
+            id={"modal-remove-" + art.id}
+            className="modal-toggle"
+          />
+          <div className="modal">
+            <div className="modal-box">
+              <h3 className="text-lg font-bold">削除しますか？</h3>
+              <p className="py-4">{JSON.stringify(art, null, 0)}</p>
+              <div className="flex justify-between">
+                <div className="modal-action">
+                  <label
+                    htmlFor={"modal-remove-" + art.id}
+                    className="btn btn-outline"
+                  >
+                    閉じる
+                  </label>
+                </div>
+                <div className="modal-action">
+                  <label
+                    htmlFor={"modal-remove-" + art.id}
+                    className="btn btn-error"
+                    onClick={() =>
+                      setStoredArts((prev) =>
+                        prev.filter((a) => a.id !== art.id)
+                      )
+                    }
+                  >
+                    削除
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Fragment>
+      ))}
     </div>
   )
 }
