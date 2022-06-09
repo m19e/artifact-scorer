@@ -26,7 +26,7 @@ export interface ArtifactSetData {
 }
 
 export type ArtifactTypeID = keyof typeof ArtifactType
-type ArtifactTypeName = typeof ArtifactType[ArtifactTypeID]
+export type ArtifactTypeName = typeof ArtifactType[ArtifactTypeID]
 export interface ArtifactTypeData {
   id: ArtifactTypeID
   name: ArtifactTypeName
