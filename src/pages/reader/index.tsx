@@ -422,286 +422,294 @@ const App = () => {
     states
 
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-col gap-4 py-4 max-w-sm">
-        {url ? (
-          <div className="flex gap-4 items-center w-full">
-            <div className="overflow-hidden flex-1 h-72 rounded-xl sm:w-72 bg-base-300">
-              <RectCropper url={url} onCrop={setRectangle} />
-            </div>
-            <div className="btn" onClick={() => setUrl("")}>
-              delete
-            </div>
-          </div>
-        ) : (
-          <Dropzone onDrop={handleDrop} />
-        )}
-        <div className="inline-flex gap-4 items-center">
-          <Progress label={textOcr} progress={progress} />
-          <button className="btn" disabled={!url} onClick={handleClick}>
-            recognize
-          </button>
-        </div>
-        <select
-          className="select select-bordered"
-          onChange={(e) =>
-            actions.setCalcType(e.currentTarget.value as CalcModeID)
-          }
-        >
-          {CalcModeList.map((data) => (
-            <option key={data.id} value={data.id}>
-              {data.label}
-            </option>
-          ))}
-        </select>
-        {!!substats.length && (
-          <div className="flex flex-col">
-            <div className="artifact-heading">
-              <div className="mt-1.5 ml-6">
-                <select
-                  className="pl-0 h-8 min-h-0 text-3xl font-bold leading-7 text-white bg-opacity-0 select select-ghost"
-                  defaultValue={artSetID}
-                  onChange={(e) =>
-                    actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
-                  }
-                >
-                  {ArtifactSetList.map(({ id, name }) => (
-                    <option key={id} value={id}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
+    <Fragment>
+      <div className="flex justify-center">
+        <div className="flex flex-col gap-4 py-4 max-w-sm">
+          {url ? (
+            <div className="flex gap-4 items-center w-full">
+              <div className="overflow-hidden flex-1 h-72 rounded-xl sm:w-72 bg-base-300">
+                <RectCropper url={url} onCrop={setRectangle} />
+              </div>
+              <div className="btn" onClick={() => setUrl("")}>
+                delete
               </div>
             </div>
-            <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
-              <div className="flex justify-between h-full">
-                <div className="flex flex-col justify-between ml-6">
-                  <div className="mt-1">
-                    <select
-                      className="pl-0 w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
-                      onChange={(e) =>
-                        actions.setArtTypeID(
-                          e.currentTarget.value as ArtifactTypeID
-                        )
-                      }
-                    >
-                      {ArtifactTypeList.map((a) => (
-                        <option key={a.name} value={a.id}>
-                          {a.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="-ml-0.5">
+          ) : (
+            <Dropzone onDrop={handleDrop} />
+          )}
+          <div className="inline-flex gap-4 items-center">
+            <Progress label={textOcr} progress={progress} />
+            <button className="btn" disabled={!url} onClick={handleClick}>
+              recognize
+            </button>
+          </div>
+          <select
+            className="select select-bordered"
+            onChange={(e) =>
+              actions.setCalcType(e.currentTarget.value as CalcModeID)
+            }
+          >
+            {CalcModeList.map((data) => (
+              <option key={data.id} value={data.id}>
+                {data.label}
+              </option>
+            ))}
+          </select>
+          {!!substats.length && (
+            <div className="flex flex-col">
+              <div className="artifact-heading">
+                <div className="mt-1.5 ml-6">
+                  <select
+                    className="pl-0 h-8 min-h-0 text-3xl font-bold leading-7 text-white bg-opacity-0 select select-ghost"
+                    defaultValue={artSetID}
+                    onChange={(e) =>
+                      actions.setArtSetID(
+                        e.currentTarget.value as ArtifactSetID
+                      )
+                    }
+                  >
+                    {ArtifactSetList.map(({ id, name }) => (
+                      <option key={id} value={id}>
+                        {name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
+                <div className="flex justify-between h-full">
+                  <div className="flex flex-col justify-between ml-6">
+                    <div className="mt-1">
                       <select
-                        className="pl-0 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                        className="pl-0 w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
                         onChange={(e) =>
-                          actions.setMainType(
-                            e.currentTarget.value as MainStatusID
+                          actions.setArtTypeID(
+                            e.currentTarget.value as ArtifactTypeID
                           )
                         }
                       >
-                        {ArtifactTypeMap[artTypeID].main.map((m, i) => (
-                          <option key={m.id + i} value={m.id}>
-                            {m.name}
+                        {ArtifactTypeList.map((a) => (
+                          <option key={a.name} value={a.id}>
+                            {a.name}
                           </option>
                         ))}
                       </select>
                     </div>
-                    <span className="font-mono text-4xl leading-7 text-white">
-                      {MainStatusMap[mainType].max}
-                    </span>
-                    <div className="gap-1 my-2.5 rating">
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                        checked
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col justify-center mr-4">
-                  <ArtifactScoreBox score={score} calc={calcMode.name} />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 py-3 bg-orange-100">
-              <div className="flex justify-between items-center px-4">
-                <div className="pr-1 h-5 text-white bg-slate-700 rounded">
-                  <div className="-mt-1.5">
-                    <span className="text-xl font-black text-white">+20</span>
-                  </div>
-                </div>
-                <TwitterShareButton url="" />
-              </div>
-              <div className="flex flex-col pr-4 pl-3.5">
-                {substats.map((s, index) => {
-                  const isPer = s.param.type === "percent"
-                  const step = isPer ? 0.1 : 1
-
-                  return (
-                    <div key={s.id + index} className="flex justify-between">
-                      <div className="flex gap-1 items-center">
-                        <span className="font-black whitespace-pre-wrap">
-                          {" ・"}
-                        </span>
+                    <div className="flex flex-col">
+                      <div className="-ml-0.5">
                         <select
-                          className="pr-7 pl-0 h-5 min-h-0 text-lg leading-4 text-slate-700 bg-opacity-0 select select-xs select-ghost"
-                          defaultValue={s.id}
-                          onChange={(e) => {
-                            const id = e.currentTarget
-                              .value as SubStatusOptionID
-                            const data = updateSubStatusByID({ id, src: s })
-                            actions.setSubStats((prev) =>
-                              prev.map((sub, i) => (index === i ? data : sub))
+                          className="pl-0 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+                          onChange={(e) =>
+                            actions.setMainType(
+                              e.currentTarget.value as MainStatusID
                             )
-                          }}
+                          }
                         >
-                          {SubStatusOptionList.map((opt) => (
-                            <option key={opt.name} value={opt.id}>
-                              {opt.name}
+                          {ArtifactTypeMap[artTypeID].main.map((m, i) => (
+                            <option key={m.id + i} value={m.id}>
+                              {m.name}
                             </option>
                           ))}
                         </select>
-                        <div className="inline-flex font-black">
-                          {/* <span>+</span> */}
-                          <input
-                            type="number"
-                            inputMode="decimal"
-                            className="px-0 w-14 text-lg font-black leading-4 text-slate-700 input input-xs input-ghost"
-                            min={0}
-                            step={step}
-                            value={s.param.value}
+                      </div>
+                      <span className="font-mono text-4xl leading-7 text-white">
+                        {MainStatusMap[mainType].max}
+                      </span>
+                      <div className="gap-1 my-2.5 rating">
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="w-5 h-5 bg-yellow-400 mask mask-star-2"
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="w-5 h-5 bg-yellow-400 mask mask-star-2"
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="w-5 h-5 bg-yellow-400 mask mask-star-2"
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="w-5 h-5 bg-yellow-400 mask mask-star-2"
+                        />
+                        <input
+                          type="radio"
+                          name="rating-2"
+                          className="w-5 h-5 bg-yellow-400 mask mask-star-2"
+                          checked
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-center mr-4">
+                    <ArtifactScoreBox score={score} calc={calcMode.name} />
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2 py-3 bg-orange-100">
+                <div className="flex justify-between items-center px-4">
+                  <div className="pr-1 h-5 text-white bg-slate-700 rounded">
+                    <div className="-mt-1.5">
+                      <span className="text-xl font-black text-white">+20</span>
+                    </div>
+                  </div>
+                  <TwitterShareButton url="" />
+                </div>
+                <div className="flex flex-col pr-4 pl-3.5">
+                  {substats.map((s, index) => {
+                    const isPer = s.param.type === "percent"
+                    const step = isPer ? 0.1 : 1
+
+                    return (
+                      <div key={s.id + index} className="flex justify-between">
+                        <div className="flex gap-1 items-center">
+                          <span className="font-black whitespace-pre-wrap">
+                            {" ・"}
+                          </span>
+                          <select
+                            className="pr-7 pl-0 h-5 min-h-0 text-lg leading-4 text-slate-700 bg-opacity-0 select select-xs select-ghost"
+                            defaultValue={s.id}
                             onChange={(e) => {
-                              const value = e.currentTarget.valueAsNumber
+                              const id = e.currentTarget
+                                .value as SubStatusOptionID
+                              const data = updateSubStatusByID({ id, src: s })
                               actions.setSubStats((prev) =>
-                                prev.map((sub, i) => {
-                                  if (index === i) {
-                                    const param = { ...sub.param, value }
-                                    return { ...sub, param }
-                                  }
-                                  return sub
-                                })
+                                prev.map((sub, i) => (index === i ? data : sub))
                               )
                             }}
-                          />
-                          <span>{isPer ? "%" : ""}</span>
+                          >
+                            {SubStatusOptionList.map((opt) => (
+                              <option key={opt.name} value={opt.id}>
+                                {opt.name}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="inline-flex font-black">
+                            {/* <span>+</span> */}
+                            <input
+                              type="number"
+                              inputMode="decimal"
+                              className="px-0 w-14 text-lg font-black leading-4 text-slate-700 input input-xs input-ghost"
+                              min={0}
+                              step={step}
+                              value={s.param.value}
+                              onChange={(e) => {
+                                const value = e.currentTarget.valueAsNumber
+                                actions.setSubStats((prev) =>
+                                  prev.map((sub, i) => {
+                                    if (index === i) {
+                                      const param = { ...sub.param, value }
+                                      return { ...sub, param }
+                                    }
+                                    return sub
+                                  })
+                                )
+                              }}
+                            />
+                            <span>{isPer ? "%" : ""}</span>
+                          </div>
                         </div>
+                        <span className="text-lg text-slate-500">
+                          ({getSubStatusRate(s).toFixed()}%)
+                        </span>
                       </div>
-                      <span className="text-lg text-slate-500">
-                        ({getSubStatusRate(s).toFixed()}%)
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="flex flex-col gap-4 items-center">
+            {!!substats.length && (
+              <button
+                className="w-24 btn"
+                disabled={!substats.length}
+                onClick={() => {
+                  const id = Date.now().toString(16)
+                  setStoredArts((prev) => [{ ...artifact, id }, ...prev])
+                }}
+              >
+                save
+              </button>
+            )}
+            <div className="flex flex-wrap gap-2 w-full">
+              {storedArts.map(({ id, type, set, main, subs }) => (
+                <div key={id} className="dropdown dropdown-top">
+                  <label tabIndex={0} className="p-0 w-14 h-14 btn btn-sm">
+                    <ArtTypeIcon name={type.name} />
+                  </label>
+                  <div
+                    tabIndex={0}
+                    className="flex flex-col px-4 pt-4 min-w-max shadow dropdown-content bg-base-100 text-base-content rounded-box"
+                  >
+                    <div className="flex flex-col items-center font-bold">
+                      <h1>
+                        {set.name} / {type.name}
+                      </h1>
+                      <span>
+                        {main.name}+{main.max}
                       </span>
                     </div>
-                  )
-                })}
-              </div>
+                    <div className="my-2 h-0 divider"></div>
+                    <div className="flex flex-col">
+                      {subs.map((sub) => (
+                        <div key={sub.id} className="flex justify-between">
+                          <span>{sub.name}</span>
+                          <span>
+                            +{sub.param.value}
+                            {sub.param.type === "percent" ? "%" : ""}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="my-2 h-0 divider"></div>
+                    <div className="flex justify-end mb-2">
+                      <label
+                        htmlFor={"modal-remove-" + id}
+                        className="hover:bg-opacity-20 modal-button text-error text-opacity-75 hover:bg-error btn btn-sm btn-error btn-circle btn-ghost"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-6 h-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </label>
+
+                      <button className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-6 h-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        )}
-        <div className="flex flex-col items-center">
-          <button
-            className="w-24 btn"
-            disabled={!substats.length}
-            onClick={() => {
-              const id = Date.now().toString(16)
-              setStoredArts((prev) => [{ ...artifact, id }, ...prev])
-            }}
-          >
-            save
-          </button>
-          {storedArts.map(({ id, type, set, main, subs }) => (
-            <div key={id} className="dropdown dropdown-top">
-              <label tabIndex={0} className="p-0 w-14 h-14 btn btn-sm">
-                <ArtTypeIcon name={type.name} />
-              </label>
-              <div
-                tabIndex={0}
-                className="flex flex-col px-4 pt-4 min-w-max shadow dropdown-content bg-base-100 text-base-content rounded-box"
-              >
-                <div className="flex flex-col items-center font-bold">
-                  <h1>
-                    {set.name} / {type.name}
-                  </h1>
-                  <span>
-                    {main.name}+{main.max}
-                  </span>
-                </div>
-                <div className="my-2 h-0 divider"></div>
-                <div className="flex flex-col">
-                  {subs.map((sub) => (
-                    <div key={sub.id} className="flex justify-between">
-                      <span>{sub.name}</span>
-                      <span>
-                        +{sub.param.value}
-                        {sub.param.type === "percent" ? "%" : ""}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div className="my-2 h-0 divider"></div>
-                <div className="flex justify-end mb-2">
-                  <label
-                    htmlFor={"modal-remove-" + id}
-                    className="hover:bg-opacity-20 modal-button text-error text-opacity-75 hover:bg-error btn btn-sm btn-error btn-circle btn-ghost"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                  </label>
-
-                  <button className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
       {storedArts.map((art) => (
@@ -742,7 +750,7 @@ const App = () => {
           </div>
         </Fragment>
       ))}
-    </div>
+    </Fragment>
   )
 }
 
