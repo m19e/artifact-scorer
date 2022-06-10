@@ -1,4 +1,4 @@
-import { Fragment, useState, useRef, useEffect, useCallback } from "react"
+import { Fragment, useState, useEffect, useCallback } from "react"
 import type { Dispatch, SetStateAction } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
@@ -296,14 +296,13 @@ const useArtifact = (
   const [artTypeID, setArtTID] = useState<ArtifactTypeID>(initialArt.type.id)
   const [mainType, setMainType] = useState(initialArt.main.id)
   const [substats, setSubs] = useState<SubStatusData[]>([])
+  const [artifact, setArt] = useState<Artifact>(initialArt)
 
   const [calcMode, setCalcMode] = useState<CalcModeData>(CalcModeMap.CRIT)
   const [score, setScore] = useState(0)
 
-  const artifactRef = useRef<Artifact>(initialArt)
-
   useEffect(() => {
-    artifactRef.current = {
+    setArt({
       id: initialArt.id,
       level: initialArt.level,
       set: {
@@ -316,7 +315,7 @@ const useArtifact = (
       },
       main: MainStatusMap[mainType],
       subs: substats,
-    }
+    })
   }, [initialArt, artSetID, artTypeID, mainType, substats])
 
   const setSubStats = useCallback<SetValue<SubStatusData[]>>(
@@ -351,7 +350,7 @@ const useArtifact = (
     substats,
     calcMode,
     score,
-    artifact: artifactRef.current,
+    artifact,
   }
   const actions = {
     setArtSetID,
