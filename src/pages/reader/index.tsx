@@ -382,6 +382,9 @@ const App = () => {
     []
   )
 
+  const { artSetID, artTypeID, mainType, substats, artifact, calcMode, score } =
+    states
+
   const tryOcr = useCallback(async () => {
     const worker = createWorker({
       logger: (m: { status: string; progress: number }) => {
@@ -416,9 +419,10 @@ const App = () => {
     setTextOcr("Recognizing...")
     await tryOcr()
   }
-
-  const { artSetID, artTypeID, mainType, substats, artifact, calcMode, score } =
-    states
+  const saveArt = useCallback(() => {
+    const id = Date.now().toString(16)
+    setStoredArts((prev) => [{ ...artifact, id }, ...prev])
+  }, [artifact, setStoredArts])
 
   return (
     <Fragment>
@@ -627,10 +631,7 @@ const App = () => {
               <button
                 className="w-24 btn"
                 disabled={!substats.length}
-                onClick={() => {
-                  const id = Date.now().toString(16)
-                  setStoredArts((prev) => [{ ...artifact, id }, ...prev])
-                }}
+                onClick={saveArt}
               >
                 save
               </button>
