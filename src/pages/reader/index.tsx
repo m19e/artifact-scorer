@@ -539,7 +539,7 @@ const App = () => {
                           type="radio"
                           name="rating-2"
                           className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                          checked
+                          defaultChecked
                         />
                       </div>
                     </div>
