@@ -17,7 +17,11 @@ export const Progress: VFC<Props> = ({ label, progress }) => {
           <span className="text-base-content">Progress</span>
         )}
       </div>
-      <progress className="w-56 progress" value={progress} max={100}></progress>
+      <progress
+        className="w-full progress"
+        value={progress}
+        max={100}
+      ></progress>
     </div>
   )
 }
