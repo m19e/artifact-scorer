@@ -286,7 +286,12 @@ const DEFAULT_ARTIFACT_DATA: Artifact = {
     name: "生の花",
   },
   main: MainStatusMap["HP_FLAT"],
-  subs: [],
+  subs: [
+    { id: "UNDETECTED", name: "なし", param: { type: "flat", value: 0 } },
+    { id: "UNDETECTED", name: "なし", param: { type: "flat", value: 0 } },
+    { id: "UNDETECTED", name: "なし", param: { type: "flat", value: 0 } },
+    { id: "UNDETECTED", name: "なし", param: { type: "flat", value: 0 } },
+  ],
 }
 
 const useArtifact = (
@@ -295,7 +300,7 @@ const useArtifact = (
   const [artSetID, setArtSetID] = useState<ArtifactSetID>(initialArt.set.id)
   const [artTypeID, setArtTID] = useState<ArtifactTypeID>(initialArt.type.id)
   const [mainType, setMainType] = useState(initialArt.main.id)
-  const [substats, setSubs] = useState<SubStatusData[]>([])
+  const [substats, setSubs] = useState<SubStatusData[]>(initialArt.subs)
   const [artifact, setArt] = useState<Artifact>(initialArt)
 
   const [calcMode, setCalcMode] = useState<CalcModeData>(CalcModeMap.CRIT)
