@@ -292,7 +292,7 @@ export const SubStatus = {
   ENERGY_RECHARGE: "元素チャージ効率",
   CRIT_RATE: "会心率",
   CRIT_DAMAGE: "会心ダメージ",
-  UNDETECTED: "UNDETECTED",
+  UNDETECTED: "なし",
 } as const
 
 export const SubStatusMap: { [key in SubStatusID]: { max: number } } = {
