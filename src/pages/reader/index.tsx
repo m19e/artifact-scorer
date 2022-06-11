@@ -369,6 +369,7 @@ const useArtifact = (
 }
 
 const App = () => {
+  const [collapseOpen, setCollapseOpen] = useState(true)
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
   const [textOcr, setTextOcr] = useState<string>("")
@@ -431,25 +432,50 @@ const App = () => {
 
   return (
     <Fragment>
-      <div className="flex justify-center">
+      <div className="flex justify-center min-h-screen bg-base-200">
         <div className="flex flex-col gap-4 py-4 max-w-sm">
-          {url ? (
-            <div className="flex gap-4 items-center w-full">
-              <div className="overflow-hidden flex-1 h-72 rounded-xl sm:w-72 bg-base-300">
-                <RectCropper url={url} onCrop={setRectangle} />
-              </div>
-              <div className="btn" onClick={() => setUrl("")}>
-                delete
-              </div>
+          <div
+            tabIndex={0}
+            className={
+              "border collapse collapse-arrow border-base-300 bg-base-100 rounded-box " +
+              (collapseOpen ? "collapse-open" : "collapse-close")
+            }
+          >
+            <div
+              className="text-lg font-medium text-base-content collapse-title"
+              onClick={() => setCollapseOpen((prev) => !prev)}
+            >
+              画像読み込み
             </div>
-          ) : (
-            <Dropzone onDrop={handleDrop} />
-          )}
-          <div className="inline-flex gap-4 items-center">
-            <Progress label={textOcr} progress={progress} />
-            <button className="btn" disabled={!url} onClick={handleClick}>
-              recognize
-            </button>
+            <div className="text-base-content collapse-content">
+              {url ? (
+                <div className="flex flex-col">
+                  <div className="flex gap-4 items-center w-full">
+                    <div className="overflow-hidden flex-1 h-72 rounded-xl sm:w-72 bg-base-300">
+                      <RectCropper url={url} onCrop={setRectangle} />
+                    </div>
+                    <div className="btn" onClick={() => setUrl("")}>
+                      delete
+                    </div>
+                  </div>
+                  <div className="h-0 divider"></div>
+                  <div className="inline-flex gap-4 items-center">
+                    <div className="flex-1">
+                      <Progress label={textOcr} progress={progress} />
+                    </div>
+                    <button
+                      className="btn"
+                      disabled={!url}
+                      onClick={handleClick}
+                    >
+                      recognize
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Dropzone onDrop={handleDrop} />
+              )}
+            </div>
           </div>
           <select
             className="select select-bordered"
