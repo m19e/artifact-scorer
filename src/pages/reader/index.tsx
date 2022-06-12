@@ -621,7 +621,6 @@ const App = () => {
                           ))}
                         </select>
                         <div className="inline-flex font-black">
-                          {/* <span>+</span> */}
                           <input
                             type="number"
                             inputMode="decimal"
