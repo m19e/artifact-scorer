@@ -477,20 +477,22 @@ const App = () => {
               )}
             </div>
           </div>
-          <select
-            className="select select-bordered"
-            onChange={(e) =>
-              actions.setCalcType(e.currentTarget.value as CalcModeID)
-            }
-          >
-            {CalcModeList.map((data) => (
-              <option key={data.id} value={data.id}>
-                {data.label}
-              </option>
-            ))}
-          </select>
-
+          <div className="my-0 h-0 divider"></div>
           <div className="flex flex-col">
+            <div className="mb-4">
+              <select
+                className="w-full select select-bordered"
+                onChange={(e) =>
+                  actions.setCalcType(e.currentTarget.value as CalcModeID)
+                }
+              >
+                {CalcModeList.map((data) => (
+                  <option key={data.id} value={data.id}>
+                    {data.label}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="artifact-heading">
               <div className="mt-1.5 ml-6">
                 <select
