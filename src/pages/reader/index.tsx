@@ -656,9 +656,12 @@ const App = () => {
             </div>
           </div>
           <div className="flex flex-col gap-4 items-center">
-            <button className="w-24 btn" disabled={!url} onClick={saveArt}>
-              save
-            </button>
+            <div className="divider">
+              <button className="btn" disabled={!url} onClick={saveArt}>
+                保存
+              </button>
+            </div>
+
             <div className="grid grid-cols-6 gap-2.5 justify-between w-full">
               {storedArts.map((art, index) => {
                 const { id, type, set, main, subs } = art
