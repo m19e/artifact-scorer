@@ -372,8 +372,6 @@ const App = () => {
   const [collapseOpen, setCollapseOpen] = useState(true)
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
-  const [textOcr, setTextOcr] = useState<string>("")
-  const [progress, setProgress] = useState(0)
   const [inOCRProcess, setInOCRProcess] = useState(false)
 
   const [rectangle, setRectangle] = useState<Rectangle>({
@@ -393,10 +391,9 @@ const App = () => {
     states
 
   const tryOcr = useCallback(async () => {
-    setInOCRProcess(true)
     const worker = createWorker({
       logger: (m: { status: string; progress: number }) => {
-        setProgress(Math.round(m.progress * 100))
+        // setProgress(Math.round(m.progress * 100))
         // setTextOcr(m.status)
       },
     })
@@ -417,8 +414,6 @@ const App = () => {
 
     const datas = getSubStatusDatas(text)
     actions.setSubStats(datas)
-
-    setInOCRProcess(false)
   }, [file, rectangle, actions])
 
   const handleDrop = (file: File) => {
@@ -426,8 +421,9 @@ const App = () => {
     setFile(file)
   }
   const handleClick = async () => {
-    setTextOcr("Recognizing...")
+    setInOCRProcess(true)
     await tryOcr()
+    setInOCRProcess(false)
   }
   const saveArt = useCallback(() => {
     const id = Date.now().toString(16)
