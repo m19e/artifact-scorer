@@ -433,7 +433,7 @@ const App = () => {
   return (
     <Fragment>
       <div className="flex justify-center min-h-screen bg-base-200">
-        <div className="flex flex-col gap-4 py-4 max-w-sm">
+        <div className="flex flex-col py-4 max-w-sm">
           <div
             tabIndex={0}
             className={
@@ -477,9 +477,15 @@ const App = () => {
               )}
             </div>
           </div>
-          <div className="my-0 h-0 divider"></div>
+          <div className="my-2">
+            <div className="divider">
+              <button className="btn" disabled={!url} onClick={handleClick}>
+                読取
+              </button>
+            </div>
+          </div>
           <div className="flex flex-col">
-            <div className="mb-4">
+            <div className="mb-2">
               <select
                 className="w-full select select-bordered"
                 onChange={(e) =>
@@ -655,14 +661,15 @@ const App = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4 items-center">
-            <div className="divider">
-              <button className="btn" disabled={!url} onClick={saveArt}>
-                保存
-              </button>
+          <div className="flex flex-col">
+            <div className="my-2">
+              <div className="divider">
+                <button className="btn" disabled={!url} onClick={saveArt}>
+                  保存
+                </button>
+              </div>
             </div>
-
-            <div className="grid grid-cols-6 gap-2.5 justify-between w-full">
+            <div className="grid grid-cols-6 gap-2.5 justify-between">
               {storedArts.map((art) => {
                 const { id, type, set, main, subs } = art
 
