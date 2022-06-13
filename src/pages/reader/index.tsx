@@ -31,7 +31,6 @@ import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import { Dropzone } from "@/components/molecules/Dropzone"
 import { RectCropper } from "@/components/molecules/RectCropper"
-import { Progress } from "@/components/atoms/Progress"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
@@ -374,6 +373,7 @@ const App = () => {
   const [url, setUrl] = useState("")
   const [textOcr, setTextOcr] = useState<string>("")
   const [progress, setProgress] = useState(0)
+  const [inOCRProcess, setInOCRProcess] = useState(false)
 
   const [rectangle, setRectangle] = useState<Rectangle>({
     left: 0,
@@ -392,6 +392,7 @@ const App = () => {
     states
 
   const tryOcr = useCallback(async () => {
+    setInOCRProcess(true)
     const worker = createWorker({
       logger: (m: { status: string; progress: number }) => {
         setProgress(Math.round(m.progress * 100))
@@ -415,6 +416,8 @@ const App = () => {
 
     const datas = getSubStatusDatas(text)
     actions.setSubStats(datas)
+
+    setInOCRProcess(false)
   }, [file, rectangle, actions])
 
   const handleDrop = (file: File) => {
@@ -458,7 +461,7 @@ const App = () => {
                       delete
                     </div>
                   </div>
-                  <div className="h-0 divider"></div>
+                  {/* <div className="h-0 divider"></div>
                   <div className="inline-flex gap-4 items-center">
                     <div className="flex-1">
                       <Progress label={textOcr} progress={progress} />
@@ -470,7 +473,7 @@ const App = () => {
                     >
                       recognize
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               ) : (
                 <Dropzone onDrop={handleDrop} />
@@ -479,9 +482,17 @@ const App = () => {
           </div>
           <div className="my-2">
             <div className="divider">
-              <button className="btn" disabled={!url} onClick={handleClick}>
-                読取
-              </button>
+              {inOCRProcess ? (
+                <button className="btn btn-primary loading">読取中</button>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  disabled={!url}
+                  onClick={handleClick}
+                >
+                  読取
+                </button>
+              )}
             </div>
           </div>
           <div className="flex flex-col">
