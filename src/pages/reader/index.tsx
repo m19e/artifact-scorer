@@ -663,19 +663,11 @@ const App = () => {
             </div>
 
             <div className="grid grid-cols-6 gap-2.5 justify-between w-full">
-              {storedArts.map((art, index) => {
+              {storedArts.map((art) => {
                 const { id, type, set, main, subs } = art
-                const isDropdownEnd =
-                  (index + 1) % 6 > 3 || (index + 1) % 6 === 0
 
                 return (
-                  <div
-                    key={id}
-                    className={
-                      "dropdown dropdown-top w-14 h-14 " +
-                      (isDropdownEnd ? "dropdown-end" : "")
-                    }
-                  >
+                  <div key={id} className="w-14 h-14 artifact-dropdown">
                     <label
                       tabIndex={0}
                       className="p-0 w-full h-full btn btn-sm"

@@ -45,4 +45,13 @@
   @apply w-full h-12;
 }
 
+.artifact-dropdown {
+  @apply dropdown dropdown-top;
+}
+.artifact-dropdown:nth-child(4n),
+:nth-child(5n),
+:nth-child(6n) {
+  @apply dropdown-end;
+}
+
 @tailwind utilities;
