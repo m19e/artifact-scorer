@@ -393,8 +393,7 @@ const App = () => {
   const tryOcr = useCallback(async () => {
     const worker = createWorker({
       logger: (m: { status: string; progress: number }) => {
-        // setProgress(Math.round(m.progress * 100))
-        // setTextOcr(m.status)
+        //
       },
     })
     await worker.load()
@@ -513,9 +512,6 @@ const App = () => {
                       </div>
                       <RectCropper url={url} onCrop={setRectangle} />
                     </div>
-                    {/* <div className="btn" onClick={() => setUrl("")}>
-                      delete
-                    </div> */}
                   </div>
                 </div>
               ) : (
