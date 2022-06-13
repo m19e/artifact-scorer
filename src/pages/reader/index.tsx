@@ -722,7 +722,11 @@ const App = () => {
           <div className="flex flex-col">
             <div className="my-2">
               <div className="divider">
-                <button className="btn" disabled={!url} onClick={saveArt}>
+                <button
+                  className="btn btn-secondary"
+                  disabled={!url}
+                  onClick={saveArt}
+                >
                   保存
                 </button>
               </div>
