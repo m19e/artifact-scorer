@@ -583,7 +583,7 @@ const App = () => {
                     +20
                   </span>
                 </div>
-                <TwitterShareButton artifact={artifact} />
+                <TwitterShareButton artifact={artifact} calcMode={calcMode} />
               </div>
               <div className="flex flex-col pr-4 pl-3.5">
                 {substats.map((s, index) => {

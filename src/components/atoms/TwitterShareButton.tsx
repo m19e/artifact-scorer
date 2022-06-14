@@ -1,16 +1,53 @@
 import type { VFC } from "react"
-import type { Artifact } from "@/types/Scorer"
+import type { Artifact, CalcModeData } from "@/types/Scorer"
+import { getArtifactScore, getScoreRateProps } from "@/tools/Scorer"
 
 interface Props {
   artifact: Artifact
+  calcMode: CalcModeData
 }
 
-const getArtShareUrl = (art: Artifact): string => {
-  return art.id
+const getMainIsPercent = (id: Artifact["main"]["id"]) => {
+  return !["ATK_FLAT", "HP_FLAT", "ELEMENTAL_MASTERY"].includes(id)
+}
+const TWITTER_BASE_URL = "https://twitter.com/intent/tweet?text="
+const SPAN = ""
+const getArtShareUrl = ({ artifact, calcMode }: Props): string => {
+  const title = "原神 聖遺物スコアラ"
+  const score = getArtifactScore({ datas: artifact.subs, mode: calcMode.id })
+  const { rate: rank } = getScoreRateProps(score)
+
+  const { level, set, type, main, subs } = artifact
+
+  const isPerMain = getMainIsPercent(main.id)
+  const mainUnit = isPerMain ? "%" : ""
+  const subLabels = subs.map(
+    ({ name, param: { type, value } }) =>
+      `・${name} ${value}${type === "percent" ? "%" : ""}`
+  )
+
+  const text = encodeURIComponent(
+    [
+      title,
+      SPAN,
+      calcMode.name,
+      `ランク【${rank}】スコア:${score.toFixed(1)}`,
+      SPAN,
+      `${set.name} - ${type.name}`,
+      // `レベル ${level}`,
+      `${main.name} ${main.max}${mainUnit}`,
+      ...subLabels,
+      SPAN,
+      "#ArtifactScorer",
+      "[TEST-URL]",
+    ].join("\n")
+  )
+
+  return TWITTER_BASE_URL + text
 }
 
-export const TwitterShareButton: VFC<Props> = ({ artifact }) => {
-  const url = getArtShareUrl(artifact)
+export const TwitterShareButton: VFC<Props> = ({ artifact, calcMode }) => {
+  const url = getArtShareUrl({ artifact, calcMode })
 
   return (
     <a
