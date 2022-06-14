@@ -8,13 +8,11 @@ import type {
   CalcModeID,
   CalcModeData,
   ArtifactSetID,
-  ArtifactSetData,
   ArtifactTypeID,
-  ArtifactTypeData,
   MainStatusID,
-  MainStatusData,
   SubStatusID,
   SubStatusData,
+  Artifact,
 } from "@/types/Scorer"
 import {
   CalcModeMap,
@@ -243,15 +241,6 @@ const getSubStatusRate = (data: SubStatusData): number => {
   }
   const { max } = SubStatusMap[id]
   return Math.round((value / (max * 6)) * 100 * 10) / 10
-}
-
-interface Artifact {
-  id: string
-  level: number
-  set: ArtifactSetData
-  type: Omit<ArtifactTypeData, "main">
-  main: MainStatusData
-  subs: SubStatusData[]
 }
 
 interface ArtifactState {

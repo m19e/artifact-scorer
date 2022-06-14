@@ -52,3 +52,12 @@ export interface SubStatusData {
     value: number
   }
 }
+
+export interface Artifact {
+  id: string
+  level: number
+  set: ArtifactSetData
+  type: Omit<ArtifactTypeData, "main">
+  main: MainStatusData
+  subs: SubStatusData[]
+}
