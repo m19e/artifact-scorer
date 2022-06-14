@@ -1,20 +1,6 @@
 import type { VFC } from "react"
 import type { CalcModeName } from "@/types/Scorer"
-
-const getScoreRateProps = (
-  score: number
-): { rate: string; className: string } => {
-  if (score >= 45) {
-    return { rate: "SS", className: "text-error" }
-  }
-  if (score >= 35) {
-    return { rate: "S", className: "text-warning" }
-  }
-  if (score >= 25) {
-    return { rate: "A", className: "text-primary" }
-  }
-  return { rate: "B", className: "text-info" }
-}
+import { getScoreRateProps } from "@/tools/Scorer"
 
 interface Props {
   score: number
