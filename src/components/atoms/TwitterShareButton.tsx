@@ -1,10 +1,17 @@
 import type { VFC } from "react"
+import type { Artifact } from "@/types/Scorer"
 
 interface Props {
-  url: string
+  artifact: Artifact
 }
 
-export const TwitterShareButton: VFC<Props> = ({ url }) => {
+const getArtShareUrl = (art: Artifact): string => {
+  return art.id
+}
+
+export const TwitterShareButton: VFC<Props> = ({ artifact }) => {
+  const url = getArtShareUrl(artifact)
+
   return (
     <a
       className="flex justify-center items-center w-8 h-8 text-white rounded-md shadow"
