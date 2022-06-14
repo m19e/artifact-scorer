@@ -21,10 +21,10 @@ const getArtShareUrl = ({ artifact, calcMode }: Props): string => {
 
   const isPerMain = getMainIsPercent(main.id)
   const mainUnit = isPerMain ? "%" : ""
-  const subLabels = subs.map(
-    ({ name, param: { type, value } }) =>
-      `・${name} ${value}${type === "percent" ? "%" : ""}`
-  )
+  const subLabels = subs.map(({ name, param: { type, value } }) => {
+    const unit = type === "percent" ? "%" : ""
+    return `・${name} ${value}${unit}`
+  })
 
   const text = encodeURIComponent(
     [
