@@ -31,6 +31,7 @@ import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import { Dropzone } from "@/components/molecules/Dropzone"
 import { RectCropper } from "@/components/molecules/RectCropper"
+import { Header } from "@/components/atoms/Header"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
@@ -368,13 +369,7 @@ const App = () => {
   return (
     <Fragment>
       <div className="flex flex-col items-center min-h-screen bg-base-200">
-        <div className="md:max-w-md navbar bg-neutral text-neutral-content md:rounded-b-box">
-          <div className="navbar-start"></div>
-          <div className="navbar-center">
-            <a className="text-xl normal-case btn btn-ghost">#ArtifactScorer</a>
-          </div>
-          <div className="navbar-end"></div>
-        </div>
+        <Header />
         <div className="flex flex-col my-4 max-w-sm">
           <div
             tabIndex={0}
