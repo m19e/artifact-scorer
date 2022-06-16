@@ -670,7 +670,7 @@ const App = () => {
                   <div key={id} className="w-14 h-14 artifact-dropdown">
                     <label
                       tabIndex={0}
-                      className="p-0 w-full h-full btn btn-sm btn-ghost bg-base-100 text-neutral-focus"
+                      className="p-0 w-full h-full shadow btn btn-sm btn-ghost bg-base-100 text-neutral-focus"
                     >
                       <ArtTypeIcon name={type.name} />
                     </label>
