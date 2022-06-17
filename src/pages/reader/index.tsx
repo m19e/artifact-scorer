@@ -305,7 +305,6 @@ const useArtifact = (
 }
 
 const App = () => {
-  const [collapseOpen, setCollapseOpen] = useState(true)
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
   const [inOCRProcess, setInOCRProcess] = useState(false)
