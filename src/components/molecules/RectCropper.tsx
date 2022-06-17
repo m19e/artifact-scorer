@@ -4,7 +4,7 @@ import type { Rectangle } from "tesseract.js"
 import ReactEasyCrop from "react-easy-crop"
 import type { Area, Point } from "react-easy-crop/types"
 
-interface Props {
+export interface Props {
   url: string
   onCrop: (rect: Rectangle) => void
 }

@@ -2,7 +2,7 @@ import { useCallback } from "react"
 import type { VFC } from "react"
 import { useDropzone } from "react-dropzone"
 
-interface Props {
+export interface Props {
   onDrop: (file: File) => void
 }
 
