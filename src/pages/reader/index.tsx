@@ -307,14 +307,13 @@ const useArtifact = (
 const App = () => {
   const [file, setFile] = useState<ImageLike>("")
   const [url, setUrl] = useState("")
-  const [inOCRProcess, setInOCRProcess] = useState(false)
-
   const [rectangle, setRectangle] = useState<Rectangle>({
     left: 0,
     top: 0,
     width: 0,
     height: 0,
   })
+  const [inOCRProcess, setInOCRProcess] = useState(false)
 
   const [states, actions] = useArtifact()
   const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
@@ -350,9 +349,9 @@ const App = () => {
     actions.setSubStats(datas)
   }, [file, rectangle, actions])
 
-  const handleDrop = (file: File) => {
-    setUrl(URL.createObjectURL(file))
-    setFile(file)
+  const handleDrop = (f: File) => {
+    setUrl(URL.createObjectURL(f))
+    setFile(f)
   }
   const handleClick = async () => {
     setInOCRProcess(true)
