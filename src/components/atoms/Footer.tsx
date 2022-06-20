@@ -16,7 +16,11 @@ export const Footer = () => {
         <p>ArtifactScorer by m19e</p>
       </div>
       <div className="flex gap-2">
-        <a>
+        <a
+          href="https://twitter.com/Versas_me"
+          target="_blank"
+          rel="noreferrer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
