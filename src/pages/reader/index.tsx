@@ -678,7 +678,7 @@ const App = () => {
             className="modal-toggle"
           />
           <div className="modal">
-            <div className="modal-box">
+            <div className="max-w-sm modal-box">
               <h3 className="text-lg font-bold">削除しますか？</h3>
               <div className="flex justify-between">
                 <div className="modal-action">
