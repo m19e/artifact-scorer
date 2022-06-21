@@ -675,7 +675,7 @@ const App = () => {
           />
           <div className="modal">
             <div className="modal-box">
-              <h3 className="text-lg font-bold">Delete this Artifact?</h3>
+              <h3 className="text-lg font-bold">削除しますか？</h3>
               <p className="py-4">{JSON.stringify(art, null, 0)}</p>
               <div className="flex justify-between">
                 <div className="modal-action">
