@@ -684,7 +684,7 @@ const App = () => {
                 <div className="modal-action">
                   <label
                     htmlFor={"modal-remove-" + art.id}
-                    className="btn btn-outline"
+                    className="btn btn-outline btn-sm sm:btn-md"
                   >
                     キャンセル
                   </label>
@@ -692,7 +692,7 @@ const App = () => {
                 <div className="modal-action">
                   <label
                     htmlFor={"modal-remove-" + art.id}
-                    className="btn btn-error"
+                    className="btn btn-sm btn-error sm:btn-md"
                     onClick={() =>
                       setStoredArts((prev) =>
                         prev.filter((a) => a.id !== art.id)
