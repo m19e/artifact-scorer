@@ -683,7 +683,7 @@ const App = () => {
                     htmlFor={"modal-remove-" + art.id}
                     className="btn btn-outline"
                   >
-                    cancel
+                    キャンセル
                   </label>
                 </div>
                 <div className="modal-action">
@@ -696,7 +696,7 @@ const App = () => {
                       )
                     }
                   >
-                    delete
+                    削除
                   </label>
                 </div>
               </div>
