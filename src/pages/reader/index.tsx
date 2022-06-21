@@ -32,7 +32,10 @@ import { ImageLoader } from "@/components/molecules/ImageLoader"
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
-import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
+import {
+  TwitterShareButton,
+  TwitterShareIcon,
+} from "@/components/atoms/TwitterShareButton"
 import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
 
 const SubStatusOption = {
@@ -639,6 +642,7 @@ const App = () => {
                             />
                           </svg>
                         </label>
+                        <TwitterShareIcon artifact={art} calcMode={calcMode} />
 
                         <button className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost">
                           <svg
