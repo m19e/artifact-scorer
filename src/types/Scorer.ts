@@ -61,3 +61,8 @@ export interface Artifact {
   main: MainStatusData
   subs: SubStatusData[]
 }
+
+export interface ScoreableArtifactProps {
+  artifact: Artifact
+  calcMode: CalcModeData
+}
