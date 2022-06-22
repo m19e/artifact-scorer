@@ -33,6 +33,7 @@ import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
+import { SubStatusEditor } from "@/components/molecules/SubStatusEditor"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 
@@ -505,63 +506,29 @@ const App = () => {
                 <TwitterShareButton artifact={artifact} calcMode={calcMode} />
               </div>
               <div className="flex flex-col pr-4 pl-3.5">
-                {substats.map((s, index) => {
-                  const isPer = s.param.type === "percent"
-                  const step = isPer ? 0.1 : 1
-
-                  return (
-                    <div key={s.id + index} className="flex justify-between">
-                      <div className="flex gap-1 items-center">
-                        <span className="font-black whitespace-pre-wrap">
-                          {" ・"}
-                        </span>
-                        <select
-                          className="pr-7 pl-0 h-5 min-h-0 text-lg leading-4 text-slate-700 bg-opacity-0 select select-xs select-ghost"
-                          defaultValue={s.id}
-                          onChange={(e) => {
-                            const id = e.currentTarget.value as SubStatusID
-                            const data = updateSubStatusByID({ id, src: s })
-                            actions.setSubStats((prev) =>
-                              prev.map((sub, i) => (index === i ? data : sub))
-                            )
-                          }}
-                        >
-                          {SubStatusOptionList.map((opt) => (
-                            <option key={opt.name} value={opt.id}>
-                              {opt.name}
-                            </option>
-                          ))}
-                        </select>
-                        <div className="inline-flex font-black">
-                          <input
-                            type="number"
-                            inputMode="decimal"
-                            className="px-0 w-14 text-lg font-black leading-4 text-slate-700 input input-xs input-ghost"
-                            min={0}
-                            step={step}
-                            value={s.param.value}
-                            onChange={(e) => {
-                              const value = e.currentTarget.valueAsNumber
-                              actions.setSubStats((prev) =>
-                                prev.map((sub, i) => {
-                                  if (index === i) {
-                                    const param = { ...sub.param, value }
-                                    return { ...sub, param }
-                                  }
-                                  return sub
-                                })
-                              )
-                            }}
-                          />
-                          <span>{isPer ? "%" : ""}</span>
-                        </div>
-                      </div>
-                      <span className="text-lg text-slate-500">
-                        ({getSubStatusRate(s).toFixed()}%)
-                      </span>
-                    </div>
-                  )
-                })}
+                {substats.map((s, index) => (
+                  <SubStatusEditor
+                    key={s.id + index}
+                    sub={s}
+                    onSelectID={(id) => {
+                      const data = updateSubStatusByID({ id, src: s })
+                      actions.setSubStats((prev) =>
+                        prev.map((sub, i) => (index === i ? data : sub))
+                      )
+                    }}
+                    onChangeValue={(value) => {
+                      actions.setSubStats((prev) =>
+                        prev.map((sub, i) => {
+                          if (index === i) {
+                            const param = { ...sub.param, value }
+                            return { ...sub, param }
+                          }
+                          return sub
+                        })
+                      )
+                    }}
+                  />
+                ))}
               </div>
             </div>
           </div>
