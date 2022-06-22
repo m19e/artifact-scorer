@@ -49,15 +49,14 @@ const SubStatusOption = {
   ATK_FLAT: "攻撃力(実数)",
   UNDETECTED: "なし",
 } as const
-type SubStatusOptionID = keyof typeof SubStatusOption
 type SubStatusOptionData = {
-  id: SubStatusOptionID
-  name: typeof SubStatusOption[SubStatusOptionID]
+  id: SubStatusID
+  name: typeof SubStatusOption[SubStatusID]
 }
 const SubStatusOptionList: SubStatusOptionData[] = Object.entries(
   SubStatusOption
 ).map(([key, name]) => {
-  const id = key as SubStatusOptionID
+  const id = key as SubStatusID
   return { id, name }
 })
 
@@ -147,7 +146,7 @@ const updateSubStatusByID = ({
   id,
   src,
 }: {
-  id: SubStatusOptionID
+  id: SubStatusID
   src: SubStatusData
 }): SubStatusData => {
   const { value } = src.param
@@ -520,8 +519,7 @@ const App = () => {
                           className="pr-7 pl-0 h-5 min-h-0 text-lg leading-4 text-slate-700 bg-opacity-0 select select-xs select-ghost"
                           defaultValue={s.id}
                           onChange={(e) => {
-                            const id = e.currentTarget
-                              .value as SubStatusOptionID
+                            const id = e.currentTarget.value as SubStatusID
                             const data = updateSubStatusByID({ id, src: s })
                             actions.setSubStats((prev) =>
                               prev.map((sub, i) => (index === i ? data : sub))
