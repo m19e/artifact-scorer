@@ -34,6 +34,7 @@ import { Footer } from "@/components/atoms/Footer"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
+import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 
 const SubStatusOption = {
   CRIT_RATE: "会心率",
@@ -591,42 +592,14 @@ const App = () => {
         </div>
         <Footer />
       </div>
-      {storedArts.map((art) => (
-        <Fragment key={art.id}>
-          <input
-            type="checkbox"
-            id={"modal-remove-" + art.id}
-            className="modal-toggle"
-          />
-          <div className="modal">
-            <div className="max-w-sm modal-box">
-              <h3 className="text-lg font-bold">削除しますか？</h3>
-              <div className="flex justify-between">
-                <div className="modal-action">
-                  <label
-                    htmlFor={"modal-remove-" + art.id}
-                    className="btn btn-outline btn-sm sm:btn-md"
-                  >
-                    キャンセル
-                  </label>
-                </div>
-                <div className="modal-action">
-                  <label
-                    htmlFor={"modal-remove-" + art.id}
-                    className="btn btn-sm btn-error sm:btn-md"
-                    onClick={() =>
-                      setStoredArts((prev) =>
-                        prev.filter((a) => a.id !== art.id)
-                      )
-                    }
-                  >
-                    削除
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Fragment>
+      {storedArts.map(({ id: targetId }) => (
+        <RemoveModal
+          key={targetId}
+          id={targetId}
+          onRemove={() =>
+            setStoredArts((prev) => prev.filter((a) => a.id !== targetId))
+          }
+        />
       ))}
     </Fragment>
   )
