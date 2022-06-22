@@ -23,7 +23,6 @@ import {
   ArtifactTypeList,
   MainStatusMap,
   SubStatus,
-  SubStatusMap,
 } from "@/consts/Scorer"
 import { getArtifactScore } from "@/tools/Scorer"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
@@ -36,30 +35,6 @@ import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { SubStatusEditor } from "@/components/molecules/SubStatusEditor"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
-
-const SubStatusOption = {
-  CRIT_RATE: "会心率",
-  CRIT_DAMAGE: "会心ダメージ",
-  ATK_PER: "攻撃力(%)",
-  ENERGY_RECHARGE: "元素チャージ効率",
-  DEF_PER: "防御力(%)",
-  HP_PER: "HP(%)",
-  ELEMENTAL_MASTERY: "元素熟知",
-  HP_FLAT: "HP(実数)",
-  DEF_FLAT: "防御力(実数)",
-  ATK_FLAT: "攻撃力(実数)",
-  UNDETECTED: "なし",
-} as const
-type SubStatusOptionData = {
-  id: SubStatusID
-  name: typeof SubStatusOption[SubStatusID]
-}
-const SubStatusOptionList: SubStatusOptionData[] = Object.entries(
-  SubStatusOption
-).map(([key, name]) => {
-  const id = key as SubStatusID
-  return { id, name }
-})
 
 const reg = new RegExp("[\u{2460}-\u{2468}]", "u")
 const isValidCharParamValue = (char: string): boolean =>
@@ -177,18 +152,6 @@ const getSubStatusDatas = (text: string): SubStatusData[] => {
     .split("\n")
     .filter((l) => Boolean(l))
     .map((l) => getSubStatusData(l.replace(/\s/g, "")))
-}
-
-const getSubStatusRate = (data: SubStatusData): number => {
-  const {
-    id,
-    param: { value },
-  } = data
-  if (id === "UNDETECTED" || Number.isNaN(value) || value === 0) {
-    return 0
-  }
-  const { max } = SubStatusMap[id]
-  return Math.round((value / (max * 6)) * 100 * 10) / 10
 }
 
 interface ArtifactState {
