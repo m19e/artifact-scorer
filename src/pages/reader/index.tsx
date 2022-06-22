@@ -32,10 +32,8 @@ import { ImageLoader } from "@/components/molecules/ImageLoader"
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
+import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
-import {
-  TwitterShareButton,
-} from "@/components/atoms/TwitterShareButton"
 
 const SubStatusOption = {
   CRIT_RATE: "会心率",

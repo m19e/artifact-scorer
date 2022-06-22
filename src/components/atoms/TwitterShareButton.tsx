@@ -1,18 +1,16 @@
 import type { VFC } from "react"
-import type { Artifact, CalcModeData } from "@/types/Scorer"
+import type { MainStatusID, ScoreableArtifactProps } from "@/types/Scorer"
 import { getArtifactScore, getScoreRateProps } from "@/tools/Scorer"
 
-interface Props {
-  artifact: Artifact
-  calcMode: CalcModeData
-}
-
-const getMainIsPercent = (id: Artifact["main"]["id"]) => {
+const getMainIsPercent = (id: MainStatusID) => {
   return !["ATK_FLAT", "HP_FLAT", "ELEMENTAL_MASTERY"].includes(id)
 }
 const TWITTER_BASE_URL = "https://twitter.com/intent/tweet?text="
 const SPAN = ""
-const getArtShareUrl = ({ artifact, calcMode }: Props): string => {
+const getArtShareUrl = ({
+  artifact,
+  calcMode,
+}: ScoreableArtifactProps): string => {
   const title = "原神 聖遺物スコアラ"
   const score = getArtifactScore({ datas: artifact.subs, mode: calcMode.id })
   const { rate: rank } = getScoreRateProps(score)
@@ -46,7 +44,10 @@ const getArtShareUrl = ({ artifact, calcMode }: Props): string => {
   return TWITTER_BASE_URL + text
 }
 
-export const TwitterShareButton: VFC<Props> = ({ artifact, calcMode }) => {
+export const TwitterShareButton: VFC<ScoreableArtifactProps> = ({
+  artifact,
+  calcMode,
+}) => {
   const url = getArtShareUrl({ artifact, calcMode })
 
   return (
@@ -75,7 +76,10 @@ export const TwitterShareButton: VFC<Props> = ({ artifact, calcMode }) => {
   )
 }
 
-export const TwitterShareIcon: VFC<Props> = ({ artifact, calcMode }) => {
+export const TwitterShareIcon: VFC<ScoreableArtifactProps> = ({
+  artifact,
+  calcMode,
+}) => {
   const url = getArtShareUrl({ artifact, calcMode })
 
   return (

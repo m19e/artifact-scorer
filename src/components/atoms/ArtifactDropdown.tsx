@@ -1,16 +1,13 @@
 import type { FC } from "react"
 
-import type { Artifact, CalcModeData } from "@/types/Scorer"
-
+import type { ScoreableArtifactProps } from "@/types/Scorer"
 import { ArtTypeIcon } from "./ArtifactTypeIcons"
 import { TwitterShareIcon } from "./TwitterShareButton"
 
-interface Props {
-  artifact: Artifact
-  calcMode: CalcModeData
-}
-
-export const ArtifactDropdown: FC<Props> = ({ artifact, calcMode }) => {
+export const ArtifactDropdown: FC<ScoreableArtifactProps> = ({
+  artifact,
+  calcMode,
+}) => {
   const { id, type, set, main, subs } = artifact
   const modalId = "modal-remove-" + id
 
