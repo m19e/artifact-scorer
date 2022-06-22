@@ -1,5 +1,5 @@
 import type { VFC } from "react"
-import type { MainStatusID, ScoreableArtifactProps } from "@/types/Scorer"
+import type { MainStatusID, ScorableArtifactProps } from "@/types/Scorer"
 import { getArtifactScore, getScoreRateProps } from "@/tools/Scorer"
 
 const getMainIsPercent = (id: MainStatusID) => {
@@ -10,7 +10,7 @@ const SPAN = ""
 const getArtShareUrl = ({
   artifact,
   calcMode,
-}: ScoreableArtifactProps): string => {
+}: ScorableArtifactProps): string => {
   const title = "原神 聖遺物スコアラ"
   const score = getArtifactScore({ datas: artifact.subs, mode: calcMode.id })
   const { rate: rank } = getScoreRateProps(score)
@@ -44,7 +44,7 @@ const getArtShareUrl = ({
   return TWITTER_BASE_URL + text
 }
 
-export const TwitterShareButton: VFC<ScoreableArtifactProps> = ({
+export const TwitterShareButton: VFC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
 }) => {
@@ -76,7 +76,7 @@ export const TwitterShareButton: VFC<ScoreableArtifactProps> = ({
   )
 }
 
-export const TwitterShareIcon: VFC<ScoreableArtifactProps> = ({
+export const TwitterShareIcon: VFC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
 }) => {

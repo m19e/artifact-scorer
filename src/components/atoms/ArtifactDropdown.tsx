@@ -1,10 +1,10 @@
 import type { FC } from "react"
 
-import type { ScoreableArtifactProps } from "@/types/Scorer"
+import type { ScorableArtifactProps } from "@/types/Scorer"
 import { ArtTypeIcon } from "./ArtifactTypeIcons"
 import { TwitterShareIcon } from "./TwitterShareButton"
 
-export const ArtifactDropdown: FC<ScoreableArtifactProps> = ({
+export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
 }) => {
