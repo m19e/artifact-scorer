@@ -31,6 +31,7 @@ import { Footer } from "@/components/atoms/Footer"
 import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
 import { ArtifactSetSelect } from "@/components/atoms/Select/Artifact/Set"
 import { ArtifactTypeSelect } from "@/components/atoms/Select/Artifact/Type"
+import { ArtifactMainSelect } from "@/components/atoms/Select/Artifact/Main"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
@@ -373,20 +374,10 @@ const App = () => {
                   </div>
                   <div className="flex flex-col">
                     <div className="-ml-0.5">
-                      <select
-                        className="pl-0 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
-                        onChange={(e) =>
-                          actions.setMainType(
-                            e.currentTarget.value as MainStatusID
-                          )
-                        }
-                      >
-                        {ArtifactTypeMap[artTypeID].main.map((m, i) => (
-                          <option key={m.id + i} value={m.id}>
-                            {m.name}
-                          </option>
-                        ))}
-                      </select>
+                      <ArtifactMainSelect
+                        type={artTypeID}
+                        onSelect={actions.setMainType}
+                      />
                     </div>
                     <span className="font-mono text-4xl leading-7 text-white">
                       {MainStatusMap[mainType].max}
