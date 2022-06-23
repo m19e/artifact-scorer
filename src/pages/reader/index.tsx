@@ -18,7 +18,6 @@ import {
   ArtifactSet,
   ArtifactType,
   ArtifactTypeMap,
-  ArtifactTypeList,
   MainStatusMap,
   SubStatus,
 } from "@/consts/Scorer"
@@ -31,6 +30,7 @@ import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
 import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
 import { ArtifactSetSelect } from "@/components/atoms/Select/Artifact/Set"
+import { ArtifactTypeSelect } from "@/components/atoms/Select/Artifact/Type"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
@@ -369,20 +369,7 @@ const App = () => {
               <div className="flex justify-between h-full">
                 <div className="flex flex-col justify-between ml-6">
                   <div className="mt-1">
-                    <select
-                      className="pl-0 w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
-                      onChange={(e) =>
-                        actions.setArtTypeID(
-                          e.currentTarget.value as ArtifactTypeID
-                        )
-                      }
-                    >
-                      {ArtifactTypeList.map((a) => (
-                        <option key={a.name} value={a.id}>
-                          {a.name}
-                        </option>
-                      ))}
-                    </select>
+                    <ArtifactTypeSelect onSelect={actions.setArtTypeID} />
                   </div>
                   <div className="flex flex-col">
                     <div className="-ml-0.5">
