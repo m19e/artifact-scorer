@@ -16,7 +16,6 @@ import type {
 import {
   CalcModeMap,
   ArtifactSet,
-  ArtifactSetList,
   ArtifactType,
   ArtifactTypeMap,
   ArtifactTypeList,
@@ -31,6 +30,7 @@ import { SubStatusEditor } from "@/components/molecules/SubStatusEditor"
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
 import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
+import { ArtifactSetSelect } from "@/components/atoms/Select/Artifact/Set"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
@@ -359,19 +359,10 @@ const App = () => {
             </div>
             <div className="artifact-heading">
               <div className="mt-1.5 ml-6">
-                <select
-                  className="pl-0 h-8 min-h-0 text-3xl font-bold leading-7 text-white bg-opacity-0 select select-ghost"
+                <ArtifactSetSelect
                   defaultValue={artSetID}
-                  onChange={(e) =>
-                    actions.setArtSetID(e.currentTarget.value as ArtifactSetID)
-                  }
-                >
-                  {ArtifactSetList.map(({ id, name }) => (
-                    <option key={id} value={id}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
+                  onSelect={actions.setArtSetID}
+                />
               </div>
             </div>
             <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
