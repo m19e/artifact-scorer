@@ -15,7 +15,6 @@ import type {
 } from "@/types/Scorer"
 import {
   CalcModeMap,
-  CalcModeList,
   ArtifactSet,
   ArtifactSetList,
   ArtifactType,
@@ -28,11 +27,12 @@ import { getArtifactScore } from "@/tools/Scorer"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
+import { SubStatusEditor } from "@/components/molecules/SubStatusEditor"
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
+import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
-import { SubStatusEditor } from "@/components/molecules/SubStatusEditor"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 
@@ -355,18 +355,7 @@ const App = () => {
           </div>
           <div className="flex flex-col">
             <div className="mb-2">
-              <select
-                className="w-full select select-bordered"
-                onChange={(e) =>
-                  actions.setCalcType(e.currentTarget.value as CalcModeID)
-                }
-              >
-                {CalcModeList.map((data) => (
-                  <option key={data.id} value={data.id}>
-                    {data.label}
-                  </option>
-                ))}
-              </select>
+              <CalcModeSelect onSelect={actions.setCalcType} />
             </div>
             <div className="artifact-heading">
               <div className="mt-1.5 ml-6">
