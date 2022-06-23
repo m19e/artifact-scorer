@@ -10,7 +10,7 @@ interface Props {
 export const ArtifactTypeSelect: FC<Props> = ({ onSelect }) => {
   return (
     <select
-      className="pl-0 w-24 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 select select-sm select-ghost text-opacity-80"
+      className="text-white text-opacity-90 artifact-select-sm"
       onChange={(e) => onSelect(e.currentTarget.value as ArtifactTypeID)}
     >
       {ArtifactTypeList.map((a) => (

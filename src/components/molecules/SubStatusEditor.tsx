@@ -58,7 +58,7 @@ export const SubStatusEditor: FC<Props> = ({
       <div className="flex gap-1 items-center">
         <span className="font-black whitespace-pre-wrap">{" ・"}</span>
         <select
-          className="pr-7 pl-0 h-5 min-h-0 text-lg leading-4 text-slate-700 bg-opacity-0 select select-xs select-ghost"
+          className="text-slate-700 artifact-select-xs"
           defaultValue={sub.id}
           onChange={(e) => onSelectID(e.currentTarget.value as SubStatusID)}
         >

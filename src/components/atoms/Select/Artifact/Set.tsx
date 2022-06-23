@@ -11,7 +11,7 @@ interface Props {
 export const ArtifactSetSelect: FC<Props> = ({ defaultValue, onSelect }) => {
   return (
     <select
-      className="pl-0 h-8 min-h-0 text-3xl font-bold leading-7 text-white bg-opacity-0 select select-ghost"
+      className="text-white artifact-select-lg"
       defaultValue={defaultValue}
       onChange={(e) => onSelect(e.currentTarget.value as ArtifactSetID)}
     >

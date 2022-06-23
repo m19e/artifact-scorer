@@ -11,7 +11,7 @@ interface Props {
 export const ArtifactMainSelect: FC<Props> = ({ type, onSelect }) => {
   return (
     <select
-      className="pl-0 h-6 min-h-0 text-base leading-5 text-white bg-opacity-0 text-opacity-60 select select-sm select-ghost"
+      className="text-white text-opacity-60 artifact-select-sm"
       onChange={(e) => onSelect(e.currentTarget.value as MainStatusID)}
     >
       {ArtifactTypeMap[type].main.map((m, i) => (
