@@ -42,7 +42,13 @@ const App = () => {
   const { artSetID, artTypeID, mainType, substats, artifact, calcMode, score } =
     states
 
+  const handleDrop = (f: File) => {
+    setUrl(URL.createObjectURL(f))
+    setFile(f)
+  }
   const tryOcr = useCallback(async () => {
+    setInOCRProcess(true)
+
     const worker = createWorker({
       logger: (m: { status: string; progress: number }) => {
         //
@@ -65,17 +71,9 @@ const App = () => {
 
     const datas = getSubStatusDatas(text)
     actions.setSubStats(datas)
-  }, [file, rectangle, actions])
 
-  const handleDrop = (f: File) => {
-    setUrl(URL.createObjectURL(f))
-    setFile(f)
-  }
-  const handleClick = async () => {
-    setInOCRProcess(true)
-    await tryOcr()
     setInOCRProcess(false)
-  }
+  }, [file, rectangle, actions])
   const saveArt = useCallback(() => {
     const id = Date.now().toString(16)
     setStoredArts((prev) => [{ ...artifact, id }, ...prev])
@@ -100,7 +98,7 @@ const App = () => {
                 <button
                   className="btn btn-primary"
                   disabled={!url}
-                  onClick={handleClick}
+                  onClick={tryOcr}
                 >
                   読取
                 </button>
