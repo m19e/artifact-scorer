@@ -41,8 +41,6 @@
   background-repeat: no-repeat, no-repeat, repeat !important;
   background-position: left, right, center !important;
   background-size: contain, contain, contain !important;
-
-  @apply w-full h-12;
 }
 
 .artifact-dropdown {

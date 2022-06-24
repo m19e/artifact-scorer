@@ -109,7 +109,7 @@ const App = () => {
             <div className="mb-2">
               <CalcModeSelect onSelect={actions.setCalcType} />
             </div>
-            <div className="artifact-heading">
+            <div className="h-12 artifact-heading">
               <div className="mt-1.5 ml-6">
                 <ArtifactSetSelect
                   defaultValue={artSetID}
