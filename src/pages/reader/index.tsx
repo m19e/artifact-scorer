@@ -1,18 +1,11 @@
 import { Fragment, useState, useCallback } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
-
-import type {
-  Artifact,
-} from "@/types/Scorer"
-import {
-  MainStatusMap,
-} from "@/consts/Scorer"
-import {
-  getSubStatusDatas,
-  updateSubStatusByID,
-} from "@/tools/Scorer"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
+
+import type { Artifact } from "@/types/Scorer"
+import { MainStatusMap } from "@/consts/Scorer"
+import { getSubStatusDatas, updateSubStatusByID } from "@/tools/Scorer"
 import { useArtifact } from "@/hooks/Scorer"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
@@ -23,6 +16,7 @@ import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
 import { ArtifactSetSelect } from "@/components/atoms/Select/Artifact/Set"
 import { ArtifactTypeSelect } from "@/components/atoms/Select/Artifact/Type"
 import { ArtifactMainSelect } from "@/components/atoms/Select/Artifact/Main"
+import { RarityRating } from "@/components/atoms/RarityRating"
 import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
@@ -141,33 +135,8 @@ const App = () => {
                     <span className="font-mono text-4xl leading-7 text-white">
                       {MainStatusMap[mainType].max}
                     </span>
-                    <div className="gap-1 my-2.5 rating">
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                      />
-                      <input
-                        type="radio"
-                        name="rating-2"
-                        className="w-5 h-5 bg-yellow-400 mask mask-star-2"
-                        defaultChecked
-                      />
+                    <div className="my-2.5">
+                      <RarityRating />
                     </div>
                   </div>
                 </div>
