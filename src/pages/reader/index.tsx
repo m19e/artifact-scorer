@@ -46,7 +46,7 @@ const App = () => {
     setUrl(URL.createObjectURL(f))
     setFile(f)
   }
-  const tryOcr = useCallback(async () => {
+  const handleRecognize = useCallback(async () => {
     setInOCRProcess(true)
 
     const worker = createWorker({
@@ -98,7 +98,7 @@ const App = () => {
                 <button
                   className="btn btn-primary"
                   disabled={!url}
-                  onClick={tryOcr}
+                  onClick={handleRecognize}
                 >
                   読取
                 </button>
