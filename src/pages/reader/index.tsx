@@ -117,7 +117,7 @@ const App = () => {
                 />
               </div>
             </div>
-            <div className="h-44 bg-gradient-to-br from-gray-600 to-orange-300">
+            <div className="h-44 artifact-hero">
               <div className="flex justify-between h-full">
                 <div className="flex flex-col justify-between ml-6">
                   <div className="mt-1">

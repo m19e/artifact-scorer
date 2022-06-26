@@ -43,6 +43,10 @@
   background-size: contain, contain, contain !important;
 }
 
+.artifact-hero {
+  @apply bg-gradient-to-br from-gray-600 to-orange-300;
+}
+
 .artifact-dropdown {
   @apply dropdown dropdown-top;
 }
