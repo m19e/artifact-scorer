@@ -21,7 +21,7 @@ import { getArtifactScore } from "@/tools/Scorer"
 
 type SetValue<T> = Dispatch<SetStateAction<T>>
 
-interface ArtifactState {
+export interface ArtifactState {
   artSetID: ArtifactSetID
   artTypeID: ArtifactTypeID
   mainType: MainStatusID
@@ -31,7 +31,7 @@ interface ArtifactState {
   artifact: Artifact
 }
 
-interface ArtifactAction {
+export interface ArtifactAction {
   setArtSetID: SetValue<ArtifactSetID>
   setSubStats: SetValue<SubStatusData[]>
   setCalcType: (type: CalcModeID) => void
