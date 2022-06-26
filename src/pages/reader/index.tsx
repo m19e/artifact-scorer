@@ -135,13 +135,13 @@ const App = () => {
                   <SubStatusEditor
                     key={s.id + index}
                     sub={s}
-                    onSelectID={(id) => {
+                    onSelect={(id) => {
                       const data = updateSubStatusByID({ id, src: s })
                       actions.setSubStats((prev) =>
                         prev.map((sub, i) => (index === i ? data : sub))
                       )
                     }}
-                    onChangeValue={(value) => {
+                    onChange={(value) => {
                       actions.setSubStats((prev) =>
                         prev.map((sub, i) => {
                           if (index === i) {

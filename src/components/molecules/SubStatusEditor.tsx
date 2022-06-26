@@ -41,15 +41,11 @@ const getSubStatusRate = (data: SubStatusData): number => {
 
 interface Props {
   sub: SubStatusData
-  onSelectID: (id: SubStatusID) => void
-  onChangeValue: (value: number) => void
+  onSelect: (id: SubStatusID) => void
+  onChange: (value: number) => void
 }
 
-export const SubStatusEditor: FC<Props> = ({
-  sub,
-  onSelectID,
-  onChangeValue,
-}) => {
+export const SubStatusEditor: FC<Props> = ({ sub, onSelect, onChange }) => {
   const isPer = sub.param.type === "percent"
   const step = isPer ? 0.1 : 1
 
@@ -60,7 +56,7 @@ export const SubStatusEditor: FC<Props> = ({
         <select
           className="text-slate-700 artifact-select-xs"
           defaultValue={sub.id}
-          onChange={(e) => onSelectID(e.currentTarget.value as SubStatusID)}
+          onChange={(e) => onSelect(e.currentTarget.value as SubStatusID)}
         >
           {SubStatusOptionList.map((opt) => (
             <option key={opt.name} value={opt.id}>
@@ -76,7 +72,7 @@ export const SubStatusEditor: FC<Props> = ({
             min={0}
             step={step}
             value={sub.param.value}
-            onChange={(e) => onChangeValue(e.currentTarget.valueAsNumber)}
+            onChange={(e) => onChange(e.currentTarget.valueAsNumber)}
           />
           <span>{isPer ? "%" : ""}</span>
         </div>
