@@ -4,20 +4,16 @@ import type { ImageLike, Rectangle } from "tesseract.js"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import type { Artifact } from "@/types/Scorer"
-import { MainStatusMap } from "@/consts/Scorer"
 import { getSubStatusDatas, updateSubStatusByID } from "@/tools/Scorer"
 import { useArtifact } from "@/hooks/Scorer"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
+import { ArtifactEditorHero } from "@/components/molecules/ArtifactEditor/Hero"
 import { SubStatusEditor } from "@/components/molecules/SubStatusEditor"
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
 import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
 import { ArtifactSetSelect } from "@/components/atoms/Select/Artifact/Set"
-import { ArtifactTypeSelect } from "@/components/atoms/Select/Artifact/Type"
-import { ArtifactMainSelect } from "@/components/atoms/Select/Artifact/Main"
-import { RarityRating } from "@/components/atoms/RarityRating"
-import { ArtifactScoreBox } from "@/components/atoms/ArtifactScoreBox"
 import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
@@ -117,32 +113,14 @@ const App = () => {
                 />
               </div>
             </div>
-            <div className="h-44 artifact-hero">
-              <div className="flex justify-between h-full">
-                <div className="flex flex-col justify-between ml-6">
-                  <div className="mt-1">
-                    <ArtifactTypeSelect onSelect={actions.setArtTypeID} />
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="-ml-0.5">
-                      <ArtifactMainSelect
-                        type={artTypeID}
-                        onSelect={actions.setMainType}
-                      />
-                    </div>
-                    <span className="font-mono text-4xl leading-7 text-white">
-                      {MainStatusMap[mainType].max}
-                    </span>
-                    <div className="my-2.5">
-                      <RarityRating />
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-col justify-center mr-4">
-                  <ArtifactScoreBox score={score} calc={calcMode.name} />
-                </div>
-              </div>
-            </div>
+            <ArtifactEditorHero
+              artTypeID={artTypeID}
+              mainType={mainType}
+              score={score}
+              calcMode={calcMode}
+              onSelectType={actions.setArtTypeID}
+              onSelectMain={actions.setMainType}
+            />
             <div className="flex flex-col gap-2 py-3 bg-orange-100">
               <div className="flex justify-between items-center px-4">
                 <div className="pr-1 pl-0.5 h-6 bg-slate-700 rounded">
