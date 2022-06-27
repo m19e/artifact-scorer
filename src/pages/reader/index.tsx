@@ -8,14 +8,10 @@ import { getSubStatusDatas } from "@/tools/Scorer"
 import { useArtifact } from "@/hooks/Scorer"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
-import { ArtifactEditorHero } from "@/components/molecules/ArtifactEditor/Hero"
-import { SubStatusEditorList } from "@/components/molecules/SubStatusEditorList"
 
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
-import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
-import { ArtifactSetSelect } from "@/components/atoms/Select/Artifact/Set"
-import { TwitterShareButton } from "@/components/atoms/TwitterShareButton"
+import { ArtifactEditor } from "@/components/molecules/ArtifactEditor"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 
@@ -102,43 +98,7 @@ const App = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-col">
-            <div className="mb-2">
-              <CalcModeSelect onSelect={actions.setCalcType} />
-            </div>
-            <div className="h-12 artifact-heading">
-              <div className="mt-1.5 ml-6">
-                <ArtifactSetSelect
-                  defaultValue={artSetID}
-                  onSelect={actions.setArtSetID}
-                />
-              </div>
-            </div>
-            <ArtifactEditorHero
-              artTypeID={artTypeID}
-              mainType={mainType}
-              score={score}
-              calcMode={calcMode}
-              onSelectType={actions.setArtTypeID}
-              onSelectMain={actions.setMainType}
-            />
-            <div className="flex flex-col gap-2 py-3 bg-orange-100">
-              <div className="flex justify-between items-center px-4">
-                <div className="pr-1 pl-0.5 h-6 bg-slate-700 rounded">
-                  <span className="text-xl font-black leading-5 text-white">
-                    +20
-                  </span>
-                </div>
-                <TwitterShareButton artifact={artifact} calcMode={calcMode} />
-              </div>
-              <div className="pr-4 pl-3.5">
-                <SubStatusEditorList
-                  subs={substats}
-                  onUpdate={actions.updateSubStat}
-                />
-              </div>
-            </div>
-          </div>
+          <ArtifactEditor {...states} {...actions} />
           <div className="flex flex-col">
             <div className="my-2">
               <div className="divider">
