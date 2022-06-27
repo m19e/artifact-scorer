@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react"
+import { useState, useCallback } from "react"
 import type { Dispatch, SetStateAction } from "react"
 
 import type {
@@ -66,27 +66,9 @@ export const useArtifact = (
   const [artTypeID, setArtTID] = useState<ArtifactTypeID>(initialArt.type.id)
   const [mainType, setMainType] = useState(initialArt.main.id)
   const [substats, setSubs] = useState<SubStatusData[]>(initialArt.subs)
-  const [artifact, setArt] = useState<Artifact>(initialArt)
 
   const [calcMode, setCalcMode] = useState<CalcModeData>(CalcModeMap.CRIT)
   const [score, setScore] = useState(0)
-
-  useEffect(() => {
-    setArt({
-      id: initialArt.id,
-      level: initialArt.level,
-      set: {
-        id: artSetID,
-        name: ArtifactSet[artSetID],
-      },
-      type: {
-        id: artTypeID,
-        name: ArtifactType[artTypeID],
-      },
-      main: MainStatusMap[mainType],
-      subs: substats,
-    })
-  }, [initialArt, artSetID, artTypeID, mainType, substats])
 
   const setSubStats = useCallback<SetValue<SubStatusData[]>>(
     (newSubs) => {
@@ -111,6 +93,21 @@ export const useArtifact = (
   const setArtTypeID = (id: ArtifactTypeID) => {
     setArtTID(id)
     setMainType(ArtifactTypeMap[id].main[0].id)
+  }
+
+  const artifact: Artifact = {
+    id: initialArt.id,
+    level: initialArt.level,
+    set: {
+      id: artSetID,
+      name: ArtifactSet[artSetID],
+    },
+    type: {
+      id: artTypeID,
+      name: ArtifactType[artTypeID],
+    },
+    main: MainStatusMap[mainType],
+    subs: substats,
   }
 
   const states = {
