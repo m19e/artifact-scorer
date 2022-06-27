@@ -71,6 +71,12 @@ const App = () => {
     const id = Date.now().toString(16)
     setStoredArts((prev) => [{ ...artifact, id }, ...prev])
   }, [artifact, setStoredArts])
+  const removeArt = (id: string) => {
+    setStoredArts((prev) => prev.filter((a) => a.id !== id))
+  }
+  const editArt = (id: string, newArt: Artifact) => {
+    setStoredArts((prev) => prev.map((a) => (a.id === id ? newArt : a)))
+  }
 
   return (
     <Fragment>
@@ -128,9 +134,7 @@ const App = () => {
         <RemoveModal
           key={targetId}
           id={targetId}
-          onRemove={() =>
-            setStoredArts((prev) => prev.filter((a) => a.id !== targetId))
-          }
+          onRemove={() => removeArt(targetId)}
         />
       ))}
       {storedArts.map((art) => (
@@ -138,9 +142,7 @@ const App = () => {
           key={art.id}
           artifact={art}
           onEdit={(newArt) =>
-            setStoredArts((prev) =>
-              prev.map((a) => (a.id === art.id ? newArt : a))
-            )
+            editArt(art.id, newArt)
           }
         />
       ))}
