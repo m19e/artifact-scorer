@@ -69,8 +69,6 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
               />
             </svg>
           </label>
-          <TwitterShareIcon artifact={artifact} calcMode={calcMode} />
-
           <label
             htmlFor={editId}
             className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost"
@@ -90,6 +88,7 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
               />
             </svg>
           </label>
+          <TwitterShareIcon artifact={artifact} calcMode={calcMode} />
         </div>
       </div>
     </div>
