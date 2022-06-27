@@ -9,7 +9,8 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
   calcMode,
 }) => {
   const { id, type, set, main, subs } = artifact
-  const modalId = "modal-remove-" + id
+  const editId = "modal-edit-" + id
+  const removeId = "modal-remove-" + id
 
   return (
     <div key={id} className="w-14 h-14 artifact-dropdown">
@@ -50,7 +51,7 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
         <div className="my-2 h-0 divider"></div>
         <div className="flex justify-end">
           <label
-            htmlFor={modalId}
+            htmlFor={removeId}
             className="hover:bg-opacity-20 modal-button text-error text-opacity-75 hover:bg-error btn btn-sm btn-error btn-circle btn-ghost"
           >
             <svg
@@ -70,7 +71,10 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
           </label>
           <TwitterShareIcon artifact={artifact} calcMode={calcMode} />
 
-          <button className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost">
+          <label
+            htmlFor={editId}
+            className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-6 h-6"
@@ -85,7 +89,7 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
               />
             </svg>
-          </button>
+          </label>
         </div>
       </div>
     </div>
