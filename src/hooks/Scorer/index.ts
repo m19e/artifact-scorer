@@ -69,7 +69,9 @@ export const useArtifact = (
   const [substats, setSubs] = useState<SubStatusData[]>(initialArt.subs)
 
   const [calcMode, setCalcMode] = useState<CalcModeData>(CalcModeMap.CRIT)
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useState(
+    getArtifactScore({ datas: initialArt.subs, mode: calcMode.id })
+  )
 
   const setSubStats = useCallback<SetValue<SubStatusData[]>>(
     (newSubs) => {
