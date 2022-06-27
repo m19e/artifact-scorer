@@ -136,21 +136,12 @@ const App = () => {
                     key={s.id + index}
                     sub={s}
                     onSelect={(id) => {
-                      const data = updateSubStatusByID({ id, src: s })
-                      actions.setSubStats((prev) =>
-                        prev.map((sub, i) => (index === i ? data : sub))
-                      )
+                      const newSub = updateSubStatusByID({ id, src: s })
+                      actions.updateSubStat(index, newSub)
                     }}
                     onChange={(value) => {
-                      actions.setSubStats((prev) =>
-                        prev.map((sub, i) => {
-                          if (index === i) {
-                            const param = { ...sub.param, value }
-                            return { ...sub, param }
-                          }
-                          return sub
-                        })
-                      )
+                      const newSub = { ...s, param: { ...s.param, value } }
+                      actions.updateSubStat(index, newSub)
                     }}
                   />
                 ))}
