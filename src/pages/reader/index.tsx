@@ -14,6 +14,7 @@ import { Footer } from "@/components/atoms/Footer"
 import { ArtifactEditor } from "@/components/molecules/ArtifactEditor"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
+import { EditModal } from "@/components/molecules/ArtifactEditModal"
 
 const App = () => {
   const [file, setFile] = useState<ImageLike>("")
@@ -129,6 +130,17 @@ const App = () => {
           id={targetId}
           onRemove={() =>
             setStoredArts((prev) => prev.filter((a) => a.id !== targetId))
+          }
+        />
+      ))}
+      {storedArts.map((art) => (
+        <EditModal
+          key={art.id}
+          artifact={art}
+          onEdit={(newArt) =>
+            setStoredArts((prev) =>
+              prev.map((a) => (a.id === art.id ? newArt : a))
+            )
           }
         />
       ))}
