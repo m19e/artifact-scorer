@@ -4,12 +4,12 @@ import type { ImageLike, Rectangle } from "tesseract.js"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import type { Artifact } from "@/types/Scorer"
-import { getSubStatusDatas, updateSubStatusByID } from "@/tools/Scorer"
+import { getSubStatusDatas } from "@/tools/Scorer"
 import { useArtifact } from "@/hooks/Scorer"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
 import { ArtifactEditorHero } from "@/components/molecules/ArtifactEditor/Hero"
-import { SubStatusEditor } from "@/components/molecules/SubStatusEditor"
+import { SubStatusEditorList } from "@/components/molecules/SubStatusEditorList"
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
 import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
@@ -130,21 +130,11 @@ const App = () => {
                 </div>
                 <TwitterShareButton artifact={artifact} calcMode={calcMode} />
               </div>
-              <div className="flex flex-col pr-4 pl-3.5">
-                {substats.map((s, index) => (
-                  <SubStatusEditor
-                    key={s.id + index}
-                    sub={s}
-                    onSelect={(id) => {
-                      const newSub = updateSubStatusByID({ id, src: s })
-                      actions.updateSubStat(index, newSub)
-                    }}
-                    onChange={(value) => {
-                      const newSub = { ...s, param: { ...s.param, value } }
-                      actions.updateSubStat(index, newSub)
-                    }}
-                  />
-                ))}
+              <div className="pr-4 pl-3.5">
+                <SubStatusEditorList
+                  subs={substats}
+                  updater={actions.updateSubStat}
+                />
               </div>
             </div>
           </div>
