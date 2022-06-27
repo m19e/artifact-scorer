@@ -22,9 +22,8 @@ export const EditModal: FC<Props> = ({ artifact, onEdit }) => {
         <div className="flex flex-col items-center max-w-md bg-base-200 modal-box">
           <div className="w-full max-w-sm">
             <h3 className="text-lg font-bold">聖遺物の編集</h3>
-            <div className="mt-1">
-              <ArtifactEditor {...states} {...actions} />
-            </div>
+            <div className="mt-0 mb-2 h-0 divider"></div>
+            <ArtifactEditor {...states} {...actions} />
             <div className="flex justify-between">
               <div className="modal-action">
                 <label
