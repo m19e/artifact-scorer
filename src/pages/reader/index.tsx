@@ -3,15 +3,16 @@ import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
-import type { Artifact } from "@/types/Scorer"
+import type { Artifact, ArtifactTypeID, ArtifactSetID } from "@/types/Scorer"
+import { ArtifactTypeList, ArtifactSet } from "@/consts/Scorer"
 import { getSubStatusDatas } from "@/tools/Scorer"
 import { useArtifact } from "@/hooks/Scorer"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
+import { ArtifactEditor } from "@/components/molecules/ArtifactEditor"
 
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
-import { ArtifactEditor } from "@/components/molecules/ArtifactEditor"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
@@ -26,6 +27,10 @@ const App = () => {
     height: 0,
   })
   const [inOCRProcess, setInOCRProcess] = useState(false)
+  const [filterArtType, setFilterArtType] = useState<"ALL" | ArtifactTypeID>(
+    "ALL"
+  )
+  const [filterArtSet, setFilterArtSet] = useState<"ALL" | ArtifactSetID>("ALL")
 
   const [states, actions] = useArtifact()
   const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
@@ -78,6 +83,21 @@ const App = () => {
     setStoredArts((prev) => prev.map((a) => (a.id === id ? newArt : a)))
   }
 
+  const allType = filterArtType === "ALL"
+  const allSet = filterArtSet == "ALL"
+  const filteredArts =
+    allType && allSet
+      ? storedArts
+      : storedArts.filter((art) => {
+          const validType = art.type.id === filterArtType
+          const validSet = art.set.id === filterArtSet
+          return (
+            (allType && validSet) ||
+            (allSet && validType) ||
+            (validType && validSet)
+          )
+        })
+
   return (
     <Fragment>
       <div className="flex flex-col items-center min-h-screen bg-base-200">
@@ -117,8 +137,38 @@ const App = () => {
                 </button>
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              <select
+                className="select select-sm"
+                onChange={(e) =>
+                  setFilterArtType(e.currentTarget.value as ArtifactTypeID)
+                }
+              >
+                <option value="ALL">全種類</option>
+                {ArtifactTypeList.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="select select-sm"
+                onChange={(e) =>
+                  setFilterArtSet(e.currentTarget.value as ArtifactSetID)
+                }
+              >
+                <option value="ALL">全セット</option>
+                {Array.from(new Set(storedArts.map(({ set }) => set.id))).map(
+                  (id) => (
+                    <option key={id} value={id}>
+                      {ArtifactSet[id]}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
             <div className="grid grid-cols-6 gap-2.5 justify-between">
-              {storedArts.map((art) => (
+              {filteredArts.map((art) => (
                 <ArtifactDropdown
                   key={art.id}
                   artifact={art}
@@ -141,9 +191,7 @@ const App = () => {
         <EditModal
           key={art.id}
           artifact={art}
-          onEdit={(newArt) =>
-            editArt(art.id, newArt)
-          }
+          onEdit={(newArt) => editArt(art.id, newArt)}
         />
       ))}
     </Fragment>
