@@ -10,6 +10,7 @@ import { useArtifact } from "@/hooks/Scorer"
 import { ImageLoader } from "@/components/molecules/ImageLoader"
 import { ArtifactEditorHero } from "@/components/molecules/ArtifactEditor/Hero"
 import { SubStatusEditorList } from "@/components/molecules/SubStatusEditorList"
+
 import { Header } from "@/components/atoms/Header"
 import { Footer } from "@/components/atoms/Footer"
 import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
@@ -133,7 +134,7 @@ const App = () => {
               <div className="pr-4 pl-3.5">
                 <SubStatusEditorList
                   subs={substats}
-                  updater={actions.updateSubStat}
+                  onUpdate={actions.updateSubStat}
                 />
               </div>
             </div>

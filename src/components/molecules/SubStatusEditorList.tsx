@@ -7,10 +7,10 @@ import { SubStatusEditor } from "./SubStatusEditor"
 
 interface Props {
   subs: SubStatusData[]
-  updater: (index: number, newSub: SubStatusData) => void
+  onUpdate: (index: number, newSub: SubStatusData) => void
 }
 
-export const SubStatusEditorList: FC<Props> = ({ subs, updater }) => {
+export const SubStatusEditorList: FC<Props> = ({ subs, onUpdate }) => {
   return (
     <div className="flex flex-col">
       {subs.map((sub, index) => {
@@ -20,11 +20,11 @@ export const SubStatusEditorList: FC<Props> = ({ subs, updater }) => {
             sub={sub}
             onSelect={(id) => {
               const newSub = updateSubStatusByID({ id, src: sub })
-              updater(index, newSub)
+              onUpdate(index, newSub)
             }}
             onChange={(value) => {
               const newSub = { ...sub, param: { ...sub.param, value } }
-              updater(index, newSub)
+              onUpdate(index, newSub)
             }}
           />
         )
