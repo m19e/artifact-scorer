@@ -10,7 +10,7 @@ export const RemoveModal: FC<Props> = ({ id, onRemove }) => {
   const modalId = "modal-remove-" + id
 
   return (
-    <Fragment key={id}>
+    <Fragment>
       <input type="checkbox" id={modalId} className="modal-toggle" />
       <div className="modal">
         <div className="max-w-sm modal-box">
