@@ -32,8 +32,7 @@ const App = () => {
     []
   )
 
-  const { artSetID, artTypeID, mainType, substats, artifact, calcMode, score } =
-    states
+  const { artifact, calcMode } = states
 
   const handleDrop = (f: File) => {
     setUrl(URL.createObjectURL(f))
