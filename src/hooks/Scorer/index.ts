@@ -37,6 +37,7 @@ export interface ArtifactAction {
   setCalcType: (type: CalcModeID) => void
   setArtTypeID: (id: ArtifactTypeID) => void
   setMainType: SetValue<MainStatusID>
+  updateSubStat: (index: number, newSub: SubStatusData) => void
 }
 
 const DEFAULT_ARTIFACT_DATA: Artifact = {
@@ -79,6 +80,9 @@ export const useArtifact = (
     },
     [substats, calcMode]
   )
+  const updateSubStat = (index: number, newSub: SubStatusData) => {
+    setSubStats((prev) => prev.map((sub, i) => (index === i ? newSub : sub)))
+  }
 
   const setCalcType = useCallback(
     (mode: CalcModeID) => {
@@ -125,6 +129,7 @@ export const useArtifact = (
     setCalcType,
     setArtTypeID,
     setMainType,
+    updateSubStat,
   }
 
   return [states, actions]
