@@ -35,4 +35,44 @@
   @apply text-base sm:text-lg md:text-xl;
 }
 
+.artifact-heading {
+  background-image: url(/header-left.jpg), url(/header-right.jpg),
+    url(/header-center.jpg) !important;
+  background-repeat: no-repeat, no-repeat, repeat !important;
+  background-position: left, right, center !important;
+  background-size: contain, contain, contain !important;
+}
+
+.artifact-hero {
+  @apply bg-gradient-to-br from-gray-600 to-orange-300;
+}
+
+.artifact-dropdown {
+  @apply dropdown dropdown-top;
+}
+.artifact-dropdown:nth-child(4n),
+:nth-child(5n),
+:nth-child(6n) {
+  @apply dropdown-end;
+}
+
+.artifact-select {
+  @apply pl-0 min-h-0 bg-opacity-0 select select-ghost;
+}
+.artifact-select-lg {
+  @apply artifact-select;
+
+  @apply h-8 text-3xl font-bold leading-7;
+}
+.artifact-select-sm {
+  @apply artifact-select;
+
+  @apply pr-8 h-6 text-base leading-5;
+}
+.artifact-select-xs {
+  @apply artifact-select;
+
+  @apply pr-8 h-5 text-lg leading-4;
+}
+
 @tailwind utilities;
