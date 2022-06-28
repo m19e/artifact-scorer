@@ -6,8 +6,6 @@ import type {
 } from "next"
 import { parse } from "next-useragent"
 
-import { MatrixMaker } from "@/components/templates/MatrixMaker"
-
 type Props = {
   isMobile: boolean
 }
@@ -53,8 +51,6 @@ const Page: NextPage<Props> = ({ isMobile }) => {
         />
         <meta property="twitter:card" content="summary" />
       </Head>
-
-      <MatrixMaker isMobile={isMobile} />
     </>
   )
 }
