@@ -20,36 +20,36 @@ const Page: NextPage<Props> = ({ isMobile }) => {
         <link
           rel="icon alternate"
           type="image/png"
-          href="https://twemoji.maxcdn.com/v/14.0.2/72x72/1f4a0.png"
+          href="https://twemoji.maxcdn.com/v/14.0.2/72x72/2728.png"
         />
-        <title>Matrix Maker</title>
+        <title>#ArtifactScorer 聖遺物スコアラ</title>
         <meta
           name="description"
-          content="「Matrix Maker」は手軽に2軸マトリクス画像が作成できるサービスです。"
+          content="「#ArtifactScorer」は原神のスクリーンショットから聖遺物データの読み取り・聖遺物スコアの算出・聖遺物の管理が簡単にできるサービスです。"
         />
-        <meta property="og:site_name" content="Matrix Maker" />
-        <meta property="og:title" content="Matrix Maker" />
+        <meta property="og:site_name" content="#ArtifactScorer" />
+        <meta property="og:title" content="#ArtifactScorer" />
         <meta
           property="og:description"
-          content="「Matrix Maker」は手軽に2軸マトリクス画像が作成できるサービスです。"
+          content="「#ArtifactScorer」は原神のスクリーンショットから聖遺物データの読み取り・聖遺物スコアの算出・聖遺物の管理が簡単にできるサービスです。"
         />
         <meta
           property="og:image"
-          content="https://twemoji.maxcdn.com/v/14.0.2/72x72/1f4a0.png"
+          content="https://twemoji.maxcdn.com/v/14.0.2/72x72/2728.png"
         />
         <meta property="og:type" content="website" />
-        <meta property="twitter:title" content="Matrix Maker" />
+        <meta property="twitter:title" content="#ArtifactScorer" />
         <meta
           property="twitter:description"
-          content="「Matrix Maker」は手軽に2軸マトリクス画像が作成できるサービスです。"
+          content="「#ArtifactScorer」は原神のスクリーンショットから聖遺物データの読み取り・聖遺物スコアの算出・聖遺物の管理が簡単にできるサービスです。"
         />
         <meta
           property="twitter:image"
-          content="https://twemoji.maxcdn.com/v/14.0.2/72x72/1f4a0.png"
+          content="https://twemoji.maxcdn.com/v/14.0.2/72x72/2728.png"
         />
         <meta
           property="twitter:url"
-          content="https://matrix-maker.vercel.app"
+          content="https://artifact-scorer.vercel.app"
         />
         <meta property="twitter:card" content="summary" />
       </Head>
