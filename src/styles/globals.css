@@ -62,7 +62,7 @@
 .artifact-select-lg {
   @apply artifact-select;
 
-  @apply h-8 text-3xl font-bold leading-7;
+  @apply h-8 text-2xl leading-6 font-bold sm:text-3xl sm:leading-7;
 }
 .artifact-select-sm {
   @apply artifact-select;
