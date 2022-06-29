@@ -22,7 +22,7 @@ const Page: NextPage<Props> = ({ isMobile }) => {
           type="image/png"
           href="https://twemoji.maxcdn.com/v/14.0.2/72x72/2728.png"
         />
-        <title>#ArtifactScorer 聖遺物スコアラ</title>
+        <title>聖遺物スコアラ #ArtifactScorer</title>
         <meta
           name="description"
           content="「#ArtifactScorer」は原神のスクリーンショットから聖遺物データの読み取り・聖遺物スコアの算出・聖遺物の管理が簡単にできるサービスです。"
