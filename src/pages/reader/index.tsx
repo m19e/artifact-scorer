@@ -179,21 +179,21 @@ const App = () => {
           </div>
         </div>
         <Footer />
+        {storedArts.map(({ id: targetId }) => (
+          <RemoveModal
+            key={targetId}
+            id={targetId}
+            onRemove={() => removeArt(targetId)}
+          />
+        ))}
+        {storedArts.map((art) => (
+          <EditModal
+            key={art.id}
+            artifact={art}
+            onEdit={(newArt) => editArt(art.id, newArt)}
+          />
+        ))}
       </div>
-      {storedArts.map(({ id: targetId }) => (
-        <RemoveModal
-          key={targetId}
-          id={targetId}
-          onRemove={() => removeArt(targetId)}
-        />
-      ))}
-      {storedArts.map((art) => (
-        <EditModal
-          key={art.id}
-          artifact={art}
-          onEdit={(newArt) => editArt(art.id, newArt)}
-        />
-      ))}
     </Fragment>
   )
 }
