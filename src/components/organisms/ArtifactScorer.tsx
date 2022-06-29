@@ -89,7 +89,7 @@ export const ArtifactScorer = () => {
 
   return (
     <Fragment>
-      <div className="flex flex-col flex-1 my-4 max-w-sm">
+      <div className="flex flex-col my-4 w-11/12 max-w-sm sm:w-full">
         <ImageLoader
           url={url}
           onDrop={handleDrop}
