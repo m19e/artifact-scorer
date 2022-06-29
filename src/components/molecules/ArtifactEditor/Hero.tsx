@@ -2,6 +2,7 @@ import type { FC } from "react"
 
 import type { ArtifactState, ArtifactAction } from "@/hooks/Scorer"
 import { MainStatusMap } from "@/consts/Scorer"
+import { getMainIsPercent } from "@/tools/Scorer"
 
 import { ArtifactTypeSelect } from "@/components/atoms/Select/Artifact/Type"
 import { ArtifactMainSelect } from "@/components/atoms/Select/Artifact/Main"
@@ -37,6 +38,7 @@ export const ArtifactEditorHero: FC<Props> = ({
             </div>
             <span className="font-mono text-4xl leading-7 text-white">
               {MainStatusMap[mainType].max}
+              {getMainIsPercent(mainType) ? "%" : ""}
             </span>
             <div className="my-2.5">
               <RarityRating />

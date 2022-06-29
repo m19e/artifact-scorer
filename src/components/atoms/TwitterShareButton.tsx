@@ -1,11 +1,13 @@
 import type { VFC } from "react"
-import type { MainStatusID, ScorableArtifactProps } from "@/types/Scorer"
-import { getArtifactScore, getScoreRateProps } from "@/tools/Scorer"
+import type { ScorableArtifactProps } from "@/types/Scorer"
+import {
+  getArtifactScore,
+  getScoreRateProps,
+  getMainIsPercent,
+} from "@/tools/Scorer"
 
-const getMainIsPercent = (id: MainStatusID) => {
-  return !["ATK_FLAT", "HP_FLAT", "ELEMENTAL_MASTERY"].includes(id)
-}
 const TWITTER_BASE_URL = "https://twitter.com/intent/tweet?text="
+const SCORER_ROOT_URL = "https://artifact-scorer.vercel.app"
 const SPAN = ""
 const getArtShareUrl = ({
   artifact,
@@ -37,7 +39,7 @@ const getArtShareUrl = ({
       ...subLabels,
       SPAN,
       "#ArtifactScorer",
-      "[TEST-URL]",
+      SCORER_ROOT_URL,
     ].join("\n")
   )
 

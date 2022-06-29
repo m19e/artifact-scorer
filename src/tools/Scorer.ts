@@ -1,4 +1,9 @@
-import type { SubStatusData, CalcModeID, SubStatusID } from "@/types/Scorer"
+import type {
+  SubStatusData,
+  CalcModeID,
+  SubStatusID,
+  MainStatusID,
+} from "@/types/Scorer"
 import { SubStatus } from "@/consts/Scorer"
 
 const reg = new RegExp("[\u{2460}-\u{2468}]", "u")
@@ -181,4 +186,8 @@ export const getScoreRateProps = (
     return { rate: "A", className: "text-primary" }
   }
   return { rate: "B", className: "text-info" }
+}
+
+export const getMainIsPercent = (id: MainStatusID) => {
+  return !["ATK_FLAT", "HP_FLAT", "ELEMENTAL_MASTERY"].includes(id)
 }

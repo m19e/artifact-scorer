@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react"
 import {
   CalcModeMap,
   ArtifactSet,
@@ -5,6 +6,8 @@ import {
   MainStatus,
   SubStatus,
 } from "@/consts/Scorer"
+
+export type SetValue<T> = Dispatch<SetStateAction<T>>
 
 export type CalcModeID = keyof typeof CalcModeMap
 type CalcModeObject = typeof CalcModeMap[CalcModeID]
