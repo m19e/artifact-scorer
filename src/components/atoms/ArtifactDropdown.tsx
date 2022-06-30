@@ -20,8 +20,8 @@ export const ArtifactDropdown: FC<Props> = ({
   const editId = "modal-edit-" + id
   const removeId = "modal-remove-" + id
 
-  const handleRemove = () => {
-    onUpdate((prev) => prev.filter((a) => a.id !== id))
+  const handleRemove = (targetId: string) => {
+    onUpdate((prev) => prev.filter((a) => a.id !== targetId))
   }
   const handleEdit = (newArt: Artifact) => {
     onUpdate((prev) => prev.map((a) => (a.id === newArt.id ? newArt : a)))
