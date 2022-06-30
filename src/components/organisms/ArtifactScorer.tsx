@@ -10,7 +10,7 @@ import { useArtifact } from "@/hooks/Scorer"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
 import { ArtifactEditor } from "@/components/molecules/ArtifactEditor"
-import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
+import { StoredArtifactList } from "@/components/molecules/StoredArtifactList"
 
 export const ArtifactScorer = () => {
   const [file, setFile] = useState<ImageLike>("")
@@ -155,14 +155,11 @@ export const ArtifactScorer = () => {
             </select>
           </div>
           <div className="grid grid-cols-6 gap-2.5 justify-between">
-            {filteredArts.map((art) => (
-              <ArtifactDropdown
-                key={art.id}
-                artifact={art}
-                calcMode={calcMode}
-                onUpdate={setStoredArts}
-              />
-            ))}
+            <StoredArtifactList
+              artifacts={filteredArts}
+              calcMode={calcMode}
+              onUpdate={setStoredArts}
+            />
           </div>
         </div>
       </div>
