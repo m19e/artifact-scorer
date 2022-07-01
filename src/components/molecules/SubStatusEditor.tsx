@@ -64,20 +64,20 @@ export const SubStatusEditor: FC<Props> = ({ sub, onSelect, onChange }) => {
             </option>
           ))}
         </select>
-        <div className="inline-flex font-black">
+        <div className="flex items-center font-black">
           <input
             type="number"
             inputMode="decimal"
-            className="px-0 w-14 text-lg font-black leading-4 text-slate-700 input input-xs input-ghost"
+            className="w-14 font-black text-slate-700 artifact-value-input"
             min={0}
             step={step}
             value={sub.param.value}
             onChange={(e) => onChange(e.currentTarget.valueAsNumber)}
           />
-          <span>{isPer ? "%" : ""}</span>
+          <span className="text-base sm:text-lg">{isPer ? "%" : ""}</span>
         </div>
       </div>
-      <span className="text-lg text-slate-500">
+      <span className="text-base text-slate-500 sm:text-lg">
         ({getSubStatusRate(sub).toFixed()}%)
       </span>
     </div>

@@ -75,7 +75,17 @@
 .artifact-select-xs {
   @apply artifact-select;
 
-  @apply pr-8 h-5 text-lg leading-4;
+  @apply pr-7 sm:pr-8;
+  @apply h-5;
+  @apply text-base sm:text-lg;
+  @apply leading-4;
+}
+
+.artifact-value-input {
+  @apply input input-xs input-ghost;
+
+  @apply text-base sm:text-lg;
+  @apply px-0 h-4 leading-3 sm:leading-4;
 }
 
 @tailwind utilities;
