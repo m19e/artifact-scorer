@@ -29,8 +29,8 @@ export const ArtifactEditor: FC<Props> = ({
       <div className="mb-2">
         <CalcModeSelect onSelect={setCalcType} />
       </div>
-      <div className="h-12 artifact-heading">
-        <div className="mt-1.5 ml-6">
+      <div className="flex items-center h-12 artifact-heading">
+        <div className="ml-6">
           <ArtifactSetSelect defaultValue={artSetID} onSelect={setArtSetID} />
         </div>
       </div>
