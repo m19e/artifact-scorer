@@ -70,7 +70,7 @@
 .artifact-select-sm {
   @apply artifact-select;
 
-  @apply pr-8 h-6 text-base leading-5;
+  @apply pr-7 h-6 text-base leading-5;
 }
 .artifact-select-xs {
   @apply artifact-select;
