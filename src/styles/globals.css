@@ -75,8 +75,7 @@
 .artifact-select-xs {
   @apply artifact-select;
 
-  @apply pr-7 sm:pr-8;
-  @apply h-5;
+  @apply pr-7 h-5;
   @apply text-base sm:text-lg;
   @apply leading-4;
 }
