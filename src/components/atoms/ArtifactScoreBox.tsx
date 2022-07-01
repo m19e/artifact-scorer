@@ -12,13 +12,13 @@ export const ArtifactScoreBox: VFC<Props> = ({ score, calc }) => {
 
   return (
     <div className="shadow stats">
-      <div className="stat">
-        <div className="stat-title">聖遺物スコア</div>
-        <div className="stat-value">
+      <div className="py-2 px-4 sm:py-4 sm:px-6 stat">
+        <div className="text-sm sm:text-base stat-title">聖遺物スコア</div>
+        <div className="text-3xl sm:text-4xl stat-value">
           {score.toFixed(1)}
           <span className={className}>【{rate}】</span>
         </div>
-        <div className="pt-1 text-right stat-desc">{calc}</div>
+        <div className="text-right stat-desc">{calc}</div>
       </div>
     </div>
   )
