@@ -26,7 +26,7 @@ export const ArtifactEditorHero: FC<Props> = ({
   onSelectMain,
 }) => {
   return (
-    <div className="h-44 artifact-hero">
+    <div className="h-36 sm:h-44 artifact-hero">
       <div className="flex justify-between h-full">
         <div className="flex flex-col justify-between ml-6">
           <div className="mt-1">
@@ -36,11 +36,11 @@ export const ArtifactEditorHero: FC<Props> = ({
             <div className="-ml-0.5">
               <ArtifactMainSelect type={artTypeID} onSelect={onSelectMain} />
             </div>
-            <span className="font-mono text-4xl leading-7 text-white">
+            <span className="font-mono text-3xl leading-6 text-white sm:text-4xl sm:leading-7">
               {MainStatusMap[mainType].max}
               {getMainIsPercent(mainType) ? "%" : ""}
             </span>
-            <div className="my-2.5">
+            <div className="my-1.5 sm:my-2.5">
               <RarityRating />
             </div>
           </div>
