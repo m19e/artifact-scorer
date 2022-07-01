@@ -87,4 +87,10 @@
   @apply px-0 h-5 leading-3 sm:leading-4;
 }
 
+.rarity-rating {
+  @apply bg-yellow-400 mask mask-star-2;
+
+  @apply w-4 sm:w-5 h-4 sm:h-5;
+}
+
 @tailwind utilities;
