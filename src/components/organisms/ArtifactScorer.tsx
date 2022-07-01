@@ -154,12 +154,14 @@ export const ArtifactScorer = () => {
               )}
             </select>
           </div>
-          <div className="grid grid-cols-6 gap-2.5 justify-between">
-            <StoredArtifactList
-              artifacts={filteredArts}
-              calcMode={calcMode}
-              onUpdate={setStoredArts}
-            />
+          <div className="flex justify-center">
+            <div className="grid grid-cols-5 gap-2.5 sm:grid-cols-6">
+              <StoredArtifactList
+                artifacts={filteredArts}
+                calcMode={calcMode}
+                onUpdate={setStoredArts}
+              />
+            </div>
           </div>
         </div>
       </div>
