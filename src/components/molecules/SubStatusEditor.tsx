@@ -77,7 +77,7 @@ export const SubStatusEditor: FC<Props> = ({ sub, onSelect, onChange }) => {
           <span className="text-base sm:text-lg">{isPer ? "%" : ""}</span>
         </div>
       </div>
-      <span className="text-base text-slate-500 sm:text-lg">
+      <span className="hidden text-base text-slate-500 sm:inline sm:text-lg">
         ({getSubStatusRate(sub).toFixed()}%)
       </span>
     </div>
