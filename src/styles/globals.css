@@ -85,7 +85,7 @@
   @apply input input-xs input-ghost;
 
   @apply text-base sm:text-lg;
-  @apply pl-0.5 pr-0 h-4 leading-3 sm:leading-4;
+  @apply px-0 h-5 leading-3 sm:leading-4;
 }
 
 @tailwind utilities;
