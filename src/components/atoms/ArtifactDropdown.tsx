@@ -25,12 +25,17 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
         className="flex flex-col p-3 min-w-max shadow dropdown-content bg-base-100 text-base-content rounded-box"
       >
         <div className="flex flex-col items-center text-base font-bold sm:text-xl">
-          <h1>
-            {set.name} / {type.name}
-          </h1>
-          <span>
-            {main.name}+{main.max}
-          </span>
+          <div className="flex flex-col items-center sm:flex-row">
+            <span>{set.name}</span>
+            <span className="hidden whitespace-pre-wrap sm:inline">
+              {" / "}
+            </span>
+            <span>{type.name}</span>
+          </div>
+          <div className="flex flex-col items-center sm:flex-row">
+            <span>{main.name}</span>
+            <span>+{main.max}</span>
+          </div>
         </div>
         <div className="my-2 h-0 divider"></div>
         <div className="flex text-sm sm:text-lg">
