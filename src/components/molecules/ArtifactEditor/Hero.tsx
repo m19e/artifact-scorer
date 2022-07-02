@@ -36,7 +36,7 @@ export const ArtifactEditorHero: FC<Props> = ({
             <div className="-ml-0.5">
               <ArtifactMainSelect type={artTypeID} onSelect={onSelectMain} />
             </div>
-            <span className="font-mono text-3xl leading-6 text-white sm:text-4xl sm:leading-7">
+            <span className="text-3xl leading-6 text-white sm:text-4xl sm:leading-7 font-renner">
               {MainStatusMap[mainType].max}
               {getMainIsPercent(mainType) ? "%" : ""}
             </span>
