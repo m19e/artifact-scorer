@@ -50,12 +50,16 @@
 .artifact-dropdown {
   @apply dropdown dropdown-top;
 }
-.artifact-dropdown:nth-child(4n),
-:nth-child(5n) {
-  @apply dropdown-end;
+@media (max-width: 639px) {
+  .artifact-dropdown:nth-child(5n-1),
+  :nth-child(5n) {
+    @apply dropdown-end;
+  }
 }
 @media (min-width: 640px) {
-  .artifact-dropdown:nth-child(6n) {
+  .artifact-dropdown:nth-child(6n-2),
+  :nth-child(6n-1),
+  :nth-child(6n) {
     @apply dropdown-end;
   }
 }
