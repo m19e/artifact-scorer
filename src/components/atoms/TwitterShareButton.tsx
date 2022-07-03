@@ -13,7 +13,7 @@ const getArtShareUrl = ({
   artifact,
   calcMode,
 }: ScorableArtifactProps): string => {
-  const title = "原神 聖遺物スコアラ"
+  const title = "原神✨聖遺物スコアラ"
   const score = getArtifactScore({ datas: artifact.subs, mode: calcMode.id })
   const { rate: rank } = getScoreRateProps(score)
 
