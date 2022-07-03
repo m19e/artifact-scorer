@@ -17,11 +17,7 @@ const Page: NextPage<Props> = ({ isMobile }) => {
     <>
       <Head>
         {/* <link rel="icon" href="/favicon.ico" /> */}
-        <link
-          rel="icon alternate"
-          type="image/png"
-          href="https://twemoji.maxcdn.com/v/14.0.2/72x72/2728.png"
-        />
+        <link rel="icon alternate" type="image/png" href="/sparkles.png" />
         <title>聖遺物スコアラ #ArtifactScorer</title>
         <meta
           name="description"
@@ -35,7 +31,7 @@ const Page: NextPage<Props> = ({ isMobile }) => {
         />
         <meta
           property="og:image"
-          content="https://twemoji.maxcdn.com/v/14.0.2/72x72/2728.png"
+          content="https://artifact-scorer.vercel.app/sparkles.png"
         />
         <meta property="og:type" content="website" />
         <meta property="twitter:title" content="#ArtifactScorer" />
@@ -45,7 +41,7 @@ const Page: NextPage<Props> = ({ isMobile }) => {
         />
         <meta
           property="twitter:image"
-          content="https://twemoji.maxcdn.com/v/14.0.2/72x72/2728.png"
+          content="https://artifact-scorer.vercel.app/sparkles.png"
         />
         <meta
           property="twitter:url"
