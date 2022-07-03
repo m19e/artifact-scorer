@@ -13,7 +13,7 @@ export const CalcMode = {
   CRIT: "会心率/ダメージ型（汎用火力用）",
   ENERGY_RECHARGE: "元素チャージ効率型（絶縁の旗印）",
   DEF: "防御型（華館夢醒形骸記）",
-  HP: "HP型（鍾離/胡桃）",
+  HP: "HP型（鍾離/胡桃/夜蘭）",
   ELEMENTAL_MASTERY: "元素熟知型（翠緑の影）",
 } as const
 
@@ -40,7 +40,7 @@ export const CalcModeMap = {
     id: "HP",
     label: CalcMode.HP,
     name: "HP型",
-    desc: "鍾離/胡桃",
+    desc: "鍾離/胡桃/夜蘭",
   },
   ELEMENTAL_MASTERY: {
     id: "ELEMENTAL_MASTERY",

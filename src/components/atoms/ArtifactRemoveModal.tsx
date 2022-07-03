@@ -3,7 +3,7 @@ import type { FC } from "react"
 
 interface Props {
   id: string
-  onRemove: () => void
+  onRemove: (id: string) => void
 }
 
 export const RemoveModal: FC<Props> = ({ id, onRemove }) => {
@@ -28,7 +28,7 @@ export const RemoveModal: FC<Props> = ({ id, onRemove }) => {
               <label
                 htmlFor={modalId}
                 className="btn btn-sm btn-error sm:btn-md"
-                onClick={onRemove}
+                onClick={() => onRemove(id)}
               >
                 削除
               </label>

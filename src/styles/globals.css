@@ -10,6 +10,13 @@
   font-family: "Zen Maru Gothic";
 }
 
+.font-renner {
+  font-family: "Renner*", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+
 .text-shadow {
   text-shadow: black 1px 1px 0, black -1px -1px 0, black -1px 1px 0,
     black 1px -1px 0, black 0px 1px 0, black 0-1px 0, black -1px 0 0,
@@ -50,10 +57,18 @@
 .artifact-dropdown {
   @apply dropdown dropdown-top;
 }
-.artifact-dropdown:nth-child(4n),
-:nth-child(5n),
-:nth-child(6n) {
-  @apply dropdown-end;
+@media (max-width: 639px) {
+  .artifact-dropdown:nth-child(5n-1),
+  :nth-child(5n) {
+    @apply dropdown-end;
+  }
+}
+@media (min-width: 640px) {
+  .artifact-dropdown:nth-child(6n-2),
+  :nth-child(6n-1),
+  :nth-child(6n) {
+    @apply dropdown-end;
+  }
 }
 
 .artifact-select {
@@ -62,17 +77,37 @@
 .artifact-select-lg {
   @apply artifact-select;
 
-  @apply h-8 text-3xl font-bold leading-7;
+  @apply font-bold;
+  @apply h-7 sm:h-8;
+  @apply text-2xl sm:text-3xl;
+  @apply leading-6 sm:leading-7;
 }
 .artifact-select-sm {
   @apply artifact-select;
 
-  @apply pr-8 h-6 text-base leading-5;
+  @apply pr-7 h-6;
+  @apply text-sm sm:text-base;
+  @apply leading-4 sm:leading-5;
 }
 .artifact-select-xs {
   @apply artifact-select;
 
-  @apply pr-8 h-5 text-lg leading-4;
+  @apply pr-7 h-5;
+  @apply text-base sm:text-lg;
+  @apply leading-4;
+}
+
+.artifact-value-input {
+  @apply input input-xs input-ghost;
+
+  @apply text-base sm:text-lg;
+  @apply px-0 h-5 leading-3 sm:leading-4;
+}
+
+.rarity-rating {
+  @apply bg-yellow-400 mask mask-star-2;
+
+  @apply w-4 sm:w-5 h-4 sm:h-5;
 }
 
 @tailwind utilities;

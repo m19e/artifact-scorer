@@ -14,11 +14,14 @@ export const ArtifactScoreBox: VFC<Props> = ({ score, calc }) => {
     <div className="shadow stats">
       <div className="stat">
         <div className="stat-title">聖遺物スコア</div>
-        <div className="stat-value">
+        <div className="stat-value font-renner">
           {score.toFixed(1)}
-          <span className={className}>【{rate}】</span>
+          <span className={className + " tracking-tighter zen-maru-gothic"}>
+            {" "}
+            {rate}
+          </span>
         </div>
-        <div className="pt-1 text-right stat-desc">{calc}</div>
+        <div className="text-right stat-desc">{calc}</div>
       </div>
     </div>
   )
