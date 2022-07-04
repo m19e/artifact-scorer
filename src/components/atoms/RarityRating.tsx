@@ -5,7 +5,13 @@ export const RarityRating = () => {
       <input type="radio" name="rating-2" className="rarity-rating" />
       <input type="radio" name="rating-2" className="rarity-rating" />
       <input type="radio" name="rating-2" className="rarity-rating" />
-      <input type="radio" name="rating-2" className="rarity-rating" checked />
+      <input
+        type="radio"
+        name="rating-2"
+        className="rarity-rating"
+        checked
+        readOnly
+      />
     </div>
   )
 }
