@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react"
 import type { Dispatch, SetStateAction } from "react"
 
+import { CustomSubStatusMap } from "@/consts/Scorer"
 import type {
   CalcModeID,
   CalcModeData,
@@ -18,27 +19,7 @@ import {
   MainStatusMap,
 } from "@/consts/Scorer"
 import { getArtifactScore } from "@/tools/Scorer"
-
-type SetValue<T> = Dispatch<SetStateAction<T>>
-
-export interface ArtifactState {
-  artSetID: ArtifactSetID
-  artTypeID: ArtifactTypeID
-  mainType: MainStatusID
-  substats: SubStatusData[]
-  calcMode: CalcModeData
-  score: number
-  artifact: Artifact
-}
-
-export interface ArtifactAction {
-  setArtSetID: SetValue<ArtifactSetID>
-  setSubStats: SetValue<SubStatusData[]>
-  setCalcType: (type: CalcModeID) => void
-  setArtTypeID: (id: ArtifactTypeID) => void
-  setMainType: SetValue<MainStatusID>
-  updateSubStat: (index: number, newSub: SubStatusData) => void
-}
+import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 const DEFAULT_ARTIFACT_DATA: Artifact = {
   id: "",
@@ -60,6 +41,29 @@ const DEFAULT_ARTIFACT_DATA: Artifact = {
   ],
 }
 
+type SetValue<T> = Dispatch<SetStateAction<T>>
+
+export interface ArtifactState {
+  artSetID: ArtifactSetID
+  artTypeID: ArtifactTypeID
+  mainType: MainStatusID
+  substats: SubStatusData[]
+  calcMode: CalcModeData
+  score: number
+  artifact: Artifact
+  custom: typeof CustomSubStatusMap
+}
+
+export interface ArtifactAction {
+  setArtSetID: SetValue<ArtifactSetID>
+  setSubStats: SetValue<SubStatusData[]>
+  setCalcType: (type: CalcModeID) => void
+  setArtTypeID: (id: ArtifactTypeID) => void
+  setMainType: SetValue<MainStatusID>
+  setCustom: SetValue<typeof CustomSubStatusMap>
+  updateSubStat: (index: number, newSub: SubStatusData) => void
+}
+
 export const useArtifact = (
   initialArt: Artifact = DEFAULT_ARTIFACT_DATA
 ): [ArtifactState, ArtifactAction] => {
@@ -71,6 +75,11 @@ export const useArtifact = (
   const [calcMode, setCalcMode] = useState<CalcModeData>(CalcModeMap.CRIT)
   const [score, setScore] = useState(
     getArtifactScore({ datas: initialArt.subs, mode: calcMode.id })
+  )
+
+  const [custom, setCustom] = useLocalStorage<typeof CustomSubStatusMap>(
+    "custom-build",
+    CustomSubStatusMap
   )
 
   const setSubStats = useCallback<SetValue<SubStatusData[]>>(
@@ -124,6 +133,7 @@ export const useArtifact = (
     calcMode,
     score,
     artifact,
+    custom,
   }
   const actions = {
     setArtSetID,
@@ -131,6 +141,7 @@ export const useArtifact = (
     setCalcType,
     setArtTypeID,
     setMainType,
+    setCustom,
     updateSubStat,
   }
 

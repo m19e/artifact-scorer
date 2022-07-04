@@ -2,6 +2,7 @@ import type { FC } from "react"
 
 import type { ArtifactState, ArtifactAction } from "@/hooks/Scorer"
 
+import { CustomBuildEditor } from "@/components/molecules/CustomBuildEditor"
 import { ArtifactEditorHero } from "@/components/molecules/ArtifactEditor/Hero"
 import { SubStatusEditorList } from "@/components/molecules/SubStatusEditorList"
 import { CalcModeSelect } from "@/components/atoms/Select/CalcMode"
@@ -18,10 +19,12 @@ export const ArtifactEditor: FC<Props> = ({
   calcMode,
   artifact,
   substats,
+  custom,
   setCalcType,
   setArtSetID,
   setArtTypeID,
   setMainType,
+  setCustom,
   updateSubStat,
 }) => {
   return (
@@ -29,6 +32,11 @@ export const ArtifactEditor: FC<Props> = ({
       <div className="mb-2">
         <CalcModeSelect onSelect={setCalcType} />
       </div>
+      <CustomBuildEditor
+        calcMode={calcMode}
+        custom={custom}
+        setCustom={setCustom}
+      />
       <div className="flex items-center h-12 artifact-heading">
         <div className="ml-6">
           <ArtifactSetSelect defaultValue={artSetID} onSelect={setArtSetID} />

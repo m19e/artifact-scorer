@@ -7,6 +7,8 @@ import type {
   MainStatusID,
   MainStatusData,
   SubStatusID,
+  CustomSubStatusID,
+  CustomSubStatusData,
 } from "@/types/Scorer"
 
 export const CalcMode = {
@@ -15,6 +17,7 @@ export const CalcMode = {
   DEF: "防御型（華館夢醒形骸記）",
   HP: "HP型（鍾離/胡桃/夜蘭）",
   ELEMENTAL_MASTERY: "元素熟知型（翠緑の影）",
+  CUSTOM: "カスタムビルド",
 } as const
 
 export const CalcModeMap = {
@@ -47,6 +50,12 @@ export const CalcModeMap = {
     label: CalcMode.ELEMENTAL_MASTERY,
     name: "元素熟知型",
     desc: "翠緑の影",
+  },
+  CUSTOM: {
+    id: "CUSTOM",
+    label: CalcMode.CUSTOM,
+    name: "カスタムビルド",
+    desc: "",
   },
 } as const
 
@@ -308,3 +317,59 @@ export const SubStatusMap: { [key in SubStatusID]: { max: number } } = {
   CRIT_DAMAGE: { max: 7.8 },
   UNDETECTED: { max: 0 },
 }
+
+export const CustomSubStatus = {
+  CRIT_RATE: "会心率",
+  CRIT_DAMAGE: "会心ダメージ",
+  ATK_PER: "攻撃力(%)",
+  ENERGY_RECHARGE: "元素チャージ効率",
+  DEF_PER: "防御力(%)",
+  HP_PER: "HP(%)",
+  ELEMENTAL_MASTERY: "元素熟知",
+  // HP_FLAT: "HP(実数)",
+  // ATK_FLAT: "攻撃力(実数)",
+  // DEF_FLAT: "防御力(実数)",
+} as const
+
+export const CustomSubStatusMap: {
+  [key in CustomSubStatusID]: CustomSubStatusData
+} = {
+  CRIT_RATE: {
+    id: "CRIT_RATE",
+    name: CustomSubStatus.CRIT_RATE,
+    value: 2,
+  },
+  CRIT_DAMAGE: {
+    id: "CRIT_DAMAGE",
+    name: CustomSubStatus.CRIT_DAMAGE,
+    value: 1,
+  },
+  ATK_PER: {
+    id: "ATK_PER",
+    name: CustomSubStatus.ATK_PER,
+    value: 1,
+  },
+  ENERGY_RECHARGE: {
+    id: "ENERGY_RECHARGE",
+    name: CustomSubStatus.ENERGY_RECHARGE,
+    value: 0,
+  },
+  DEF_PER: {
+    id: "DEF_PER",
+    name: CustomSubStatus.DEF_PER,
+    value: 0,
+  },
+  HP_PER: {
+    id: "HP_PER",
+    name: CustomSubStatus.HP_PER,
+    value: 0,
+  },
+  ELEMENTAL_MASTERY: {
+    id: "ELEMENTAL_MASTERY",
+    name: CustomSubStatus.ELEMENTAL_MASTERY,
+    value: 0,
+  },
+}
+
+export const CustomSubStatusList: CustomSubStatusData[] =
+  Object.values(CustomSubStatusMap)
