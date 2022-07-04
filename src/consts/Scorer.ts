@@ -326,9 +326,6 @@ export const CustomSubStatus = {
   DEF_PER: "防御力(%)",
   HP_PER: "HP(%)",
   ELEMENTAL_MASTERY: "元素熟知",
-  // HP_FLAT: "HP(実数)",
-  // ATK_FLAT: "攻撃力(実数)",
-  // DEF_FLAT: "防御力(実数)",
 } as const
 
 export const CustomSubStatusMap: {
@@ -373,3 +370,37 @@ export const CustomSubStatusMap: {
 
 export const CustomSubStatusList: CustomSubStatusData[] =
   Object.values(CustomSubStatusMap)
+
+export const CalcModeBuildMap: {
+  [key in Exclude<CalcModeData["id"], "CUSTOM">]: typeof CustomSubStatusMap
+} = {
+  CRIT: CustomSubStatusMap,
+  ENERGY_RECHARGE: {
+    ...CustomSubStatusMap,
+    ENERGY_RECHARGE: {
+      ...CustomSubStatusMap.ENERGY_RECHARGE,
+      value: 1,
+    },
+  },
+  DEF: {
+    ...CustomSubStatusMap,
+    DEF_PER: {
+      ...CustomSubStatusMap.DEF_PER,
+      value: 1,
+    },
+  },
+  HP: {
+    ...CustomSubStatusMap,
+    HP_PER: {
+      ...CustomSubStatusMap.HP_PER,
+      value: 1,
+    },
+  },
+  ELEMENTAL_MASTERY: {
+    ...CustomSubStatusMap,
+    ELEMENTAL_MASTERY: {
+      ...CustomSubStatusMap.ELEMENTAL_MASTERY,
+      value: 0.5,
+    },
+  },
+}
