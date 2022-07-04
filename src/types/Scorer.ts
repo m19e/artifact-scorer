@@ -78,3 +78,7 @@ export interface CustomSubStatusData {
   name: typeof CustomSubStatus[CustomSubStatusID]
   value: number
 }
+
+export type SubStatusBuildMap = {
+  [key in CustomSubStatusID]: CustomSubStatusData
+}

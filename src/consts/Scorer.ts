@@ -7,8 +7,8 @@ import type {
   MainStatusID,
   MainStatusData,
   SubStatusID,
-  CustomSubStatusID,
   CustomSubStatusData,
+  SubStatusBuildMap,
 } from "@/types/Scorer"
 
 export const CalcMode = {
@@ -328,9 +328,7 @@ export const CustomSubStatus = {
   ELEMENTAL_MASTERY: "元素熟知",
 } as const
 
-export const CustomSubStatusMap: {
-  [key in CustomSubStatusID]: CustomSubStatusData
-} = {
+export const CustomSubStatusMap: SubStatusBuildMap = {
   CRIT_RATE: {
     id: "CRIT_RATE",
     name: CustomSubStatus.CRIT_RATE,
@@ -372,7 +370,7 @@ export const CustomSubStatusList: CustomSubStatusData[] =
   Object.values(CustomSubStatusMap)
 
 export const CalcModeBuildMap: {
-  [key in Exclude<CalcModeData["id"], "CUSTOM">]: typeof CustomSubStatusMap
+  [key in Exclude<CalcModeData["id"], "CUSTOM">]: SubStatusBuildMap
 } = {
   CRIT: CustomSubStatusMap,
   ENERGY_RECHARGE: {
