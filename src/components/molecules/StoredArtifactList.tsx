@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import type { FC } from "react"
 
 import type { SetValue, Artifact, CalcModeData } from "@/types/Scorer"
@@ -26,13 +27,17 @@ export const StoredArtifactList: FC<Props> = ({
   return (
     <>
       {artifacts.map((art) => (
-        <ArtifactDropdown key={art.id} artifact={art} calcMode={calcMode} />
+        <ArtifactDropdown
+          key={"dropdown-" + art.id}
+          artifact={art}
+          calcMode={calcMode}
+        />
       ))}
       {artifacts.map((art) => (
-        <>
-          <RemoveModal key={art.id} id={art.id} onRemove={handleRemove} />
-          <EditModal key={art.id} artifact={art} onEdit={handleEdit} />
-        </>
+        <Fragment key={"modals-" + art.id}>
+          <RemoveModal id={art.id} onRemove={handleRemove} />
+          <EditModal artifact={art} onEdit={handleEdit} />
+        </Fragment>
       ))}
     </>
   )
