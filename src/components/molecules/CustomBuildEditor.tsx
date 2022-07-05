@@ -27,8 +27,7 @@ export const CustomBuildEditor: FC<Props> = ({
               step={0.1}
               value={sub.value}
               onChange={(e) => {
-                const v = e.currentTarget.valueAsNumber
-                const value = Number.isNaN(v) ? 0 : v
+                const value = e.currentTarget.valueAsNumber
                 setCustom((prev) => {
                   const newSub = { ...prev[sub.id], value }
                   const newCustom = { ...prev, [sub.id]: newSub }

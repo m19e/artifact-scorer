@@ -23,7 +23,7 @@ const getArtShareUrl = ({
     calcMode.name +
     (isCustom
       ? `(${Object.values(custom)
-          .filter((s) => s.value !== 0)
+          .filter((s) => !!s.value)
           .reduce((sum, cur) => sum + `${cur.short}x${cur.value}`, "")})`
       : "")
   const score = getArtifactScore({ datas: artifact.subs, build })

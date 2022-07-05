@@ -137,7 +137,9 @@ export const getArtifactScore = ({
       ) {
         return 0
       }
-      return param.value * build[id].value
+      const r = build[id].value
+      const rate = Number.isNaN(r) ? 0 : r
+      return param.value * rate
     })
     .reduce((sum, elem) => sum + elem, 0)
 }
