@@ -28,7 +28,7 @@ export const ArtifactEditorHero: FC<Props> = ({
   return (
     <div className="h-36 sm:h-44 artifact-hero">
       <div className="flex justify-between h-full">
-        <div className="flex flex-col justify-between ml-6">
+        <div className="flex flex-col justify-between ml-4 sm:ml-6">
           <div className="mt-1">
             <ArtifactTypeSelect
               defaultValue={artTypeID}

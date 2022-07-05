@@ -37,8 +37,8 @@ export const ArtifactEditor: FC<Props> = ({
         custom={custom}
         setCustom={setCustom}
       />
-      <div className="flex items-center h-12 artifact-heading">
-        <div className="ml-6">
+      <div className="flex items-center h-10 sm:h-12 artifact-heading">
+        <div className="ml-5 sm:ml-6">
           <ArtifactSetSelect defaultValue={artSetID} onSelect={setArtSetID} />
         </div>
       </div>
