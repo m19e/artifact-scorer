@@ -344,7 +344,7 @@ export const CustomSubStatusMap: SubStatusBuildMap = {
   ATK_PER: {
     id: "ATK_PER",
     name: CustomSubStatus.ATK_PER,
-    short: "攻撃%",
+    short: "攻撃",
     value: 0,
   },
   ENERGY_RECHARGE: {
@@ -356,13 +356,13 @@ export const CustomSubStatusMap: SubStatusBuildMap = {
   DEF_PER: {
     id: "DEF_PER",
     name: CustomSubStatus.DEF_PER,
-    short: "防御%",
+    short: "防御",
     value: 0,
   },
   HP_PER: {
     id: "HP_PER",
     name: CustomSubStatus.HP_PER,
-    short: "HP%",
+    short: "HP",
     value: 0,
   },
   ELEMENTAL_MASTERY: {
