@@ -52,7 +52,7 @@ export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
               </label>
               <div
                 tabIndex={0}
-                className="w-72 shadow-xl card dropdown-content bg-base-100"
+                className="w-56 shadow-xl sm:w-72 card dropdown-content bg-base-100"
               >
                 <div className="p-4 card-body">
                   <h2 className="text-base card-title">
