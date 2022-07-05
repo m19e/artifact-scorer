@@ -84,7 +84,7 @@ export const useArtifact = (
 
   const [custom, setCus] = useLocalStorage<SubStatusBuildMap>(
     "custom-build",
-    CustomSubStatusMap
+    CalcModeBuildMap.CRIT
   )
 
   const setSubStats = useCallback<SetValue<SubStatusData[]>>(
