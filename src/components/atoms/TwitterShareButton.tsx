@@ -28,10 +28,10 @@ const getArtShareUrl = ({
           .reduce((sum, cur) => sum + `${cur.short}x${cur.value} `, "")
       : "")
   const score = getArtifactScore({ datas: artifact.subs, build })
-  const { rate: rank } = getScoreRateProps(score)
 
   const { level, set, type, main, subs } = artifact
 
+  const { rate: rank } = getScoreRateProps(type.id, score)
   const isPerMain = getMainIsPercent(main.id)
   const mainUnit = isPerMain ? "%" : ""
   const subLabels = subs.map(({ name, param: { type, value } }) => {

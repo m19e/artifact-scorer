@@ -1,7 +1,8 @@
 import type {
+  ArtifactTypeID,
+  MainStatusID,
   SubStatusData,
   SubStatusID,
-  MainStatusID,
   SubStatusBuildMap,
 } from "@/types/Scorer"
 import { SubStatus } from "@/consts/Scorer"
@@ -145,17 +146,31 @@ export const getArtifactScore = ({
 }
 
 export const getScoreRateProps = (
+  type: ArtifactTypeID,
   score: number
 ): { rate: string; className: string } => {
-  if (score >= 45) {
-    return { rate: "SS", className: "text-error" }
+  if (type === "SANDS" || type === "CIRCLET") {
+    if (score >= 30) {
+      return { rate: "SS", className: "text-error" }
+    }
+    if (score >= 20) {
+      return { rate: "S", className: "text-warning" }
+    }
+    if (score >= 10) {
+      return { rate: "A", className: "text-primary" }
+    }
+  } else {
+    if (score >= 45) {
+      return { rate: "SS", className: "text-error" }
+    }
+    if (score >= 35) {
+      return { rate: "S", className: "text-warning" }
+    }
+    if (score >= 25) {
+      return { rate: "A", className: "text-primary" }
+    }
   }
-  if (score >= 35) {
-    return { rate: "S", className: "text-warning" }
-  }
-  if (score >= 25) {
-    return { rate: "A", className: "text-primary" }
-  }
+
   return { rate: "B", className: "text-info" }
 }
 

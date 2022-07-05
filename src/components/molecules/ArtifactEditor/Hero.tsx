@@ -53,7 +53,11 @@ export const ArtifactEditorHero: FC<Props> = ({
           </div>
         </div>
         <div className="flex flex-col justify-center mr-4">
-          <ArtifactScoreBox score={score} calc={calcMode.name} />
+          <ArtifactScoreBox
+            type={artTypeID}
+            score={score}
+            calc={calcMode.name}
+          />
         </div>
       </div>
     </div>
