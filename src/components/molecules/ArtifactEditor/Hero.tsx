@@ -30,11 +30,18 @@ export const ArtifactEditorHero: FC<Props> = ({
       <div className="flex justify-between h-full">
         <div className="flex flex-col justify-between ml-6">
           <div className="mt-1">
-            <ArtifactTypeSelect onSelect={onSelectType} />
+            <ArtifactTypeSelect
+              defaultValue={artTypeID}
+              onSelect={onSelectType}
+            />
           </div>
           <div className="flex flex-col">
             <div className="-ml-0.5">
-              <ArtifactMainSelect type={artTypeID} onSelect={onSelectMain} />
+              <ArtifactMainSelect
+                type={artTypeID}
+                defaultValue={mainType}
+                onSelect={onSelectMain}
+              />
             </div>
             <span className="text-3xl leading-6 text-white sm:text-4xl sm:leading-7 font-renner">
               {MainStatusMap[mainType].max}
