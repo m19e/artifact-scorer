@@ -321,10 +321,10 @@ export const SubStatusMap: { [key in SubStatusID]: { max: number } } = {
 export const CustomSubStatus = {
   CRIT_RATE: "会心率",
   CRIT_DAMAGE: "会心ダメージ",
-  ATK_PER: "攻撃力(%)",
+  ATK_PER: "攻撃力%",
   ENERGY_RECHARGE: "元素チャージ効率",
-  DEF_PER: "防御力(%)",
-  HP_PER: "HP(%)",
+  DEF_PER: "防御力%",
+  HP_PER: "HP%",
   ELEMENTAL_MASTERY: "元素熟知",
 } as const
 
@@ -332,36 +332,43 @@ export const CustomSubStatusMap: SubStatusBuildMap = {
   CRIT_RATE: {
     id: "CRIT_RATE",
     name: CustomSubStatus.CRIT_RATE,
+    short: "会心率",
     value: 2,
   },
   CRIT_DAMAGE: {
     id: "CRIT_DAMAGE",
     name: CustomSubStatus.CRIT_DAMAGE,
+    short: "会心ダメージ",
     value: 1,
   },
   ATK_PER: {
     id: "ATK_PER",
     name: CustomSubStatus.ATK_PER,
-    value: 1,
+    short: "攻撃%",
+    value: 0,
   },
   ENERGY_RECHARGE: {
     id: "ENERGY_RECHARGE",
     name: CustomSubStatus.ENERGY_RECHARGE,
+    short: "チャージ",
     value: 0,
   },
   DEF_PER: {
     id: "DEF_PER",
     name: CustomSubStatus.DEF_PER,
+    short: "防御%",
     value: 0,
   },
   HP_PER: {
     id: "HP_PER",
     name: CustomSubStatus.HP_PER,
+    short: "HP%",
     value: 0,
   },
   ELEMENTAL_MASTERY: {
     id: "ELEMENTAL_MASTERY",
     name: CustomSubStatus.ELEMENTAL_MASTERY,
+    short: "熟知",
     value: 0,
   },
 }
@@ -372,7 +379,13 @@ export const CustomSubStatusList: CustomSubStatusData[] =
 export const CalcModeBuildMap: {
   [key in Exclude<CalcModeData["id"], "CUSTOM">]: SubStatusBuildMap
 } = {
-  CRIT: CustomSubStatusMap,
+  CRIT: {
+    ...CustomSubStatusMap,
+    ATK_PER: {
+      ...CustomSubStatusMap.ATK_PER,
+      value: 1,
+    },
+  },
   ENERGY_RECHARGE: {
     ...CustomSubStatusMap,
     ENERGY_RECHARGE: {

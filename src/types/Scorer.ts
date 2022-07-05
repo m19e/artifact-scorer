@@ -66,19 +66,21 @@ export interface Artifact {
   subs: SubStatusData[]
 }
 
-export interface ScorableArtifactProps {
-  artifact: Artifact
-  calcMode: CalcModeData
-}
-
 export type CustomSubStatusID = keyof typeof CustomSubStatus
 
 export interface CustomSubStatusData {
   id: CustomSubStatusID
   name: typeof CustomSubStatus[CustomSubStatusID]
+  short: string
   value: number
 }
 
 export type SubStatusBuildMap = {
   [key in CustomSubStatusID]: CustomSubStatusData
+}
+
+export interface ScorableArtifactProps {
+  artifact: Artifact
+  calcMode: CalcModeData
+  custom: SubStatusBuildMap
 }

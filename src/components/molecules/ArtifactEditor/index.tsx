@@ -55,7 +55,11 @@ export const ArtifactEditor: FC<Props> = ({
           <div className="pr-1 pl-0.5 h-6 bg-slate-700 rounded">
             <span className="text-xl font-black leading-5 text-white">+20</span>
           </div>
-          <TwitterShareButton artifact={artifact} calcMode={calcMode} />
+          <TwitterShareButton
+            artifact={artifact}
+            calcMode={calcMode}
+            custom={custom}
+          />
         </div>
         <div className="pr-4 pl-3.5">
           <SubStatusEditorList subs={substats} onUpdate={updateSubStat} />

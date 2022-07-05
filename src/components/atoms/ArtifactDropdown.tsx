@@ -7,6 +7,7 @@ import { TwitterShareIcon } from "./TwitterShareButton"
 export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
+  custom,
 }) => {
   const { id, type, set, main, subs } = artifact
   const editId = "modal-edit-" + id
@@ -93,7 +94,11 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
               />
             </svg>
           </label>
-          <TwitterShareIcon artifact={artifact} calcMode={calcMode} />
+          <TwitterShareIcon
+            artifact={artifact}
+            calcMode={calcMode}
+            custom={custom}
+          />
         </div>
       </div>
     </div>

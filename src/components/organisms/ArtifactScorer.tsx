@@ -33,7 +33,7 @@ export const ArtifactScorer = () => {
     []
   )
 
-  const { artifact, calcMode } = states
+  const { artifact, calcMode, custom } = states
 
   const handleDrop = (f: File) => {
     setUrl(URL.createObjectURL(f))
@@ -159,6 +159,7 @@ export const ArtifactScorer = () => {
               <StoredArtifactList
                 artifacts={filteredArts}
                 calcMode={calcMode}
+                custom={custom}
                 onUpdate={setStoredArts}
               />
             </div>

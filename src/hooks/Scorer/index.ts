@@ -10,6 +10,7 @@ import type {
   MainStatusID,
   SubStatusData,
   Artifact,
+  SubStatusBuildMap,
 } from "@/types/Scorer"
 import {
   CalcModeMap,
@@ -17,6 +18,7 @@ import {
   ArtifactType,
   ArtifactTypeMap,
   MainStatusMap,
+  CalcModeBuildMap,
 } from "@/consts/Scorer"
 import { getArtifactScore } from "@/tools/Scorer"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
@@ -74,10 +76,13 @@ export const useArtifact = (
 
   const [calcMode, setCalcMode] = useState<CalcModeData>(CalcModeMap.CRIT)
   const [score, setScore] = useState(
-    getArtifactScore({ datas: initialArt.subs, mode: calcMode.id })
+    getArtifactScore({
+      datas: initialArt.subs,
+      build: CalcModeBuildMap.CRIT,
+    })
   )
 
-  const [custom, setCustom] = useLocalStorage<typeof CustomSubStatusMap>(
+  const [custom, setCus] = useLocalStorage<SubStatusBuildMap>(
     "custom-build",
     CustomSubStatusMap
   )
@@ -86,10 +91,12 @@ export const useArtifact = (
     (newSubs) => {
       setSubs(newSubs)
       const datas = typeof newSubs === "function" ? newSubs(substats) : newSubs
-      const newScore = getArtifactScore({ datas, mode: calcMode.id })
+      const build =
+        calcMode.id === "CUSTOM" ? custom : CalcModeBuildMap[calcMode.id]
+      const newScore = getArtifactScore({ datas, build })
       setScore(newScore)
     },
-    [substats, calcMode]
+    [substats, custom, calcMode]
   )
   const updateSubStat = (index: number, newSub: SubStatusData) => {
     setSubStats((prev) => prev.map((sub, i) => (index === i ? newSub : sub)))
@@ -98,16 +105,23 @@ export const useArtifact = (
   const setCalcType = useCallback(
     (mode: CalcModeID) => {
       if (substats.length) {
-        setScore(getArtifactScore({ datas: substats, mode }))
+        const build = mode === "CUSTOM" ? custom : CalcModeBuildMap[mode]
+        setScore(getArtifactScore({ datas: substats, build }))
       }
       setCalcMode(CalcModeMap[mode])
     },
-    [substats]
+    [custom, substats]
   )
 
   const setArtTypeID = (id: ArtifactTypeID) => {
     setArtTID(id)
     setMainType(ArtifactTypeMap[id].main[0].id)
+  }
+
+  const setCustom: SetValue<SubStatusBuildMap> = (build) => {
+    const newCustom = typeof build === "function" ? build(custom) : build
+    setScore(getArtifactScore({ datas: substats, build: newCustom }))
+    setCus(build)
   }
 
   const artifact: Artifact = {
