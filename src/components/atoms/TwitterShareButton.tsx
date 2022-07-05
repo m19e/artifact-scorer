@@ -22,9 +22,10 @@ const getArtShareUrl = ({
   const calcModeLabel =
     calcMode.name +
     (isCustom
-      ? `(${Object.values(custom)
+      ? "\n" +
+        Object.values(custom)
           .filter((s) => !!s.value)
-          .reduce((sum, cur) => sum + `${cur.short}x${cur.value}`, "")})`
+          .reduce((sum, cur) => sum + `${cur.short}x${cur.value} `, "")
       : "")
   const score = getArtifactScore({ datas: artifact.subs, build })
   const { rate: rank } = getScoreRateProps(score)
