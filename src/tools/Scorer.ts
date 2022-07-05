@@ -47,7 +47,7 @@ const parseSubStatusText = (
     if (isPer) {
       if (isMatch(line, "会心")) {
         if (isMatch(line, "率")) return "CRIT_RATE"
-        if (isMatch(line, "ダメージ")) return "CRIT_DAMAGE"
+        if (isMatch(line, "ダメージ")) return "CRIT_DMG"
         return "CRIT_RATE"
       }
       if (isMatch(line, "攻撃")) return "ATK_PER"
@@ -104,7 +104,7 @@ export const updateSubStatusByID = ({
     "ATK_PER",
     "ENERGY_RECHARGE",
     "CRIT_RATE",
-    "CRIT_DAMAGE",
+    "CRIT_DMG",
   ].includes(id)
   const name = SubStatus[id]
   const param: SubStatusData["param"] = {

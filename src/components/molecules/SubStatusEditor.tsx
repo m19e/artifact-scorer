@@ -5,7 +5,7 @@ import { SubStatusMap } from "@/consts/Scorer"
 
 const SubStatusOption = {
   CRIT_RATE: "会心率",
-  CRIT_DAMAGE: "会心ダメージ",
+  CRIT_DMG: "会心ダメージ",
   ATK_PER: "攻撃力(%)",
   ENERGY_RECHARGE: "元素チャージ効率",
   DEF_PER: "防御力(%)",
