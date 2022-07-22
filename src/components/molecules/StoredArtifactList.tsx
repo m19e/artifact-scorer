@@ -33,14 +33,16 @@ export const StoredArtifactList: FC<Props> = ({
 
   return (
     <>
-      {artifacts.map((art) => (
-        <ArtifactDropdown
-          key={"dropdown-" + art.id}
-          artifact={art}
-          calcMode={calcMode}
-          custom={custom}
-        />
-      ))}
+      <div className="grid grid-cols-5 gap-2.5 sm:grid-cols-6">
+        {artifacts.map((art) => (
+          <ArtifactDropdown
+            key={"dropdown-" + art.id}
+            artifact={art}
+            calcMode={calcMode}
+            custom={custom}
+          />
+        ))}
+      </div>
       {artifacts.map((art) => (
         <Fragment key={"modals-" + art.id}>
           <RemoveModal id={art.id} onRemove={handleRemove} />
