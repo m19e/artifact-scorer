@@ -48,7 +48,7 @@ export const ArtifactDropdownList: FC<Props> = ({
     onUpdate(newArts)
   }
 
-  const mb = isDragging ? "mb-14" : "mb-0"
+  const mb = isDragging ? "mb-20" : "mb-0"
 
   return (
     <DragDropContext
@@ -62,21 +62,73 @@ export const ArtifactDropdownList: FC<Props> = ({
             ref={provided.innerRef}
             className={`flex flex-col gap-y-2 w-full ${mb}`}
           >
-            {artifacts.map((art, index) => (
-              <Draggable key={art.id} draggableId={art.id} index={index}>
-                {(provided) => (
+            {artifacts.map(({ id, type, set, main, subs }, index) => (
+              <Draggable key={id} draggableId={id} index={index}>
+                {(provided, snapshot) => (
                   <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <div className="flex items-center w-full bg-base-100">
-                      <div className="p-0 w-14 h-14 shadow btn btn-sm btn-ghost bg-base-100 text-neutral-focus">
-                        <ArtTypeIcon name={art.type.name} />
+                    <div className="flex overflow-hidden gap-1 items-center px-1 w-full bg-base-100 rounded-box">
+                      <div className="p-0 w-10 h-10 bg-base-100 text-neutral-focus">
+                        <ArtTypeIcon name={type.name} />
                       </div>
-                      <div className="grid grid-rows-2 h-full">
-                        <span>row 1</span>
-                        <span>row 2</span>
+
+                      <div className="flex flex-col flex-1 py-1 h-full">
+                        <span className="text-sm font-bold sm:text-base">
+                          {set.name} {type.name} {main.name}
+                        </span>
+                        <div className="m-1 mx-0 mb-1.5 h-0 divider"></div>
+                        <div className="flex flex-wrap gap-x-1 text-sm sm:text-base">
+                          {subs.map((sub, i) => {
+                            const { name, param } = sub
+                            const per = param.type === "percent" ? "%" : ""
+                            return (
+                              <span
+                                key={sub.id + i}
+                                className="leading-4 sm:leading-5"
+                              >
+                                {name}+{param.value}
+                                {per}
+                              </span>
+                            )
+                          })}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col justify-center">
+                        {snapshot.isDragging ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-6 h-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M4 6h16M4 12h16M4 18h16"
+                            />
+                          </svg>
+                        )}
                       </div>
                     </div>
                   </div>
