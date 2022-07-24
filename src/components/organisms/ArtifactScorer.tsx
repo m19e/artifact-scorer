@@ -1,4 +1,4 @@
-import { Fragment, useState, useCallback } from "react"
+import { Fragment, useState, useMemo, useCallback } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
@@ -34,6 +34,23 @@ export const ArtifactScorer = () => {
   )
 
   const { artifact, calcMode, custom } = states
+
+  const filteredArts = useMemo(() => {
+    const allType = filterArtType === "ALL"
+    const allSet = filterArtSet == "ALL"
+
+    if (allType && allSet) return storedArts
+
+    return storedArts.filter((art) => {
+      const validType = art.type.id === filterArtType
+      const validSet = art.set.id === filterArtSet
+      return (
+        (allType && validSet) ||
+        (allSet && validType) ||
+        (validType && validSet)
+      )
+    })
+  }, [filterArtType, filterArtSet, storedArts])
 
   const handleDrop = (f: File) => {
     setUrl(URL.createObjectURL(f))
@@ -71,21 +88,6 @@ export const ArtifactScorer = () => {
     const id = Date.now().toString(16)
     setStoredArts((prev) => [{ ...artifact, id }, ...prev])
   }, [artifact, setStoredArts])
-
-  const allType = filterArtType === "ALL"
-  const allSet = filterArtSet == "ALL"
-  const filteredArts =
-    allType && allSet
-      ? storedArts
-      : storedArts.filter((art) => {
-          const validType = art.type.id === filterArtType
-          const validSet = art.set.id === filterArtSet
-          return (
-            (allType && validSet) ||
-            (allSet && validType) ||
-            (validType && validSet)
-          )
-        })
 
   return (
     <Fragment>
