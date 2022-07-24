@@ -76,9 +76,12 @@ export const ArtifactDropdownList: FC<Props> = ({
                       </div>
 
                       <div className="flex flex-col flex-1 py-1 h-full">
-                        <span className="text-sm font-bold sm:text-base">
-                          {set.name} {type.name} {main.name}
-                        </span>
+                        <div className="flex flex-wrap gap-x-1 text-sm font-bold leading-4 sm:text-base sm:leading-5">
+                          <span>{set.name}</span>
+                          <span>{type.name}</span>
+                          <span>{main.name}</span>
+                        </div>
+
                         <div className="m-1 mx-0 mb-1.5 h-0 divider"></div>
                         <div className="flex flex-wrap gap-x-1 text-sm sm:text-base">
                           {subs.map((sub, i) => {
