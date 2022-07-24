@@ -26,7 +26,7 @@ interface Props {
   onUpdate: SetValue<Artifact[]>
 }
 
-export const ArtifactDropdownList: FC<Props> = ({
+export const SortableArtifactList: FC<Props> = ({
   artifacts,
   calcMode,
   custom,

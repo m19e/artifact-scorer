@@ -10,7 +10,7 @@ import type {
   ArtifactTypeID,
   ArtifactSetID,
 } from "@/types/Scorer"
-import { ArtifactDropdownList } from "@/components/molecules/ArtifactDropdownList"
+import { SortableArtifactList } from "@/components/molecules/SortableArtifactList"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
@@ -101,7 +101,7 @@ export const StoredArtifactList: FC<Props> = ({
           />
         </label>
         {isSort ? (
-          <ArtifactDropdownList
+          <SortableArtifactList
             artifacts={artifacts}
             calcMode={calcMode}
             custom={custom}
