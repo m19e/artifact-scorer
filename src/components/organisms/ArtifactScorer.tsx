@@ -156,7 +156,7 @@ export const ArtifactScorer = () => {
               )}
             </select>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col gap-2 items-center">
             <StoredArtifactList
               artifacts={filteredArts}
               calcMode={calcMode}
