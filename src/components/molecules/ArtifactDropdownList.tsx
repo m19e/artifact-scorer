@@ -79,11 +79,6 @@ export const ArtifactDropdownList: FC<Props> = ({
                         <span>row 2</span>
                       </div>
                     </div>
-                    {/* <ArtifactDropdown
-                      artifact={art}
-                      calcMode={calcMode}
-                      custom={custom}
-                    /> */}
                   </div>
                 )}
               </Draggable>
