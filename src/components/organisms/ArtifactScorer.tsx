@@ -154,7 +154,7 @@ export const ArtifactScorer = () => {
               )}
             </select>
           </div>
-          <div className="flex justify-center">
+          <div className="flex flex-col items-center">
             <StoredArtifactList
               artifacts={filteredArts}
               calcMode={calcMode}
