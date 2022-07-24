@@ -37,7 +37,9 @@ export const StoredArtifactList: FC<Props> = ({
   return (
     <div className="flex flex-col gap-2 items-center">
       <label className="pr-2 pl-3.5 w-full h-8 font-bold cursor-pointer label rounded-box bg-base-100">
-        <span className="label-text">並べ替え</span>
+        <span className="label-text">
+          並べ替え{isSort ? "(ドラッグ&ドロップ)" : ""}
+        </span>
         <input
           type="checkbox"
           className="checkbox"
