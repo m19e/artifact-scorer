@@ -1,10 +1,9 @@
-import { Fragment, useState, useMemo, useCallback } from "react"
+import { Fragment, useState, useCallback } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import type { Artifact, ArtifactTypeID, ArtifactSetID } from "@/types/Scorer"
-import { ArtifactTypeList, ArtifactSet } from "@/consts/Scorer"
 import { getSubStatusDatas } from "@/tools/Scorer"
 import { useArtifact } from "@/hooks/Scorer"
 
@@ -34,23 +33,6 @@ export const ArtifactScorer = () => {
   )
 
   const { artifact, calcMode, custom } = states
-
-  const filteredArts = useMemo(() => {
-    const allType = filterArtType === "ALL"
-    const allSet = filterArtSet == "ALL"
-
-    if (allType && allSet) return storedArts
-
-    return storedArts.filter((art) => {
-      const validType = art.type.id === filterArtType
-      const validSet = art.set.id === filterArtSet
-      return (
-        (allType && validSet) ||
-        (allSet && validType) ||
-        (validType && validSet)
-      )
-    })
-  }, [filterArtType, filterArtSet, storedArts])
 
   const handleDrop = (f: File) => {
     setUrl(URL.createObjectURL(f))
@@ -126,38 +108,8 @@ export const ArtifactScorer = () => {
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2 mb-2">
-            <select
-              className="select select-sm"
-              onChange={(e) =>
-                setFilterArtType(e.currentTarget.value as ArtifactTypeID)
-              }
-            >
-              <option value="ALL">全種類</option>
-              {ArtifactTypeList.map((type) => (
-                <option key={type.id} value={type.id}>
-                  {type.name}
-                </option>
-              ))}
-            </select>
-            <select
-              className="select select-sm"
-              onChange={(e) =>
-                setFilterArtSet(e.currentTarget.value as ArtifactSetID)
-              }
-            >
-              <option value="ALL">全セット</option>
-              {Array.from(new Set(storedArts.map(({ set }) => set.id))).map(
-                (id) => (
-                  <option key={id} value={id}>
-                    {ArtifactSet[id]}
-                  </option>
-                )
-              )}
-            </select>
-          </div>
           <StoredArtifactList
-            artifacts={filteredArts}
+            artifacts={storedArts}
             calcMode={calcMode}
             custom={custom}
             onUpdate={setStoredArts}
