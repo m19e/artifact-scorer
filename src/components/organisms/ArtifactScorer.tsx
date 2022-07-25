@@ -9,7 +9,7 @@ import { useArtifact } from "@/hooks/Scorer"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
 import { ArtifactEditor } from "@/components/molecules/ArtifactEditor"
-import { StoredArtifactList } from "@/components/molecules/StoredArtifactList"
+import { StoredArtifactList } from "@/components/molecules/ArtifactListContainer"
 
 export const ArtifactScorer = () => {
   const [file, setFile] = useState<ImageLike>("")
