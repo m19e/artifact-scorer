@@ -191,7 +191,7 @@ const ArtifactListSwitcher: FC<SwitcherProps> = ({
     return <SortableArtifactList artifacts={artifacts} onUpdate={onUpdate} />
   }
   if (mode === "grid") {
-    return <Grid artifacts={filtered} calcMode={calcMode} custom={custom} />
+    return <Grid filtered={filtered} calcMode={calcMode} custom={custom} />
   }
 
   return <Detail filtered={filtered} calcMode={calcMode} custom={custom} />
