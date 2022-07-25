@@ -156,7 +156,7 @@ export const StoredArtifactList: FC<Props> = ({
           </select>
         </div>
       )}
-      <ArtifactListSwitcher
+      <Switcher
         mode={mode}
         filtered={filteredArts}
         artifacts={artifacts}
@@ -179,7 +179,7 @@ interface SwitcherProps extends Props {
   filtered: Artifact[]
 }
 
-const ArtifactListSwitcher: FC<SwitcherProps> = ({
+const Switcher: FC<SwitcherProps> = ({
   mode,
   filtered,
   artifacts,
