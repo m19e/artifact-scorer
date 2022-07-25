@@ -27,13 +27,9 @@ export const SortableArtifactList: FC<Props> = ({ artifacts, onUpdate }) => {
     if (!result.destination) {
       return
     }
-    const newArts = reorder(
-      artifacts,
-      result.source.index,
-      result.destination.index
-    )
 
-    onUpdate(newArts)
+    const { source, destination } = result
+    onUpdate((prev) => reorder(prev, source.index, destination.index))
   }
 
   const mb = isDragging ? "mb-20" : "mb-0"
