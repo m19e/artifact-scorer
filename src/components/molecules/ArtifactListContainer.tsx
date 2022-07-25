@@ -11,7 +11,7 @@ import type {
   ArtifactSetID,
 } from "@/types/Scorer"
 
-import { SortableArtifactList } from "@/components/molecules/ArtifactList/Sortable"
+import { Sortable } from "@/components/molecules/ArtifactList/Sortable"
 import { Grid } from "@/components/molecules/ArtifactList/Grid"
 import { Detail } from "@/components/molecules/ArtifactList/Detail"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
@@ -189,7 +189,7 @@ const Switcher: FC<SwitcherProps> = ({
   onUpdate,
 }) => {
   if (mode === "sort") {
-    return <SortableArtifactList artifacts={artifacts} onUpdate={onUpdate} />
+    return <Sortable artifacts={artifacts} onUpdate={onUpdate} />
   }
   if (mode === "grid") {
     return <Grid filtered={filtered} calcMode={calcMode} custom={custom} />

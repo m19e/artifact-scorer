@@ -19,7 +19,7 @@ interface Props {
   onUpdate: SetValue<Artifact[]>
 }
 
-export const SortableArtifactList: FC<Props> = ({ artifacts, onUpdate }) => {
+export const Sortable: FC<Props> = ({ artifacts, onUpdate }) => {
   const [isDragging, setIsDragging] = useState(false)
 
   const handleDragEnd = (result: DropResult) => {
