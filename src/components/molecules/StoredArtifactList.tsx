@@ -101,12 +101,7 @@ export const StoredArtifactList: FC<Props> = ({
           />
         </label>
         {isSort ? (
-          <SortableArtifactList
-            artifacts={artifacts}
-            calcMode={calcMode}
-            custom={custom}
-            onUpdate={onUpdate}
-          />
+          <SortableArtifactList artifacts={artifacts} onUpdate={onUpdate} />
         ) : (
           <div className="grid grid-cols-5 gap-x-2.5 gap-y-1.5 sm:grid-cols-6">
             {filteredArts.map((art) => (

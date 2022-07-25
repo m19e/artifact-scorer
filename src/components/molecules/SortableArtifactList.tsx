@@ -3,12 +3,7 @@ import type { FC } from "react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import type { DropResult } from "react-beautiful-dnd"
 
-import type {
-  Artifact,
-  CalcModeData,
-  SubStatusBuildMap,
-  SetValue,
-} from "@/types/Scorer"
+import type { Artifact, SetValue } from "@/types/Scorer"
 import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
 
 const reorder = (list: any[], startIndex: number, endIndex: number) => {
@@ -21,17 +16,10 @@ const reorder = (list: any[], startIndex: number, endIndex: number) => {
 
 interface Props {
   artifacts: Artifact[]
-  calcMode: CalcModeData
-  custom: SubStatusBuildMap
   onUpdate: SetValue<Artifact[]>
 }
 
-export const SortableArtifactList: FC<Props> = ({
-  artifacts,
-  calcMode,
-  custom,
-  onUpdate,
-}) => {
+export const SortableArtifactList: FC<Props> = ({ artifacts, onUpdate }) => {
   const [isDragging, setIsDragging] = useState(false)
 
   const handleDragEnd = (result: DropResult) => {
