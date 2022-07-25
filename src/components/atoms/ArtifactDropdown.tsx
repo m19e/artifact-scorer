@@ -1,8 +1,8 @@
 import type { FC } from "react"
 
 import type { ScorableArtifactProps } from "@/types/Scorer"
-import { ArtTypeIcon } from "./ArtifactTypeIcons"
-import { TwitterShareIcon } from "./TwitterShareButton"
+import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
+import { TwitterShareIcon } from "@/components/atoms/TwitterShareButton"
 
 export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
   artifact,
