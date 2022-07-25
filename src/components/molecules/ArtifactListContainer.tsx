@@ -10,11 +10,12 @@ import type {
   ArtifactTypeID,
   ArtifactSetID,
 } from "@/types/Scorer"
-import { SortableArtifactList } from "@/components/molecules/SortableArtifactList"
+
+import { SortableArtifactList } from "@/components/molecules/ArtifactList/Sortable"
 import { Grid } from "@/components/molecules/ArtifactList/Grid"
 import { Detail } from "@/components/molecules/ArtifactList/Detail"
-import { EditModal } from "@/components/molecules/ArtifactEditModal"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
+import { EditModal } from "@/components/molecules/ArtifactEditModal"
 
 type ArtifactListMode = "sort" | "grid" | "detail"
 
