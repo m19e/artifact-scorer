@@ -1,7 +1,7 @@
 import type { FC } from "react"
 
 import type { Artifact, CalcModeData, SubStatusBuildMap } from "@/types/Scorer"
-import { ArtifactDropdown } from "@/components/molecules/ArtifactList/Item/Grid"
+import { GridItem } from "@/components/molecules/ArtifactList/Item/Grid"
 
 interface Props {
   filtered: Artifact[]
@@ -14,7 +14,7 @@ export const Grid: FC<Props> = ({ filtered, calcMode, custom }) => {
     <div className="flex flex-col items-center">
       <div className="grid grid-cols-5 gap-x-2.5 gap-y-1.5 sm:grid-cols-6">
         {filtered.map((artifact) => (
-          <ArtifactDropdown
+          <GridItem
             key={"dropdown-" + artifact.id}
             artifact={artifact}
             calcMode={calcMode}

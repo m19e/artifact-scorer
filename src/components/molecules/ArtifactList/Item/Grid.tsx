@@ -4,7 +4,7 @@ import type { ScorableArtifactProps } from "@/types/Scorer"
 import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
 import { TwitterShareIcon } from "@/components/atoms/TwitterShareButton"
 
-export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
+export const GridItem: FC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
   custom,
