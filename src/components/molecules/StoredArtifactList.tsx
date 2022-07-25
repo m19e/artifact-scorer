@@ -11,7 +11,7 @@ import type {
   ArtifactSetID,
 } from "@/types/Scorer"
 import { SortableArtifactList } from "@/components/molecules/SortableArtifactList"
-import { Grid } from "@/components/molecules/ArtifactList/Dropdown/Grid"
+import { Grid } from "@/components/molecules/ArtifactList/Grid"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
