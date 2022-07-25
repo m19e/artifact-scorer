@@ -25,7 +25,7 @@ interface Props {
   onUpdate: SetValue<Artifact[]>
 }
 
-export const StoredArtifactList: FC<Props> = ({
+export const Container: FC<Props> = ({
   artifacts,
   calcMode,
   custom,

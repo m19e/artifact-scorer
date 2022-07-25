@@ -9,7 +9,7 @@ import { useArtifact } from "@/hooks/Scorer"
 
 import { ImageLoader } from "@/components/molecules/ImageLoader"
 import { ArtifactEditor } from "@/components/molecules/ArtifactEditor"
-import { StoredArtifactList } from "@/components/molecules/ArtifactListContainer"
+import { Container as ArtifactListContainer } from "@/components/molecules/ArtifactListContainer"
 
 export const ArtifactScorer = () => {
   const [file, setFile] = useState<ImageLike>("")
@@ -104,7 +104,7 @@ export const ArtifactScorer = () => {
               </button>
             </div>
           </div>
-          <StoredArtifactList
+          <ArtifactListContainer
             artifacts={storedArts}
             calcMode={calcMode}
             custom={custom}
