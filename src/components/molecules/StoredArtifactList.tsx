@@ -11,9 +11,9 @@ import type {
   ArtifactSetID,
 } from "@/types/Scorer"
 import { SortableArtifactList } from "@/components/molecules/SortableArtifactList"
+import { Grid } from "@/components/molecules/ArtifactList/Dropdown/Grid"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
-import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
 import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
 import { TwitterShareIcon } from "@/components/atoms/TwitterShareButton"
 
@@ -192,20 +192,7 @@ const ArtifactListSwitcher: FC<SwitcherProps> = ({
     return <SortableArtifactList artifacts={artifacts} onUpdate={onUpdate} />
   }
   if (mode === "grid") {
-    return (
-      <div className="flex flex-col items-center">
-        <div className="grid grid-cols-5 gap-x-2.5 gap-y-1.5 sm:grid-cols-6">
-          {filtered.map((art) => (
-            <ArtifactDropdown
-              key={"dropdown-" + art.id}
-              artifact={art}
-              calcMode={calcMode}
-              custom={custom}
-            />
-          ))}
-        </div>
-      </div>
-    )
+    return <Grid artifacts={filtered} calcMode={calcMode} custom={custom} />
   }
 
   return (
