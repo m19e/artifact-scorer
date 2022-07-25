@@ -1,7 +1,7 @@
 import type { FC } from "react"
 
 import type { Artifact, CalcModeData, SubStatusBuildMap } from "@/types/Scorer"
-import { ArtifactDropdown } from "@/components/atoms/ArtifactDropdown"
+import { ArtifactDropdown } from "@/components/molecules/ArtifactList/Item/Grid"
 
 interface Props {
   filtered: Artifact[]
