@@ -3,7 +3,7 @@ import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
-import type { Artifact, ArtifactTypeID, ArtifactSetID } from "@/types/Scorer"
+import type { Artifact } from "@/types/Scorer"
 import { getSubStatusDatas } from "@/tools/Scorer"
 import { useArtifact } from "@/hooks/Scorer"
 
@@ -21,10 +21,6 @@ export const ArtifactScorer = () => {
     height: 0,
   })
   const [inOCRProcess, setInOCRProcess] = useState(false)
-  const [filterArtType, setFilterArtType] = useState<"ALL" | ArtifactTypeID>(
-    "ALL"
-  )
-  const [filterArtSet, setFilterArtSet] = useState<"ALL" | ArtifactSetID>("ALL")
 
   const [states, actions] = useArtifact()
   const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
