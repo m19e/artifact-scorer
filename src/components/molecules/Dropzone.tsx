@@ -54,7 +54,3 @@ export const Dropzone: VFC<Props> = ({ onDrop }) => {
     </div>
   )
 }
-
-// <p>Drop the file here ...</p>
-// <p>"Drag 'n' Drop image file here,"</p>
-// <p>or click to select file</p>
