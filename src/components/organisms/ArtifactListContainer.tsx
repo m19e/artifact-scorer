@@ -72,7 +72,7 @@ export const Container: FC<Props> = ({
     <div className="flex flex-col gap-2">
       <div className="flex gap-2 items-center">
         <div className="flex-1">
-          <label className="pr-2 pl-3 w-full h-8 font-semibold cursor-pointer label rounded-box bg-base-100">
+          <label className="pr-2 pl-3 w-full h-8 font-semibold border border-opacity-20 cursor-pointer label rounded-box bg-base-100 border-base-content">
             <span className="label-text">
               並び替え{isSort ? "(ドラッグ&ドロップ)" : ""}
             </span>
@@ -85,7 +85,7 @@ export const Container: FC<Props> = ({
           </label>
         </div>
         {!isSort && (
-          <div className="btn btn-square btn-sm bg-base-100 text-neutral-focus btn-ghost">
+          <div className="border border-opacity-20 btn btn-square btn-sm bg-base-100 text-neutral-focus btn-ghost border-base-content">
             <label className="swap swap-rotate">
               <input
                 type="checkbox"
@@ -128,7 +128,7 @@ export const Container: FC<Props> = ({
       {!isSort && (
         <div className="grid grid-cols-2 gap-2">
           <select
-            className="select select-sm"
+            className="select select-sm select-bordered"
             onChange={(e) =>
               setFilterArtType(e.currentTarget.value as ArtifactTypeID)
             }
@@ -141,7 +141,7 @@ export const Container: FC<Props> = ({
             ))}
           </select>
           <select
-            className="select select-sm"
+            className="select select-sm select-bordered"
             onChange={(e) =>
               setFilterArtSet(e.currentTarget.value as ArtifactSetID)
             }
