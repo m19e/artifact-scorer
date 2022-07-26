@@ -54,7 +54,7 @@ export const Sortable: FC<Props> = ({ artifacts, onUpdate }) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <div className="flex overflow-hidden gap-1 items-center px-1 w-full bg-base-100 rounded-box">
+                    <div className="flex overflow-hidden gap-1 items-center px-1 w-full shadow bg-base-100 rounded-box">
                       <div className="p-0 w-10 h-10 bg-base-100 text-neutral-focus">
                         <ArtTypeIcon name={type.name} />
                       </div>
