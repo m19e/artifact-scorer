@@ -72,7 +72,7 @@ export const Container: FC<Props> = ({
     <div className="flex flex-col gap-2">
       <div className="flex gap-2 items-center">
         <div className="flex-1">
-          <label className="pr-2 pl-3.5 w-full h-8 font-bold cursor-pointer label rounded-box bg-base-100">
+          <label className="pr-2 pl-3 w-full h-8 font-semibold cursor-pointer label rounded-box bg-base-100">
             <span className="label-text">
               並び替え{isSort ? "(ドラッグ&ドロップ)" : ""}
             </span>
