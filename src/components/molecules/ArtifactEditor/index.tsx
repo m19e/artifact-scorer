@@ -28,10 +28,8 @@ export const ArtifactEditor: FC<Props> = ({
   updateSubStat,
 }) => {
   return (
-    <div className="flex flex-col">
-      <div className="mb-2">
-        <CalcModeSelect onSelect={setCalcType} />
-      </div>
+    <div className="flex flex-col gap-2">
+      <CalcModeSelect onSelect={setCalcType} />
       <CustomBuildEditor
         calcMode={calcMode}
         custom={custom}
