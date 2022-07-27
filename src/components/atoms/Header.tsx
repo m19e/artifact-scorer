@@ -89,9 +89,11 @@ const Config = () => {
           className="w-48 font-semibold shadow dropdown-content menu bg-base-100 rounded-box text-base-content"
         >
           <li className="hover:bordered">
-            <label htmlFor={importId}>
-              <ConfigFileInput onDrop={setImported} />
-            </label>
+            <div className="py-3 px-4">
+              <label htmlFor={importId} className="w-full">
+                <ConfigFileInput onDrop={setImported} />
+              </label>
+            </div>
           </li>
           <li className="hover:bordered" onClick={handleExport}>
             <div className="flex">
@@ -211,7 +213,7 @@ const ConfigFileInput = ({ onDrop }: { onDrop: SetValue<Artifact[]> }) => {
   })
 
   return (
-    <div {...getRootProps()}>
+    <div {...getRootProps()} className="w-full">
       <input {...getInputProps()} />
       <div className="flex gap-3">
         <svg
