@@ -139,7 +139,7 @@ const Config = () => {
       <div className="modal">
         <div className="max-w-sm modal-box text-base-content">
           <h3 className="text-lg font-bold">インポートしますか？</h3>
-          <p className="py-4">現在の聖遺物は上書きされます</p>
+          <p className="py-4">※現在の聖遺物は上書きされます</p>
           <div className="flex justify-between">
             <div className="modal-action">
               <label
