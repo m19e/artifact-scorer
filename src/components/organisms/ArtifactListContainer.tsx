@@ -131,6 +131,7 @@ export const Container: FC<Props> = ({
         <div className="grid grid-cols-2 gap-2">
           <select
             className="select select-sm select-bordered"
+            defaultValue={filterArtType}
             onChange={(e) =>
               setFilterArtType(e.currentTarget.value as ArtifactTypeID)
             }
@@ -144,6 +145,7 @@ export const Container: FC<Props> = ({
           </select>
           <select
             className="select select-sm select-bordered"
+            defaultValue={filterArtSet}
             onChange={(e) =>
               setFilterArtSet(e.currentTarget.value as ArtifactSetID)
             }
