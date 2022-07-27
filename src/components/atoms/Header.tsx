@@ -46,6 +46,7 @@ const Config = () => {
   const resetImported = () => setImported([])
 
   const handleImport = useCallback(() => {
+    if (!imported.length) return
     setStoredArts(imported)
     resetImported()
   }, [imported])
