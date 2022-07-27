@@ -1,6 +1,9 @@
+import { useCallback } from "react"
+import { useDropzone } from "react-dropzone"
+
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
-import type { Artifact } from "@/types/Scorer"
+import type { Artifact, SetValue } from "@/types/Scorer"
 
 export const Header = () => {
   return (
@@ -16,8 +19,36 @@ export const Header = () => {
   )
 }
 
+const getTimestamp = () => {
+  const dt = new Date()
+  const y = String(dt.getFullYear()).slice(-2)
+  const m = ("00" + String(dt.getMonth() + 1)).slice(-2)
+  const d = ("00" + String(dt.getDate())).slice(-2)
+
+  return y + m + d
+}
+
+const downloadURI = (uri: string, name: string) => {
+  const link = document.createElement("a")
+  link.download = name
+  link.href = uri
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
 const Config = () => {
-  const [, setStoredArts] = useLocalStorage<Artifact[]>("artifacts", [])
+  const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
+    "artifacts",
+    []
+  )
+
+  const handleExport = useCallback(() => {
+    const data = new Blob([JSON.stringify(storedArts)], { type: "text/json" })
+    const uri = URL.createObjectURL(data)
+    const fileName = `artifact-scorer-${getTimestamp()}.json`
+    downloadURI(uri, fileName)
+  }, [storedArts])
 
   return (
     <div className="dropdown dropdown-end">
@@ -46,26 +77,10 @@ const Config = () => {
         tabIndex={0}
         className="w-40 font-semibold shadow dropdown-content menu bg-base-100 rounded-box text-neutral-focus"
       >
-        <li className="hover:border-l-4 border-primary">
-          <div className="flex">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 text-primary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-              />
-            </svg>
-            <span>インポート</span>
-          </div>
+        <li className="hover:bordered">
+          <ConfigFileInput onSave={setStoredArts} />
         </li>
-        <li className="hover:border-l-4 border-secondary">
+        <li className="hover:bordered" onClick={handleExport}>
           <div className="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +99,7 @@ const Config = () => {
             <span>エクスポート</span>
           </div>
         </li>
-        <li className="hover:border-l-4 border-error">
+        <li className="hover:bordered">
           <div className="flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +119,48 @@ const Config = () => {
           </div>
         </li>
       </ul>
+    </div>
+  )
+}
+
+const ConfigFileInput = ({ onSave }: { onSave: SetValue<Artifact[]> }) => {
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      if (!acceptedFiles.length) return
+      const [file] = acceptedFiles
+      const text = await file.text()
+      const result = JSON.parse(text) as Artifact[]
+      onSave(result)
+    },
+    [onSave]
+  )
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: ["application/json"],
+    maxFiles: 1,
+    noDrag: true,
+  })
+
+  return (
+    <div {...getRootProps()}>
+      <input {...getInputProps()} />
+      <div className="flex gap-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6 text-primary"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+          />
+        </svg>
+        <span>インポート</span>
+      </div>
     </div>
   )
 }
