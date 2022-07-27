@@ -13,7 +13,7 @@ export const RemoveModal: FC<Props> = ({ id, onRemove }) => {
     <Fragment>
       <input type="checkbox" id={modalId} className="modal-toggle" />
       <div className="modal">
-        <div className="max-w-sm modal-box bg-base-200">
+        <div className="max-w-sm modal-box bg-base-100">
           <h3 className="text-lg font-bold">削除しますか？</h3>
           <div className="flex justify-between">
             <div className="modal-action">
