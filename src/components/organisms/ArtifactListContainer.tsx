@@ -68,6 +68,8 @@ export const Container: FC<Props> = ({
     onUpdate((prev) => prev.map((a) => (a.id === newArt.id ? newArt : a)))
   }
 
+  const isArtsEmpty = filteredArts.length === 0
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-2 items-center">
@@ -157,14 +159,22 @@ export const Container: FC<Props> = ({
           </select>
         </div>
       )}
-      <Switcher
-        mode={mode}
-        filtered={filteredArts}
-        artifacts={artifacts}
-        calcMode={calcMode}
-        custom={custom}
-        onUpdate={onUpdate}
-      />
+      {isArtsEmpty ? (
+        <div className="flex justify-center items-center w-full h-14">
+          <span className="font-semibold text-neutral">
+            表示できる聖遺物がありません
+          </span>
+        </div>
+      ) : (
+        <Switcher
+          mode={mode}
+          filtered={filteredArts}
+          artifacts={artifacts}
+          calcMode={calcMode}
+          custom={custom}
+          onUpdate={onUpdate}
+        />
+      )}
       {filteredArts.map((art) => (
         <Fragment key={"modals-" + art.id}>
           <RemoveModal id={art.id} onRemove={handleRemove} />
