@@ -34,7 +34,7 @@ const Page: NextPage<Props> = ({ isMobile }) => {
         />
         <meta
           property="og:image"
-          content="https://artifact-scorer.vercel.app/sparkles.png"
+          content="https://artifact-scorer.vercel.app/scale.png"
         />
         <meta property="og:type" content="website" />
         <meta property="twitter:title" content="#ArtifactScorer" />
@@ -44,7 +44,7 @@ const Page: NextPage<Props> = ({ isMobile }) => {
         />
         <meta
           property="twitter:image"
-          content="https://artifact-scorer.vercel.app/sparkles.png"
+          content="https://artifact-scorer.vercel.app/scale.png"
         />
         <meta
           property="twitter:url"
