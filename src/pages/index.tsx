@@ -16,8 +16,11 @@ const Page: NextPage<Props> = ({ isMobile }) => {
   return (
     <>
       <Head>
-        {/* <link rel="icon" href="/favicon.ico" /> */}
-        <link rel="icon alternate" type="image/png" href="/sparkles.png" />
+        <link
+          rel="icon alternate"
+          type="image/svg+xml"
+          href="https://twemoji.maxcdn.com/v/latest/svg/2696.svg"
+        />
         <title>聖遺物スコアラ #ArtifactScorer</title>
         <meta
           name="description"
