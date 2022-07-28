@@ -15,7 +15,7 @@ const getArtShareUrl = ({
   calcMode,
   custom,
 }: ScorableArtifactProps): string => {
-  const title = "原神✨聖遺物スコアラ"
+  const title = "原神⚖️聖遺物スコアラ"
   const isCustom = calcMode.id === "CUSTOM"
   const build =
     calcMode.id === "CUSTOM" ? custom : CalcModeBuildMap[calcMode.id]
