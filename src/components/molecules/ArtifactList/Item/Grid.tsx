@@ -1,12 +1,13 @@
 import type { FC } from "react"
 
 import type { ScorableArtifactProps } from "@/types/Scorer"
-import { ArtTypeIcon } from "./ArtifactTypeIcons"
-import { TwitterShareIcon } from "./TwitterShareButton"
+import { ArtTypeIcon } from "@/components/atoms/ArtifactTypeIcons"
+import { TwitterShareIcon } from "@/components/atoms/TwitterShareButton"
 
-export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
+export const GridItem: FC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
+  custom,
 }) => {
   const { id, type, set, main, subs } = artifact
   const editId = "modal-edit-" + id
@@ -93,7 +94,11 @@ export const ArtifactDropdown: FC<ScorableArtifactProps> = ({
               />
             </svg>
           </label>
-          <TwitterShareIcon artifact={artifact} calcMode={calcMode} />
+          <TwitterShareIcon
+            artifact={artifact}
+            calcMode={calcMode}
+            custom={custom}
+          />
         </div>
       </div>
     </div>

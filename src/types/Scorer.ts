@@ -5,6 +5,7 @@ import {
   ArtifactType,
   MainStatus,
   SubStatus,
+  CustomSubStatus,
 } from "@/consts/Scorer"
 
 export type SetValue<T> = Dispatch<SetStateAction<T>>
@@ -65,7 +66,21 @@ export interface Artifact {
   subs: SubStatusData[]
 }
 
+export type CustomSubStatusID = keyof typeof CustomSubStatus
+
+export interface CustomSubStatusData {
+  id: CustomSubStatusID
+  name: typeof CustomSubStatus[CustomSubStatusID]
+  short: string
+  value: number
+}
+
+export type SubStatusBuildMap = {
+  [key in CustomSubStatusID]: CustomSubStatusData
+}
+
 export interface ScorableArtifactProps {
   artifact: Artifact
   calcMode: CalcModeData
+  custom: SubStatusBuildMap
 }

@@ -15,11 +15,13 @@ export const ArtifactSetSelect: FC<Props> = ({ defaultValue, onSelect }) => {
       defaultValue={defaultValue}
       onChange={(e) => onSelect(e.currentTarget.value as ArtifactSetID)}
     >
-      {ArtifactSetList.map(({ id, name }) => (
-        <option key={id} value={id}>
-          {name}
-        </option>
-      ))}
+      {ArtifactSetList.slice()
+        .reverse()
+        .map(({ id, name }) => (
+          <option key={id} value={id}>
+            {name}
+          </option>
+        ))}
     </select>
   )
 }

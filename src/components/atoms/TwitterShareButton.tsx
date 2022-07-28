@@ -1,5 +1,6 @@
 import type { VFC } from "react"
 import type { ScorableArtifactProps } from "@/types/Scorer"
+import { CalcModeBuildMap } from "@/consts/Scorer"
 import {
   getArtifactScore,
   getScoreRateProps,
@@ -12,13 +13,25 @@ const SPAN = ""
 const getArtShareUrl = ({
   artifact,
   calcMode,
+  custom,
 }: ScorableArtifactProps): string => {
-  const title = "原神 聖遺物スコアラ"
-  const score = getArtifactScore({ datas: artifact.subs, mode: calcMode.id })
-  const { rate: rank } = getScoreRateProps(score)
+  const title = "原神✨聖遺物スコアラ"
+  const isCustom = calcMode.id === "CUSTOM"
+  const build =
+    calcMode.id === "CUSTOM" ? custom : CalcModeBuildMap[calcMode.id]
+  const calcModeLabel =
+    calcMode.name +
+    (isCustom
+      ? "\n" +
+        Object.values(custom)
+          .filter((s) => !!s.value)
+          .reduce((sum, cur) => sum + `${cur.short}x${cur.value} `, "")
+      : "")
+  const score = getArtifactScore({ datas: artifact.subs, build })
 
   const { level, set, type, main, subs } = artifact
 
+  const { rate: rank } = getScoreRateProps(type.id, score)
   const isPerMain = getMainIsPercent(main.id)
   const mainUnit = isPerMain ? "%" : ""
   const subLabels = subs.map(({ name, param: { type, value } }) => {
@@ -30,7 +43,7 @@ const getArtShareUrl = ({
     [
       title,
       SPAN,
-      calcMode.name,
+      calcModeLabel,
       `ランク【${rank}】スコア:${score.toFixed(1)}`,
       SPAN,
       `${set.name} - ${type.name}`,
@@ -49,8 +62,9 @@ const getArtShareUrl = ({
 export const TwitterShareButton: VFC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
+  custom,
 }) => {
-  const url = getArtShareUrl({ artifact, calcMode })
+  const url = getArtShareUrl({ artifact, calcMode, custom })
 
   return (
     <a
@@ -81,8 +95,9 @@ export const TwitterShareButton: VFC<ScorableArtifactProps> = ({
 export const TwitterShareIcon: VFC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
+  custom,
 }) => {
-  const url = getArtShareUrl({ artifact, calcMode })
+  const url = getArtShareUrl({ artifact, calcMode, custom })
 
   return (
     <a

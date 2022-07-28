@@ -42,6 +42,11 @@
   @apply text-base sm:text-lg md:text-xl;
 }
 
+.image-loader {
+  @apply collapse collapse-arrow;
+  @apply bg-base-100 border border-base-content border-opacity-20 rounded-box;
+}
+
 .artifact-heading {
   background-image: url(/header-left.jpg), url(/header-right.jpg),
     url(/header-center.jpg) !important;

@@ -1,8 +1,9 @@
 import type {
-  SubStatusData,
-  CalcModeID,
-  SubStatusID,
+  ArtifactTypeID,
   MainStatusID,
+  SubStatusData,
+  SubStatusID,
+  SubStatusBuildMap,
 } from "@/types/Scorer"
 import { SubStatus } from "@/consts/Scorer"
 
@@ -47,7 +48,7 @@ const parseSubStatusText = (
     if (isPer) {
       if (isMatch(line, "会心")) {
         if (isMatch(line, "率")) return "CRIT_RATE"
-        if (isMatch(line, "ダメージ")) return "CRIT_DAMAGE"
+        if (isMatch(line, "ダメージ")) return "CRIT_DMG"
         return "CRIT_RATE"
       }
       if (isMatch(line, "攻撃")) return "ATK_PER"
@@ -104,7 +105,7 @@ export const updateSubStatusByID = ({
     "ATK_PER",
     "ENERGY_RECHARGE",
     "CRIT_RATE",
-    "CRIT_DAMAGE",
+    "CRIT_DMG",
   ].includes(id)
   const name = SubStatus[id]
   const param: SubStatusData["param"] = {
@@ -121,70 +122,55 @@ export const updateSubStatusByID = ({
 
 export const getArtifactScore = ({
   datas,
-  mode,
+  build,
 }: {
   datas: SubStatusData[]
-  mode: CalcModeID
+  build: SubStatusBuildMap
 }): number => {
   return datas
     .filter(({ param }) => !Number.isNaN(param.value))
     .map(({ id, param }) => {
-      switch (id) {
-        case "CRIT_RATE":
-          return param.value * 2
-
-        case "CRIT_DAMAGE":
-          return param.value
-
-        case "ATK_PER":
-          if (mode === "CRIT") {
-            return param.value
-          }
-          return 0
-
-        case "ENERGY_RECHARGE":
-          if (mode === "ENERGY_RECHARGE") {
-            return param.value
-          }
-          return 0
-
-        case "DEF_PER":
-          if (mode === "DEF") {
-            return param.value
-          }
-          return 0
-
-        case "HP_PER":
-          if (mode === "HP") {
-            return param.value
-          }
-          return 0
-
-        case "ELEMENTAL_MASTERY":
-          if (mode === "ELEMENTAL_MASTERY") {
-            return param.value / 2
-          }
-          return 0
-
-        default:
-          return 0
+      if (
+        id === "ATK_FLAT" ||
+        id === "DEF_FLAT" ||
+        id === "HP_FLAT" ||
+        id === "UNDETECTED"
+      ) {
+        return 0
       }
+      const r = build[id].value
+      const rate = Number.isNaN(r) ? 0 : r
+      return param.value * rate
     })
     .reduce((sum, elem) => sum + elem, 0)
 }
 
 export const getScoreRateProps = (
+  type: ArtifactTypeID,
   score: number
 ): { rate: string; className: string } => {
-  if (score >= 45) {
-    return { rate: "SS", className: "text-error" }
+  if (type === "SANDS" || type === "CIRCLET") {
+    if (score >= 30) {
+      return { rate: "SS", className: "text-error" }
+    }
+    if (score >= 20) {
+      return { rate: "S", className: "text-warning" }
+    }
+    if (score >= 10) {
+      return { rate: "A", className: "text-primary" }
+    }
+  } else {
+    if (score >= 45) {
+      return { rate: "SS", className: "text-error" }
+    }
+    if (score >= 35) {
+      return { rate: "S", className: "text-warning" }
+    }
+    if (score >= 25) {
+      return { rate: "A", className: "text-primary" }
+    }
   }
-  if (score >= 35) {
-    return { rate: "S", className: "text-warning" }
-  }
-  if (score >= 25) {
-    return { rate: "A", className: "text-primary" }
-  }
+
   return { rate: "B", className: "text-info" }
 }
 
