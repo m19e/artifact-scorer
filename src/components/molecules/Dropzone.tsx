@@ -45,7 +45,7 @@ export const Dropzone: VFC<Props> = ({ onDrop }) => {
           <p>ここに画像をドロップ…</p>
         ) : (
           <>
-            <p>{"画像ファイルをドロップ"}</p>
+            <p>画像ファイルをドロップ</p>
             <p className="text-sm text-base-content text-opacity-60">または</p>
             <p>クリックして選択</p>
           </>
