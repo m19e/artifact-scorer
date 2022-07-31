@@ -27,7 +27,7 @@ export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
       <div className="text-base-content collapse-content">
         {url ? (
           <div className="overflow-hidden relative flex-1 h-80 rounded-xl bg-base-300">
-            <div className="absolute top-1 left-1 z-50 h-6 bg-white rounded-full dropdown">
+            <div className="absolute top-1 left-1 z-10 h-6 bg-white rounded-full dropdown">
               <label
                 tabIndex={0}
                 className="btn btn-circle btn-ghost btn-xs text-info"
@@ -65,7 +65,7 @@ export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
                 </div>
               </div>
             </div>
-            <div className="flex absolute top-1 right-1 z-50 justify-center items-center w-9 h-9 bg-base-100 rounded-box">
+            <div className="flex absolute top-1 right-1 z-10 justify-center items-center w-9 h-9 bg-base-100 rounded-box">
               <button
                 className="btn btn-sm btn-square rounded-box"
                 onClick={onReset}
