@@ -79,10 +79,12 @@ export const ArtifactScorer = () => {
         <div className="my-2">
           <div className="divider">
             {inOCRProcess ? (
-              <button className="btn btn-primary loading">読取中</button>
+              <button className="btn btn-primary rounded-box loading">
+                読取中
+              </button>
             ) : (
               <button
-                className="btn btn-primary"
+                className="btn btn-primary rounded-box"
                 disabled={!url}
                 onClick={handleRecognize}
               >
@@ -96,7 +98,7 @@ export const ArtifactScorer = () => {
           <div className="my-2">
             <div className="divider">
               <button
-                className="btn btn-secondary"
+                className="btn btn-secondary rounded-box"
                 disabled={!url}
                 onClick={saveArt}
               >
