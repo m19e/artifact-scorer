@@ -55,7 +55,7 @@ export const Sortable: FC<Props> = ({ artifacts, onUpdate }) => {
                     {...provided.dragHandleProps}
                   >
                     <div className="flex overflow-hidden gap-1 items-center px-1 w-full shadow bg-base-100 rounded-box">
-                      <div className="p-0 w-10 h-10 bg-base-100 text-neutral-focus">
+                      <div className="p-0 w-10 h-10 bg-base-100 text-base-focus">
                         <ArtTypeIcon name={type.name} />
                       </div>
                       <div className="flex flex-col flex-1 py-1 h-full">
@@ -82,7 +82,7 @@ export const Sortable: FC<Props> = ({ artifacts, onUpdate }) => {
                         </div>
                       </div>
 
-                      <div className="flex flex-col justify-center text-neutral-focus">
+                      <div className="flex flex-col justify-center text-base-focus">
                         {snapshot.isDragging ? (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

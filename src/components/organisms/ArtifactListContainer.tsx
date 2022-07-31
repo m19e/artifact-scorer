@@ -87,7 +87,7 @@ export const Container: FC<Props> = ({
           </label>
         </div>
         {!isSort && (
-          <div className="border border-opacity-20 btn btn-square btn-sm bg-base-100 text-neutral-focus btn-ghost border-base-content">
+          <div className="border border-opacity-20 border-base-content btn btn-sm btn-square btn-ghost bg-base-100 text-base-focus">
             <label className="swap swap-rotate">
               <input
                 type="checkbox"
