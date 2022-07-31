@@ -66,7 +66,10 @@ export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
               </div>
             </div>
             <div className="flex absolute top-1 right-1 z-50 justify-center items-center w-9 h-9 bg-base-100 rounded-box">
-              <button className="btn btn-sm btn-square" onClick={onReset}>
+              <button
+                className="btn btn-sm btn-square rounded-box"
+                onClick={onReset}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-6 h-6"
