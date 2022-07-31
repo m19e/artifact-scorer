@@ -17,7 +17,7 @@ export const GridItem: FC<ScorableArtifactProps> = ({
     <div className="w-14 h-14 artifact-dropdown">
       <label
         tabIndex={0}
-        className="p-0 w-full h-full shadow btn btn-sm btn-ghost bg-base-100"
+        className="p-0 w-full h-full shadow bg-base-100 btn btn-sm btn-ghost rounded-box"
       >
         <div className="text-base-focus">
           <ArtTypeIcon name={type.name} />

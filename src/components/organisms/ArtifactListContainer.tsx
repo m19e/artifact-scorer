@@ -87,7 +87,7 @@ export const Container: FC<Props> = ({
           </label>
         </div>
         {!isSort && (
-          <div className="border border-opacity-20 border-base-content btn btn-sm btn-square btn-ghost bg-base-100 text-base-focus">
+          <div className="border border-opacity-20 border-base-content btn btn-sm btn-square rounded-box btn-ghost bg-base-100 text-base-focus">
             <label className="swap swap-rotate">
               <input
                 type="checkbox"
@@ -130,7 +130,7 @@ export const Container: FC<Props> = ({
       {!isSort && (
         <div className="grid grid-cols-2 gap-2">
           <select
-            className="select select-sm select-bordered"
+            className="select select-sm select-bordered rounded-box"
             defaultValue={filterArtType}
             onChange={(e) =>
               setFilterArtType(e.currentTarget.value as ArtifactTypeID)
@@ -144,7 +144,7 @@ export const Container: FC<Props> = ({
             ))}
           </select>
           <select
-            className="select select-sm select-bordered"
+            className="select select-sm select-bordered rounded-box"
             defaultValue={filterArtSet}
             onChange={(e) =>
               setFilterArtSet(e.currentTarget.value as ArtifactSetID)
