@@ -94,7 +94,7 @@ export const ArtifactScorer = () => {
           </div>
         </div>
         <ArtifactEditor {...states} {...actions} />
-        <div className="flex flex-col">
+        <div className="flex flex-col flex-1">
           <div className="my-2">
             <div className="divider">
               <button

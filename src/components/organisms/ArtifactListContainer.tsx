@@ -71,7 +71,7 @@ export const Container: FC<Props> = ({
   const isArtsEmpty = filteredArts.length === 0
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col flex-1 gap-2">
       <div className="flex gap-2 items-center">
         <div className="flex-1">
           <label className="pr-2 pl-3 w-full h-8 font-semibold border border-opacity-20 cursor-pointer label rounded-box bg-base-100 border-base-content">
@@ -162,10 +162,12 @@ export const Container: FC<Props> = ({
         </div>
       )}
       {isArtsEmpty ? (
-        <div className="flex justify-center items-center w-full h-14">
-          <span className="font-semibold text-base-focus">
-            表示できる聖遺物がありません
-          </span>
+        <div className="flex flex-1 justify-center items-center w-full">
+          <div className="flex flex-col justify-center h-14">
+            <span className="font-semibold text-base-focus">
+              表示できる聖遺物がありません
+            </span>
+          </div>
         </div>
       ) : (
         <Switcher
