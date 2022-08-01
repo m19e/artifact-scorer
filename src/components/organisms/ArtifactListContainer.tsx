@@ -163,7 +163,7 @@ export const Container: FC<Props> = ({
       )}
       {isArtsEmpty ? (
         <div className="flex justify-center items-center w-full h-14">
-          <span className="font-semibold text-neutral">
+          <span className="font-semibold text-base-focus">
             表示できる聖遺物がありません
           </span>
         </div>
