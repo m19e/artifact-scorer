@@ -12,7 +12,7 @@ export const ArtifactScoreBox: VFC<Props> = ({ type, score, calc }) => {
   const { rate, className } = getScoreRateProps(type, score)
 
   return (
-    <div data-theme="retro" className="shadow stats">
+    <div className="shadow stats">
       <div className="px-4 sm:px-6 stat">
         <div className="stat-title">聖遺物スコア</div>
         <div className="stat-value font-renner">
