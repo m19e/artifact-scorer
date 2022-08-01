@@ -4,15 +4,17 @@ import { useDropzone } from "react-dropzone"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import type { Artifact, SetValue } from "@/types/Scorer"
+import { ThemeSelect } from "@/components/atoms/Select/Theme"
 
 export const Header = () => {
   return (
     <div className="md:max-w-md navbar bg-neutral text-neutral-content md:rounded-b-box">
-      <div className="navbar-start"></div>
-      <div className="navbar-center">
+      <div className="navbar-start">
         <a className="text-2xl normal-case btn btn-ghost">#ArtifactScorer</a>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-center"></div>
+      <div className="gap-1 navbar-end">
+        <ThemeSelect />
         <Config />
       </div>
     </div>
