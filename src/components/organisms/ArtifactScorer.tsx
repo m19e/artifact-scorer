@@ -94,25 +94,23 @@ export const ArtifactScorer = () => {
           </div>
         </div>
         <ArtifactEditor {...states} {...actions} />
-        <div className="flex flex-col flex-1">
-          <div className="my-2">
-            <div className="divider">
-              <button
-                className="btn btn-secondary rounded-box"
-                disabled={!url}
-                onClick={saveArt}
-              >
-                保存
-              </button>
-            </div>
+        <div className="my-2">
+          <div className="divider">
+            <button
+              className="btn btn-secondary rounded-box"
+              disabled={!url}
+              onClick={saveArt}
+            >
+              保存
+            </button>
           </div>
-          <ArtifactListContainer
-            artifacts={storedArts}
-            calcMode={calcMode}
-            custom={custom}
-            onUpdate={setStoredArts}
-          />
         </div>
+        <ArtifactListContainer
+          artifacts={storedArts}
+          calcMode={calcMode}
+          custom={custom}
+          onUpdate={setStoredArts}
+        />
       </div>
     </Fragment>
   )
