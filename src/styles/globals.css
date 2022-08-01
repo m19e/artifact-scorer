@@ -119,4 +119,10 @@
   @apply w-4 sm:w-5 h-4 sm:h-5;
 }
 
+.btn-naked {
+  @apply btn btn-ghost;
+
+  @apply p-0 h-auto font-normal rounded-box;
+}
+
 @tailwind utilities;
