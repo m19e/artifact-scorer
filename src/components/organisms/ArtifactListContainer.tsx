@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic"
 import { useState, useMemo, Fragment } from "react"
 import type { FC } from "react"
 
@@ -11,11 +12,27 @@ import type {
   ArtifactSetID,
 } from "@/types/Scorer"
 
-import { Sortable } from "@/components/molecules/ArtifactList/Sortable"
-import { Grid } from "@/components/molecules/ArtifactList/Grid"
-import { Detail } from "@/components/molecules/ArtifactList/Detail"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
+
+const Loader = () => {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="grid grid-cols-5 gap-x-2.5 sm:grid-cols-6">
+        <button className="w-14 h-14 btn btn-square loading"></button>
+        <button className="w-14 h-14 btn btn-square loading"></button>
+        <button className="w-14 h-14 btn btn-square loading"></button>
+        <button className="w-14 h-14 btn btn-square loading"></button>
+        <button className="w-14 h-14 btn btn-square loading"></button>
+      </div>
+    </div>
+  )
+}
+
+const Switcher = dynamic(
+  import("@/components/molecules/ArtifactList/Switcher"),
+  { ssr: false, loading: Loader }
+)
 
 type ArtifactListMode = "sort" | "grid" | "detail"
 
@@ -67,8 +84,6 @@ export const Container: FC<Props> = ({
   const handleEdit = (newArt: Artifact) => {
     onUpdate((prev) => prev.map((a) => (a.id === newArt.id ? newArt : a)))
   }
-
-  const isArtsEmpty = filteredArts.length === 0
 
   return (
     <div className="flex flex-col flex-1 gap-2">
@@ -161,24 +176,14 @@ export const Container: FC<Props> = ({
           </select>
         </div>
       )}
-      {isArtsEmpty ? (
-        <div className="flex flex-1 justify-center items-center w-full">
-          <div className="flex flex-col justify-center h-14">
-            <span className="font-semibold text-base-focus">
-              表示できる聖遺物がありません
-            </span>
-          </div>
-        </div>
-      ) : (
-        <Switcher
-          mode={mode}
-          filtered={filteredArts}
-          artifacts={artifacts}
-          calcMode={calcMode}
-          custom={custom}
-          onUpdate={onUpdate}
-        />
-      )}
+      <Switcher
+        mode={mode}
+        filtered={filteredArts}
+        artifacts={artifacts}
+        calcMode={calcMode}
+        custom={custom}
+        onUpdate={onUpdate}
+      />
       {filteredArts.map((art) => (
         <Fragment key={"modals-" + art.id}>
           <RemoveModal id={art.id} onRemove={handleRemove} />
@@ -187,27 +192,4 @@ export const Container: FC<Props> = ({
       ))}
     </div>
   )
-}
-
-interface SwitcherProps extends Props {
-  mode: ArtifactListMode
-  filtered: Artifact[]
-}
-
-const Switcher: FC<SwitcherProps> = ({
-  mode,
-  filtered,
-  artifacts,
-  calcMode,
-  custom,
-  onUpdate,
-}) => {
-  if (mode === "sort") {
-    return <Sortable artifacts={artifacts} onUpdate={onUpdate} />
-  }
-  if (mode === "grid") {
-    return <Grid filtered={filtered} calcMode={calcMode} custom={custom} />
-  }
-
-  return <Detail filtered={filtered} calcMode={calcMode} custom={custom} />
 }
