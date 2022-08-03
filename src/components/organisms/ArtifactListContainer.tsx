@@ -10,6 +10,7 @@ import type {
   SubStatusBuildMap,
   ArtifactTypeID,
   ArtifactSetID,
+  ArtifactListMode,
 } from "@/types/Scorer"
 
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
@@ -33,8 +34,6 @@ const Switcher = dynamic(
   import("@/components/molecules/ArtifactList/Switcher"),
   { ssr: false, loading: Loader }
 )
-
-type ArtifactListMode = "sort" | "grid" | "detail"
 
 interface Props {
   artifacts: Artifact[]

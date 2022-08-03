@@ -5,6 +5,7 @@ import type {
   Artifact,
   CalcModeData,
   SubStatusBuildMap,
+  ArtifactListMode,
 } from "@/types/Scorer"
 
 import { Sortable } from "@/components/molecules/ArtifactList/Sortable"
@@ -12,15 +13,13 @@ import { Grid } from "@/components/molecules/ArtifactList/Grid"
 import { Detail } from "@/components/molecules/ArtifactList/Detail"
 import { ListEmpty } from "@/components/molecules/ArtifactList/Empty"
 
-type ArtifactListMode = "sort" | "grid" | "detail"
-
 interface Props {
+  mode: ArtifactListMode
+  filtered: Artifact[]
   artifacts: Artifact[]
   calcMode: CalcModeData
   custom: SubStatusBuildMap
   onUpdate: SetValue<Artifact[]>
-  mode: ArtifactListMode
-  filtered: Artifact[]
 }
 
 const Switcher: FC<Props> = ({

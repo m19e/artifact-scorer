@@ -84,3 +84,5 @@ export interface ScorableArtifactProps {
   calcMode: CalcModeData
   custom: SubStatusBuildMap
 }
+
+export type ArtifactListMode = "sort" | "grid" | "detail"
