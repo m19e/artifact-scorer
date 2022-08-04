@@ -43,13 +43,13 @@ export const GridItem: FC<ScorableArtifactProps> = ({
         <div className="my-2 h-0 divider"></div>
         <div className="flex text-sm sm:text-lg">
           <div className="flex flex-col flex-1">
-            {subs.map((sub) => (
-              <span key={sub.id}>{sub.name}</span>
+            {subs.map((sub, i) => (
+              <span key={sub.id + i}>{sub.name}</span>
             ))}
           </div>
           <div className="flex flex-col">
-            {subs.map((sub) => (
-              <span key={sub.id}>
+            {subs.map((sub, i) => (
+              <span key={sub.id + i}>
                 +{sub.param.value}
                 {sub.param.type === "percent" ? "%" : ""}
               </span>
