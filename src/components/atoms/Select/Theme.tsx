@@ -30,7 +30,7 @@ const THEMES = [
   "lemonade",
   "night",
   "coffee",
-  "winter",
+  // "winter",
 ] as const
 
 export const ThemeSelect: FC = () => {
