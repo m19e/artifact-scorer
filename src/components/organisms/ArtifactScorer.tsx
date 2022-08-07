@@ -68,32 +68,30 @@ export const ArtifactScorer = () => {
   }, [artifact, setStoredArts])
 
   return (
-    <div className="flex flex-col flex-1 my-2 w-11/12 max-w-sm sm:w-full">
+    <div className="flex flex-col flex-1 gap-2 my-2 w-11/12 max-w-sm sm:w-full">
       <ImageLoader
         url={url}
         onDrop={handleDrop}
         onCrop={setRectangle}
         onReset={() => setUrl("")}
       />
-      <div className="my-2">
-        <div className="divider">
-          {inOCRProcess ? (
-            <button className="btn btn-primary rounded-box loading">
-              読取中
-            </button>
-          ) : (
-            <button
-              className="btn btn-primary rounded-box"
-              disabled={!url}
-              onClick={handleRecognize}
-            >
-              読取
-            </button>
-          )}
-        </div>
+      <div className="divider">
+        {inOCRProcess ? (
+          <button className="btn btn-primary rounded-box loading">
+            読取中
+          </button>
+        ) : (
+          <button
+            className="btn btn-primary rounded-box"
+            disabled={!url}
+            onClick={handleRecognize}
+          >
+            読取
+          </button>
+        )}
       </div>
       <ArtifactEditor {...states} {...actions} />
-      <div className="my-2">
+      <div className="grid grid-cols-1 gap-2">
         <div className="divider">
           <button
             className="btn btn-secondary rounded-box"
@@ -103,13 +101,13 @@ export const ArtifactScorer = () => {
             保存
           </button>
         </div>
+        <ArtifactListContainer
+          artifacts={storedArts}
+          calcMode={calcMode}
+          custom={custom}
+          onUpdate={setStoredArts}
+        />
       </div>
-      <ArtifactListContainer
-        artifacts={storedArts}
-        calcMode={calcMode}
-        custom={custom}
-        onUpdate={setStoredArts}
-      />
     </div>
   )
 }
