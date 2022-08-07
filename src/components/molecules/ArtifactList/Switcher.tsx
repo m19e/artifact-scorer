@@ -30,7 +30,7 @@ const Switcher: FC<Props> = ({
   custom,
   onUpdate,
 }) => {
-  if (!artifacts.length) {
+  if (!filtered.length) {
     return <ListEmpty />
   }
   if (mode === "sort") {
