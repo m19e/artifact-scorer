@@ -1,4 +1,4 @@
-import { Fragment, useState, useCallback } from "react"
+import { useState, useCallback } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
@@ -68,50 +68,48 @@ export const ArtifactScorer = () => {
   }, [artifact, setStoredArts])
 
   return (
-    <Fragment>
-      <div className="flex flex-col flex-1 my-2 w-11/12 max-w-sm sm:w-full">
-        <ImageLoader
-          url={url}
-          onDrop={handleDrop}
-          onCrop={setRectangle}
-          onReset={() => setUrl("")}
-        />
-        <div className="my-2">
-          <div className="divider">
-            {inOCRProcess ? (
-              <button className="btn btn-primary rounded-box loading">
-                読取中
-              </button>
-            ) : (
-              <button
-                className="btn btn-primary rounded-box"
-                disabled={!url}
-                onClick={handleRecognize}
-              >
-                読取
-              </button>
-            )}
-          </div>
-        </div>
-        <ArtifactEditor {...states} {...actions} />
-        <div className="my-2">
-          <div className="divider">
-            <button
-              className="btn btn-secondary rounded-box"
-              disabled={!url}
-              onClick={saveArt}
-            >
-              保存
+    <div className="flex flex-col flex-1 my-2 w-11/12 max-w-sm sm:w-full">
+      <ImageLoader
+        url={url}
+        onDrop={handleDrop}
+        onCrop={setRectangle}
+        onReset={() => setUrl("")}
+      />
+      <div className="my-2">
+        <div className="divider">
+          {inOCRProcess ? (
+            <button className="btn btn-primary rounded-box loading">
+              読取中
             </button>
-          </div>
+          ) : (
+            <button
+              className="btn btn-primary rounded-box"
+              disabled={!url}
+              onClick={handleRecognize}
+            >
+              読取
+            </button>
+          )}
         </div>
-        <ArtifactListContainer
-          artifacts={storedArts}
-          calcMode={calcMode}
-          custom={custom}
-          onUpdate={setStoredArts}
-        />
       </div>
-    </Fragment>
+      <ArtifactEditor {...states} {...actions} />
+      <div className="my-2">
+        <div className="divider">
+          <button
+            className="btn btn-secondary rounded-box"
+            disabled={!url}
+            onClick={saveArt}
+          >
+            保存
+          </button>
+        </div>
+      </div>
+      <ArtifactListContainer
+        artifacts={storedArts}
+        calcMode={calcMode}
+        custom={custom}
+        onUpdate={setStoredArts}
+      />
+    </div>
   )
 }
