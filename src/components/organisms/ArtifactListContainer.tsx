@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic"
 import { useState, useMemo, Fragment } from "react"
 import type { FC } from "react"
 
@@ -13,6 +12,7 @@ import type {
   ArtifactListMode,
 } from "@/types/Scorer"
 
+import Switcher from "@/components/molecules/ArtifactList/Switcher"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
 
@@ -29,11 +29,6 @@ const Loader = () => {
     </div>
   )
 }
-
-const Switcher = dynamic(
-  import("@/components/molecules/ArtifactList/Switcher"),
-  { ssr: false, loading: Loader }
-)
 
 interface Props {
   artifacts: Artifact[]
