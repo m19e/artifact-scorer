@@ -30,7 +30,7 @@ export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
             <div className="absolute top-1 left-1 z-10 h-6 bg-white rounded-full dropdown">
               <label
                 tabIndex={0}
-                className="btn btn-circle btn-ghost btn-xs text-info"
+                className="text-blue-600 btn btn-circle btn-ghost btn-xs"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
