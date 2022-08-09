@@ -13,7 +13,7 @@ export const Header = () => {
         <a className="text-2xl normal-case btn btn-ghost">#ArtifactScorer</a>
       </div>
       <div className="navbar-center"></div>
-      <div className="gap-1 navbar-end">
+      <div className="navbar-end">
         <ThemeSelect />
         <Config />
       </div>
