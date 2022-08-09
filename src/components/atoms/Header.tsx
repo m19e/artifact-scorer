@@ -65,7 +65,7 @@ const Config = () => {
   return (
     <>
       <div className="dropdown dropdown-end">
-        <label tabIndex={0} className="btn btn-circle">
+        <label tabIndex={0} className="btn btn-square">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-6 h-6"
