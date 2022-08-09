@@ -88,7 +88,7 @@ const Config = () => {
         </label>
         <ul
           tabIndex={0}
-          className="top-px mt-16 w-48 font-semibold shadow dropdown-content menu bg-base-100 rounded-box text-base-content"
+          className="mt-4 w-48 font-semibold shadow dropdown-content menu bg-base-100 rounded-box text-base-content"
         >
           <li className="hover:bordered">
             <div className="py-3 px-4">
