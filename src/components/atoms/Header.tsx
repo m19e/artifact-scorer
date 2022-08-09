@@ -8,7 +8,7 @@ import { ThemeSelect } from "@/components/atoms/Select/Theme"
 
 export const Header = () => {
   return (
-    <div className="md:max-w-md navbar bg-neutral text-neutral-content md:rounded-b-box">
+    <div className="md:max-w-lg navbar bg-neutral text-neutral-content md:rounded-b-box">
       <div className="navbar-start">
         <a className="text-2xl normal-case btn btn-ghost">#ArtifactScorer</a>
       </div>
