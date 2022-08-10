@@ -32,7 +32,7 @@ export const Footer = () => {
           </svg>
         </a>
         <a
-          href="https://github.com/m19e/artifact-reader"
+          href="https://github.com/m19e/artifact-scorer"
           target="_blank"
           rel="noreferrer"
         >
