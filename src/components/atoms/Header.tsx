@@ -101,7 +101,7 @@ const Config = () => {
             <div className="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6 text-secondary"
+                className="w-6 h-6 text-success"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -220,7 +220,7 @@ const ConfigFileInput = ({ onDrop }: { onDrop: SetValue<Artifact[]> }) => {
       <div className="flex gap-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6 text-primary"
+          className="w-6 h-6 text-info"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
