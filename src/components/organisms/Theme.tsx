@@ -69,7 +69,7 @@ export const ThemeList: FC = () => {
       </div>
       <div
         tabIndex={0}
-        className="overflow-y-auto top-px mt-16 w-52 h-[70vh] max-h-96 shadow-2xl dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box"
+        className="overflow-y-auto mt-4 w-52 h-[70vh] max-h-96 shadow-2xl dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box"
       >
         <div className="grid grid-cols-1 gap-3 p-3">
           {THEMES.map((th) => {
