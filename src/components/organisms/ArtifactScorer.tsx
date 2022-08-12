@@ -62,7 +62,7 @@ export const ArtifactScorer = () => {
 
     setInOCRProcess(false)
   }, [file, rectangle, actions])
-  const saveArt = useCallback(() => {
+  const handleSave = useCallback(() => {
     const id = Date.now().toString(16)
     setStoredArts((prev) => [{ ...artifact, id }, ...prev])
   }, [artifact, setStoredArts])
@@ -96,7 +96,7 @@ export const ArtifactScorer = () => {
           <button
             className="btn btn-secondary rounded-box"
             disabled={!url}
-            onClick={saveArt}
+            onClick={handleSave}
           >
             保存
           </button>
