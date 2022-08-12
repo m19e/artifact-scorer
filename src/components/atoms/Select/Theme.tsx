@@ -1,7 +1,6 @@
 import type { FC } from "react"
 import { useTheme } from "next-themes"
 
-// TODO filter themes
 const THEMES = [
   "light",
   "dark",
