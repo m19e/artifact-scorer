@@ -35,7 +35,7 @@ const THEMES = [
 
 type ThemeID = typeof THEMES[number]
 
-export const ThemeSelect: FC = () => {
+export const ThemeList: FC = () => {
   const { theme, setTheme } = useTheme()
 
   return (

@@ -4,22 +4,6 @@ import { useDropzone } from "react-dropzone"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import type { Artifact, SetValue } from "@/types/Scorer"
-import { ThemeList } from "@/components/organisms/Theme"
-
-export const Header = () => {
-  return (
-    <div className="md:max-w-lg navbar bg-neutral text-neutral-content md:rounded-b-box">
-      <div className="navbar-start">
-        <a className="text-2xl normal-case btn btn-ghost">#ArtifactScorer</a>
-      </div>
-      <div className="navbar-center"></div>
-      <div className="navbar-end">
-        <ThemeList />
-        <Config />
-      </div>
-    </div>
-  )
-}
 
 const getTimestamp = () => {
   const dt = new Date()
@@ -39,7 +23,7 @@ const downloadURI = (uri: string, name: string) => {
   document.body.removeChild(link)
 }
 
-const Config = () => {
+export const Config = () => {
   const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
     "artifacts",
     []
