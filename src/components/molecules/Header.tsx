@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
 import type { Artifact, SetValue } from "@/types/Scorer"
-import { ThemeSelect } from "@/components/atoms/Select/Theme"
+import { ThemeSelect } from "@/components/organisms/Theme"
 
 export const Header = () => {
   return (
