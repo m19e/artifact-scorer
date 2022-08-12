@@ -14,10 +14,10 @@ type Props = DropzoneProps &
 
 export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
   const [collapseOpen, setCollapseOpen] = useState(true)
-  const collapseState = collapseOpen ? "collapse-open" : "collapse-close"
+  const collapseStatus = collapseOpen ? "collapse-open" : "collapse-close"
 
   return (
-    <div tabIndex={0} className={`image-loader ${collapseState}`}>
+    <div tabIndex={0} className={`image-loader ${collapseStatus}`}>
       <div
         className="text-lg font-medium text-base-content collapse-title"
         onClick={() => setCollapseOpen((prev) => !prev)}
