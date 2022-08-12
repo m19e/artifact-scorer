@@ -2,10 +2,10 @@ import Image from "next/image"
 import { useState } from "react"
 import type { FC } from "react"
 
-import { RectCropper } from "./RectCropper"
-import { Dropzone } from "./Dropzone"
-import type { Props as CropperProps } from "./RectCropper"
-import type { Props as DropzoneProps } from "./Dropzone"
+import { RectCropper } from "@/components/molecules/RectCropper"
+import { Dropzone } from "@/components/molecules/Dropzone"
+import type { Props as CropperProps } from "@/components/molecules/RectCropper"
+import type { Props as DropzoneProps } from "@/components/molecules/Dropzone"
 
 type Props = DropzoneProps &
   CropperProps & {
