@@ -16,20 +16,6 @@ import Switcher from "@/components/molecules/ArtifactList/Switcher"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
 
-const Loader = () => {
-  return (
-    <div className="flex flex-col items-center">
-      <div className="grid grid-cols-5 gap-x-2.5 sm:grid-cols-6">
-        <button className="w-14 h-14 btn btn-square loading"></button>
-        <button className="w-14 h-14 btn btn-square loading"></button>
-        <button className="w-14 h-14 btn btn-square loading"></button>
-        <button className="w-14 h-14 btn btn-square loading"></button>
-        <button className="w-14 h-14 btn btn-square loading"></button>
-      </div>
-    </div>
-  )
-}
-
 interface Props {
   artifacts: Artifact[]
   calcMode: CalcModeData
