@@ -32,26 +32,28 @@ export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
             <div className="absolute top-1 left-1 z-10">
               <Hint />
             </div>
-            <div className="flex absolute top-1 right-1 z-10 justify-center items-center w-9 h-9 bg-base-100 rounded-box">
-              <button
-                className="btn btn-sm btn-square rounded-box"
-                onClick={onReset}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+            <div className="absolute top-1 right-1 z-10">
+              <div className="flex justify-center items-center w-9 h-9 bg-base-100 rounded-box">
+                <button
+                  className="btn btn-sm btn-square rounded-box"
+                  onClick={onReset}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
             <RectCropper url={url} onCrop={onCrop} />
           </div>
