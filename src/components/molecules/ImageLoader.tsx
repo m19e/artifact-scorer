@@ -16,11 +16,13 @@ export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
   const [collapseOpen, setCollapseOpen] = useState(true)
   const collapseStatus = collapseOpen ? "collapse-open" : "collapse-close"
 
+  const toggleCollapse = () => setCollapseOpen((prev) => !prev)
+
   return (
     <div tabIndex={0} className={`image-loader ${collapseStatus}`}>
       <div
         className="text-lg font-medium text-base-content collapse-title"
-        onClick={() => setCollapseOpen((prev) => !prev)}
+        onClick={toggleCollapse}
       >
         画像読み込み
       </div>
