@@ -1,12 +1,12 @@
 import { useCallback } from "react"
-import type { VFC } from "react"
+import type { FC } from "react"
 import { useDropzone } from "react-dropzone"
 
 export interface Props {
   onDrop: (file: File) => void
 }
 
-export const Dropzone: VFC<Props> = ({ onDrop }) => {
+export const Dropzone: FC<Props> = ({ onDrop }) => {
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (!acceptedFiles.length) return
