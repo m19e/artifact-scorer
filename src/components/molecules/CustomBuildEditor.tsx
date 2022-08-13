@@ -14,9 +14,9 @@ export const CustomBuildEditor: FC<Props> = ({
 
   return (
     <div className="grid grid-cols-1 gap-y-2 p-4 border border-opacity-20 sm:grid-cols-2 bg-base-100 border-base-content rounded-box">
-      {Object.values(custom).map((sub) => (
-        <div key={sub.id} className="flex justify-between">
-          <span className="font-normal">{sub.name}</span>
+      {Object.values(custom).map(({ id, name, value }) => (
+        <div key={id} className="flex justify-between">
+          <span className="font-normal">{name}</span>
           <div>
             <span className="-mr-0.5">×</span>
             <input
@@ -26,12 +26,12 @@ export const CustomBuildEditor: FC<Props> = ({
               min={0}
               max={2}
               step={0.1}
-              value={sub.value}
+              value={value}
               onChange={(e) => {
                 const value = e.currentTarget.valueAsNumber
                 setCustom((prev) => {
-                  const newSub = { ...prev[sub.id], value }
-                  const newCustom = { ...prev, [sub.id]: newSub }
+                  const newSub = { ...prev[id], value }
+                  const newCustom = { ...prev, [id]: newSub }
                   return newCustom
                 })
               }}
