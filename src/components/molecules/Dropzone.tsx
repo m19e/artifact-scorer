@@ -25,7 +25,7 @@ export const Dropzone: VFC<Props> = ({ onDrop }) => {
       {...getRootProps()}
       className="grid place-items-center p-2 w-full max-w-sm h-40 card bg-base-200 rounded-box"
     >
-      <div className="flex flex-col justify-center items-center w-full h-full text-sm font-black text-center border-2 border-dashed sm:text-base border-base-300 text-base-content rounded-box">
+      <div className="flex flex-col justify-center items-center w-full h-full text-sm font-black border-2 border-dashed sm:text-base border-base-300 text-base-content rounded-box">
         <input {...getInputProps()} />
         <svg
           xmlns="http://www.w3.org/2000/svg"
