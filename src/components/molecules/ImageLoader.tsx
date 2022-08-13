@@ -67,7 +67,7 @@ export const ImageLoader: FC<Props> = ({ url, onDrop, onCrop, onReset }) => {
 
 const Hint = () => {
   return (
-    <div className="h-6 bg-white rounded-full dropdown">
+    <div className="h-6 bg-white rounded-box dropdown">
       <label
         tabIndex={0}
         className="text-blue-600 btn btn-circle btn-ghost btn-xs"
