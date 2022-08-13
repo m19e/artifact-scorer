@@ -51,10 +51,10 @@ export const SubStatusEditor: FC<Props> = ({ sub, onSelect, onChange }) => {
 
   return (
     <div className="flex justify-between">
-      <div className="flex gap-1 items-center">
-        <span className="font-black whitespace-pre-wrap">{" ・"}</span>
+      <div className="flex gap-1 items-center font-black text-slate-700">
+        <span className="whitespace-pre-wrap">{" ・"}</span>
         <select
-          className="text-slate-700 artifact-select-xs"
+          className="artifact-select-xs"
           defaultValue={sub.id}
           onChange={(e) => onSelect(e.currentTarget.value as SubStatusID)}
         >
@@ -64,11 +64,11 @@ export const SubStatusEditor: FC<Props> = ({ sub, onSelect, onChange }) => {
             </option>
           ))}
         </select>
-        <div className="flex items-center font-black">
+        <div className="flex items-center">
           <input
             type="number"
             inputMode="decimal"
-            className="w-14 font-black text-slate-700 artifact-value-input"
+            className="w-14 font-black artifact-value-input"
             min={0}
             step={step}
             value={sub.param.value}

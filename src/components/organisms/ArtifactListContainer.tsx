@@ -9,15 +9,12 @@ import type {
   SubStatusBuildMap,
   ArtifactTypeID,
   ArtifactSetID,
+  ArtifactListMode,
 } from "@/types/Scorer"
 
-import { Sortable } from "@/components/molecules/ArtifactList/Sortable"
-import { Grid } from "@/components/molecules/ArtifactList/Grid"
-import { Detail } from "@/components/molecules/ArtifactList/Detail"
+import Switcher from "@/components/molecules/ArtifactList/Switcher"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
-
-type ArtifactListMode = "sort" | "grid" | "detail"
 
 interface Props {
   artifacts: Artifact[]
@@ -68,10 +65,8 @@ export const Container: FC<Props> = ({
     onUpdate((prev) => prev.map((a) => (a.id === newArt.id ? newArt : a)))
   }
 
-  const isArtsEmpty = filteredArts.length === 0
-
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col flex-1 gap-2">
       <div className="flex gap-2 items-center">
         <div className="flex-1">
           <label className="pr-2 pl-3 w-full h-8 font-semibold border border-opacity-20 cursor-pointer label rounded-box bg-base-100 border-base-content">
@@ -87,7 +82,7 @@ export const Container: FC<Props> = ({
           </label>
         </div>
         {!isSort && (
-          <div className="border border-opacity-20 btn btn-square btn-sm bg-base-100 text-neutral-focus btn-ghost border-base-content">
+          <div className="border border-opacity-20 border-base-content btn btn-sm btn-square rounded-box btn-ghost bg-base-100 text-base-focus">
             <label className="swap swap-rotate">
               <input
                 type="checkbox"
@@ -130,7 +125,7 @@ export const Container: FC<Props> = ({
       {!isSort && (
         <div className="grid grid-cols-2 gap-2">
           <select
-            className="select select-sm select-bordered"
+            className="select select-sm select-bordered rounded-box"
             defaultValue={filterArtType}
             onChange={(e) =>
               setFilterArtType(e.currentTarget.value as ArtifactTypeID)
@@ -144,7 +139,7 @@ export const Container: FC<Props> = ({
             ))}
           </select>
           <select
-            className="select select-sm select-bordered"
+            className="select select-sm select-bordered rounded-box"
             defaultValue={filterArtSet}
             onChange={(e) =>
               setFilterArtSet(e.currentTarget.value as ArtifactSetID)
@@ -161,22 +156,14 @@ export const Container: FC<Props> = ({
           </select>
         </div>
       )}
-      {isArtsEmpty ? (
-        <div className="flex justify-center items-center w-full h-14">
-          <span className="font-semibold text-neutral">
-            表示できる聖遺物がありません
-          </span>
-        </div>
-      ) : (
-        <Switcher
-          mode={mode}
-          filtered={filteredArts}
-          artifacts={artifacts}
-          calcMode={calcMode}
-          custom={custom}
-          onUpdate={onUpdate}
-        />
-      )}
+      <Switcher
+        mode={mode}
+        filtered={filteredArts}
+        artifacts={artifacts}
+        calcMode={calcMode}
+        custom={custom}
+        onUpdate={onUpdate}
+      />
       {filteredArts.map((art) => (
         <Fragment key={"modals-" + art.id}>
           <RemoveModal id={art.id} onRemove={handleRemove} />
@@ -185,27 +172,4 @@ export const Container: FC<Props> = ({
       ))}
     </div>
   )
-}
-
-interface SwitcherProps extends Props {
-  mode: ArtifactListMode
-  filtered: Artifact[]
-}
-
-const Switcher: FC<SwitcherProps> = ({
-  mode,
-  filtered,
-  artifacts,
-  calcMode,
-  custom,
-  onUpdate,
-}) => {
-  if (mode === "sort") {
-    return <Sortable artifacts={artifacts} onUpdate={onUpdate} />
-  }
-  if (mode === "grid") {
-    return <Grid filtered={filtered} calcMode={calcMode} custom={custom} />
-  }
-
-  return <Detail filtered={filtered} calcMode={calcMode} custom={custom} />
 }

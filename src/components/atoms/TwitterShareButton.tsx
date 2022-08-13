@@ -1,4 +1,5 @@
-import type { VFC } from "react"
+import { useMemo } from "react"
+import type { FC } from "react"
 import type { ScorableArtifactProps } from "@/types/Scorer"
 import { CalcModeBuildMap } from "@/consts/Scorer"
 import {
@@ -59,12 +60,15 @@ const getArtShareUrl = ({
   return TWITTER_BASE_URL + text
 }
 
-export const TwitterShareButton: VFC<ScorableArtifactProps> = ({
+export const TwitterShareButton: FC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
   custom,
 }) => {
-  const url = getArtShareUrl({ artifact, calcMode, custom })
+  const url = useMemo(
+    () => getArtShareUrl({ artifact, calcMode, custom }),
+    [artifact, calcMode, custom]
+  )
 
   return (
     <a
@@ -92,12 +96,15 @@ export const TwitterShareButton: VFC<ScorableArtifactProps> = ({
   )
 }
 
-export const TwitterShareIcon: VFC<ScorableArtifactProps> = ({
+export const TwitterShareIcon: FC<ScorableArtifactProps> = ({
   artifact,
   calcMode,
   custom,
 }) => {
-  const url = getArtShareUrl({ artifact, calcMode, custom })
+  const url = useMemo(
+    () => getArtShareUrl({ artifact, calcMode, custom }),
+    [artifact, calcMode, custom]
+  )
 
   return (
     <a

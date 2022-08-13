@@ -1,23 +1,10 @@
 import { useState, useCallback } from "react"
-import { useDropzone } from "react-dropzone"
 
 import { useLocalStorage } from "@/hooks/useLocalStorage"
 
-import type { Artifact, SetValue } from "@/types/Scorer"
+import type { Artifact } from "@/types/Scorer"
 
-export const Header = () => {
-  return (
-    <div className="md:max-w-md navbar bg-neutral text-neutral-content md:rounded-b-box">
-      <div className="navbar-start"></div>
-      <div className="navbar-center">
-        <a className="text-2xl normal-case btn btn-ghost">#ArtifactScorer</a>
-      </div>
-      <div className="navbar-end">
-        <Config />
-      </div>
-    </div>
-  )
-}
+import { ConfigFileInput } from "@/components/molecules/ConfigFileInput"
 
 const getTimestamp = () => {
   const dt = new Date()
@@ -37,7 +24,7 @@ const downloadURI = (uri: string, name: string) => {
   document.body.removeChild(link)
 }
 
-const Config = () => {
+export const Config = () => {
   const [storedArts, setStoredArts] = useLocalStorage<Artifact[]>(
     "artifacts",
     []
@@ -63,7 +50,7 @@ const Config = () => {
   return (
     <>
       <div className="dropdown dropdown-end">
-        <label tabIndex={0} className="btn btn-circle">
+        <label tabIndex={0} className="btn btn-square">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-6 h-6"
@@ -86,7 +73,7 @@ const Config = () => {
         </label>
         <ul
           tabIndex={0}
-          className="w-48 font-semibold shadow dropdown-content menu bg-base-100 rounded-box text-base-content"
+          className="mt-4 w-48 font-semibold shadow dropdown-content menu bg-base-100 rounded-box text-base-content"
         >
           <li className="hover:bordered">
             <div className="py-3 px-4">
@@ -99,7 +86,7 @@ const Config = () => {
             <div className="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6 text-secondary"
+                className="w-6 h-6 text-success"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -191,47 +178,5 @@ const Config = () => {
         </div>
       </div>
     </>
-  )
-}
-
-const ConfigFileInput = ({ onDrop }: { onDrop: SetValue<Artifact[]> }) => {
-  const handleDrop = useCallback(
-    async (acceptedFiles: File[]) => {
-      if (!acceptedFiles.length) return
-      const [file] = acceptedFiles
-      const text = await file.text()
-      const data = JSON.parse(text) as Artifact[]
-      onDrop(data)
-    },
-    [onDrop]
-  )
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop: handleDrop,
-    accept: ["application/json"],
-    maxFiles: 1,
-    noDrag: true,
-  })
-
-  return (
-    <div {...getRootProps()} className="w-full">
-      <input {...getInputProps()} />
-      <div className="flex gap-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-6 h-6 text-primary"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
-          />
-        </svg>
-        <span>インポート</span>
-      </div>
-    </div>
   )
 }

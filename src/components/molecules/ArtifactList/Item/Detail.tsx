@@ -22,9 +22,9 @@ export const DetailItem: FC<Props> = ({ artifact, calcMode, custom }) => {
     >
       <div
         tabIndex={0}
-        className="flex overflow-hidden gap-1 items-center px-1 w-full shadow bg-base-100 rounded-box"
+        className="flex gap-1 items-center px-1 w-full shadow bg-base-100 btn-naked"
       >
-        <div className="p-0 w-10 h-10 bg-base-100 text-neutral-focus">
+        <div className="p-0 w-10 h-10 text-base-focus">
           <ArtTypeIcon name={type.name} />
         </div>
         <div className="flex flex-col flex-1 py-1 h-full">
@@ -73,7 +73,7 @@ export const DetailItem: FC<Props> = ({ artifact, calcMode, custom }) => {
         </label>
         <label
           htmlFor={editId}
-          className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost"
+          className="btn btn-sm btn-circle btn-ghost text-base-focus"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

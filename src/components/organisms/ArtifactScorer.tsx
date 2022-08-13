@@ -1,4 +1,4 @@
-import { Fragment, useState, useCallback } from "react"
+import { useState, useCallback } from "react"
 import { createWorker } from "tesseract.js"
 import type { ImageLike, Rectangle } from "tesseract.js"
 import { useLocalStorage } from "@/hooks/useLocalStorage"
@@ -37,11 +37,7 @@ export const ArtifactScorer = () => {
   const handleRecognize = useCallback(async () => {
     setInOCRProcess(true)
 
-    const worker = createWorker({
-      logger: (m: { status: string; progress: number }) => {
-        //
-      },
-    })
+    const worker = createWorker()
     await worker.load()
     await worker.loadLanguage("jpn")
 
@@ -62,56 +58,52 @@ export const ArtifactScorer = () => {
 
     setInOCRProcess(false)
   }, [file, rectangle, actions])
-  const saveArt = useCallback(() => {
+  const handleSave = useCallback(() => {
     const id = Date.now().toString(16)
     setStoredArts((prev) => [{ ...artifact, id }, ...prev])
   }, [artifact, setStoredArts])
 
   return (
-    <Fragment>
-      <div className="flex flex-col flex-1 my-2 w-11/12 max-w-sm sm:w-full">
-        <ImageLoader
-          url={url}
-          onDrop={handleDrop}
-          onCrop={setRectangle}
-          onReset={() => setUrl("")}
-        />
-        <div className="my-2">
-          <div className="divider">
-            {inOCRProcess ? (
-              <button className="btn btn-primary loading">読取中</button>
-            ) : (
-              <button
-                className="btn btn-primary"
-                disabled={!url}
-                onClick={handleRecognize}
-              >
-                読取
-              </button>
-            )}
-          </div>
-        </div>
-        <ArtifactEditor {...states} {...actions} />
-        <div className="flex flex-col">
-          <div className="my-2">
-            <div className="divider">
-              <button
-                className="btn btn-secondary"
-                disabled={!url}
-                onClick={saveArt}
-              >
-                保存
-              </button>
-            </div>
-          </div>
-          <ArtifactListContainer
-            artifacts={storedArts}
-            calcMode={calcMode}
-            custom={custom}
-            onUpdate={setStoredArts}
-          />
-        </div>
+    <div className="flex flex-col flex-1 gap-2 my-2 w-11/12 max-w-sm sm:w-full">
+      <ImageLoader
+        url={url}
+        onDrop={handleDrop}
+        onCrop={setRectangle}
+        onReset={() => setUrl("")}
+      />
+      <div className="divider">
+        {inOCRProcess ? (
+          <button className="btn btn-primary rounded-box loading">
+            読取中
+          </button>
+        ) : (
+          <button
+            className="btn btn-primary rounded-box"
+            disabled={!url}
+            onClick={handleRecognize}
+          >
+            読取
+          </button>
+        )}
       </div>
-    </Fragment>
+      <ArtifactEditor {...states} {...actions} />
+      <div className="grid grid-cols-1 gap-2">
+        <div className="divider">
+          <button
+            className="btn btn-secondary rounded-box"
+            disabled={!url}
+            onClick={handleSave}
+          >
+            保存
+          </button>
+        </div>
+        <ArtifactListContainer
+          artifacts={storedArts}
+          calcMode={calcMode}
+          custom={custom}
+          onUpdate={setStoredArts}
+        />
+      </div>
+    </div>
   )
 }

@@ -1,5 +1,5 @@
 import { ArtifactScorer } from "@/components/organisms/ArtifactScorer"
-import { Header } from "@/components/atoms/Header"
+import { Header } from "@/components/molecules/Header"
 import { Footer } from "@/components/atoms/Footer"
 
 const Scorer = () => {

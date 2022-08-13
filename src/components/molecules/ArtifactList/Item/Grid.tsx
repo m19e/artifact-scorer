@@ -17,9 +17,11 @@ export const GridItem: FC<ScorableArtifactProps> = ({
     <div className="w-14 h-14 artifact-dropdown">
       <label
         tabIndex={0}
-        className="p-0 w-full h-full shadow btn btn-sm btn-ghost bg-base-100 text-neutral-focus"
+        className="p-0 w-full h-full shadow bg-base-100 btn btn-sm btn-ghost rounded-box"
       >
-        <ArtTypeIcon name={type.name} />
+        <div className="text-base-focus">
+          <ArtTypeIcon name={type.name} />
+        </div>
       </label>
       <div
         tabIndex={0}
@@ -41,13 +43,13 @@ export const GridItem: FC<ScorableArtifactProps> = ({
         <div className="my-2 h-0 divider"></div>
         <div className="flex text-sm sm:text-lg">
           <div className="flex flex-col flex-1">
-            {subs.map((sub) => (
-              <span key={sub.id}>{sub.name}</span>
+            {subs.map((sub, i) => (
+              <span key={sub.id + i}>{sub.name}</span>
             ))}
           </div>
           <div className="flex flex-col">
-            {subs.map((sub) => (
-              <span key={sub.id}>
+            {subs.map((sub, i) => (
+              <span key={sub.id + i}>
                 +{sub.param.value}
                 {sub.param.type === "percent" ? "%" : ""}
               </span>
@@ -77,7 +79,7 @@ export const GridItem: FC<ScorableArtifactProps> = ({
           </label>
           <label
             htmlFor={editId}
-            className="text-neutral-focus text-opacity-75 btn btn-sm btn-circle btn-ghost"
+            className="btn btn-sm btn-circle btn-ghost text-base-focus"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

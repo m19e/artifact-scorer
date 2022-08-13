@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <footer className="flex items-center p-4 w-full md:max-w-md footer bg-neutral text-neutral-content md:rounded-t-box">
+    <footer className="flex items-center p-4 w-full md:max-w-xl footer bg-neutral text-neutral-content md:rounded-t-box">
       <div className="flex flex-1 items-center">
         <svg
           width="36"
@@ -32,7 +32,7 @@ export const Footer = () => {
           </svg>
         </a>
         <a
-          href="https://github.com/m19e/artifact-reader"
+          href="https://github.com/m19e/artifact-scorer"
           target="_blank"
           rel="noreferrer"
         >
