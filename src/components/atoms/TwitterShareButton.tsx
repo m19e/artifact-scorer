@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import type { FC } from "react"
 import type { ScorableArtifactProps } from "@/types/Scorer"
 import { CalcModeBuildMap } from "@/consts/Scorer"
@@ -64,7 +65,10 @@ export const TwitterShareButton: FC<ScorableArtifactProps> = ({
   calcMode,
   custom,
 }) => {
-  const url = getArtShareUrl({ artifact, calcMode, custom })
+  const url = useMemo(
+    () => getArtShareUrl({ artifact, calcMode, custom }),
+    [artifact, calcMode, custom]
+  )
 
   return (
     <a
@@ -97,7 +101,10 @@ export const TwitterShareIcon: FC<ScorableArtifactProps> = ({
   calcMode,
   custom,
 }) => {
-  const url = getArtShareUrl({ artifact, calcMode, custom })
+  const url = useMemo(
+    () => getArtShareUrl({ artifact, calcMode, custom }),
+    [artifact, calcMode, custom]
+  )
 
   return (
     <a
