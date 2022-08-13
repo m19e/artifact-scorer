@@ -13,9 +13,9 @@ export const CalcModeSelect: FC<Props> = ({ onSelect }) => {
       className="w-full select select-bordered rounded-box"
       onChange={(e) => onSelect(e.currentTarget.value as CalcModeID)}
     >
-      {CalcModeList.map((data) => (
-        <option key={data.id} value={data.id}>
-          {data.label}
+      {CalcModeList.map(({ id, label }) => (
+        <option key={id} value={id}>
+          {label}
         </option>
       ))}
     </select>
