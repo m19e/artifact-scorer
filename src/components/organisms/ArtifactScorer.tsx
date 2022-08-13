@@ -37,11 +37,7 @@ export const ArtifactScorer = () => {
   const handleRecognize = useCallback(async () => {
     setInOCRProcess(true)
 
-    const worker = createWorker({
-      logger: (m: { status: string; progress: number }) => {
-        //
-      },
-    })
+    const worker = createWorker()
     await worker.load()
     await worker.loadLanguage("jpn")
 
