@@ -5,14 +5,14 @@ import { CalcModeList } from "@/consts/Scorer"
 
 import { SelectInput } from "@/components/molecules/SelectInput"
 
+interface Props {
+  onSelect: (id: CalcModeID) => void
+}
+
 const CALCMODE_LIST = CalcModeList.map(({ label, id }) => ({
   label,
   value: id,
 }))
-
-interface Props {
-  onSelect: (id: CalcModeID) => void
-}
 
 export const CalcModeSelect: FC<Props> = ({ onSelect }) => {
   return (
