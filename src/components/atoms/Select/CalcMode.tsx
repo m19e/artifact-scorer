@@ -23,16 +23,4 @@ export const CalcModeSelect: FC<Props> = ({ onSelect }) => {
       defaultValue={"CRIT"}
     />
   )
-  return (
-    <select
-      className="w-full select select-bordered rounded-box"
-      onChange={(e) => onSelect(e.currentTarget.value as CalcModeID)}
-    >
-      {CalcModeList.map(({ id, label }) => (
-        <option key={id} value={id}>
-          {label}
-        </option>
-      ))}
-    </select>
-  )
 }
