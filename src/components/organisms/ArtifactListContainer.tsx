@@ -13,8 +13,18 @@ import type {
 } from "@/types/Scorer"
 
 import Switcher from "@/components/molecules/ArtifactList/Switcher"
+import { SelectInput } from "@/components/molecules/SelectInput"
+import type { Item } from "@/components/molecules/SelectInput"
 import { RemoveModal } from "@/components/atoms/ArtifactRemoveModal"
 import { EditModal } from "@/components/molecules/ArtifactEditModal"
+
+const FILTERABLE_ARTTYPE_LIST: Item<"ALL" | ArtifactTypeID>[] = [
+  { label: "全種類", value: "ALL" },
+  ...ArtifactTypeList.map(({ id, name }) => ({
+    label: name,
+    value: id,
+  })),
+]
 
 interface Props {
   artifacts: Artifact[]
@@ -41,6 +51,16 @@ export const Container: FC<Props> = ({
     if (isGridView) return "grid"
     return "detail"
   }, [isGridView, isSort])
+  const filterableArtSetList: Item<"ALL" | ArtifactSetID>[] = useMemo(
+    () => [
+      { label: "全セット", value: "ALL" },
+      ...Array.from(new Set(artifacts.map(({ set }) => set.id))).map((id) => ({
+        label: ArtifactSet[id],
+        value: id,
+      })),
+    ],
+    [artifacts]
+  )
   const filteredArts = useMemo(() => {
     const allType = filterArtType === "ALL"
     const allSet = filterArtSet == "ALL"
@@ -124,36 +144,18 @@ export const Container: FC<Props> = ({
       </div>
       {!isSort && (
         <div className="grid grid-cols-2 gap-2">
-          <select
+          <SelectInput
             className="select select-sm select-bordered rounded-box"
+            items={FILTERABLE_ARTTYPE_LIST}
+            onSelect={setFilterArtType}
             defaultValue={filterArtType}
-            onChange={(e) =>
-              setFilterArtType(e.currentTarget.value as ArtifactTypeID)
-            }
-          >
-            <option value="ALL">全種類</option>
-            {ArtifactTypeList.map((type) => (
-              <option key={type.id} value={type.id}>
-                {type.name}
-              </option>
-            ))}
-          </select>
-          <select
+          />
+          <SelectInput
             className="select select-sm select-bordered rounded-box"
+            items={filterableArtSetList}
+            onSelect={setFilterArtSet}
             defaultValue={filterArtSet}
-            onChange={(e) =>
-              setFilterArtSet(e.currentTarget.value as ArtifactSetID)
-            }
-          >
-            <option value="ALL">全セット</option>
-            {Array.from(new Set(artifacts.map(({ set }) => set.id))).map(
-              (id) => (
-                <option key={id} value={id}>
-                  {ArtifactSet[id]}
-                </option>
-              )
-            )}
-          </select>
+          />
         </div>
       )}
       <Switcher
