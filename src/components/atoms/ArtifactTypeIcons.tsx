@@ -1,4 +1,4 @@
-import type { VFC } from "react"
+import type { FC } from "react"
 
 import type { ArtifactTypeName } from "@/types/Scorer"
 import { ArtifactType } from "@/consts/Scorer"
@@ -7,7 +7,7 @@ interface RootProps {
   name: ArtifactTypeName
 }
 
-export const ArtTypeIcon: VFC<RootProps> = ({ name }) => {
+export const ArtTypeIcon: FC<RootProps> = ({ name }) => {
   switch (name) {
     case ArtifactType.FLOWER:
       return <Flower />
@@ -25,7 +25,7 @@ export const ArtTypeIcon: VFC<RootProps> = ({ name }) => {
   }
 }
 
-export const Flower: VFC = () => {
+export const Flower: FC = () => {
   return (
     <svg
       className="w-full h-full"
@@ -40,7 +40,7 @@ export const Flower: VFC = () => {
   )
 }
 
-export const Plume: VFC = () => {
+export const Plume: FC = () => {
   return (
     <svg
       className="w-full h-full"
@@ -55,7 +55,7 @@ export const Plume: VFC = () => {
   )
 }
 
-export const Sands: VFC = () => {
+export const Sands: FC = () => {
   return (
     <svg
       className="w-full h-full"
@@ -70,7 +70,7 @@ export const Sands: VFC = () => {
   )
 }
 
-export const Goblet: VFC = () => {
+export const Goblet: FC = () => {
   return (
     <svg
       className="w-full h-full"
@@ -85,7 +85,7 @@ export const Goblet: VFC = () => {
   )
 }
 
-export const Circlet: VFC = () => {
+export const Circlet: FC = () => {
   return (
     <svg
       className="w-full h-full"

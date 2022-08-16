@@ -1,4 +1,4 @@
-import type { VFC } from "react"
+import type { FC } from "react"
 import type { ArtifactTypeID, CalcModeName } from "@/types/Scorer"
 import { getScoreRateProps } from "@/tools/Scorer"
 
@@ -8,7 +8,7 @@ interface Props {
   calc: CalcModeName
 }
 
-export const ArtifactScoreBox: VFC<Props> = ({ type, score, calc }) => {
+export const ArtifactScoreBox: FC<Props> = ({ type, score, calc }) => {
   const { rate, className } = getScoreRateProps(type, score)
 
   return (
