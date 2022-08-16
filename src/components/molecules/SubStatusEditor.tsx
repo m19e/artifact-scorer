@@ -3,6 +3,8 @@ import type { FC } from "react"
 import type { SubStatusID, SubStatusData } from "@/types/Scorer"
 import { SubStatusMap } from "@/consts/Scorer"
 
+import { SelectInput } from "@/components/molecules/SelectInput"
+
 const SubStatusOption = {
   CRIT_RATE: "会心率",
   CRIT_DMG: "会心ダメージ",
@@ -26,6 +28,11 @@ const SubStatusOptionList: SubStatusOptionData[] = Object.entries(
   const id = key as SubStatusID
   return { id, name }
 })
+const SUBSTAT_LIST = SubStatusOptionList.map(({ id, name }, i) => ({
+  key: id + i,
+  label: name,
+  value: id,
+}))
 
 const getSubStatusRate = (data: SubStatusData): number => {
   const {
@@ -53,17 +60,12 @@ export const SubStatusEditor: FC<Props> = ({ sub, onSelect, onChange }) => {
     <div className="flex justify-between">
       <div className="flex gap-1 items-center font-black text-slate-700">
         <span className="whitespace-pre-wrap">{" ・"}</span>
-        <select
+        <SelectInput
           className="artifact-select-xs"
           defaultValue={sub.id}
-          onChange={(e) => onSelect(e.currentTarget.value as SubStatusID)}
-        >
-          {SubStatusOptionList.map((opt) => (
-            <option key={opt.name} value={opt.id}>
-              {opt.name}
-            </option>
-          ))}
-        </select>
+          items={SUBSTAT_LIST}
+          onSelect={onSelect}
+        />
         <div className="flex items-center">
           <input
             type="number"

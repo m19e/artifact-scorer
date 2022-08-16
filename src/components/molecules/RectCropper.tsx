@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react"
-import type { VFC } from "react"
+import type { FC } from "react"
 import type { Rectangle } from "tesseract.js"
 import ReactEasyCrop from "react-easy-crop"
 import type { Area, Point } from "react-easy-crop/types"
@@ -9,7 +9,7 @@ export interface Props {
   onCrop: (rect: Rectangle) => void
 }
 
-export const RectCropper: VFC<Props> = ({ url, onCrop }) => {
+export const RectCropper: FC<Props> = ({ url, onCrop }) => {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
 
