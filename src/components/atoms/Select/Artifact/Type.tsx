@@ -19,9 +19,9 @@ export const ArtifactTypeSelect: FC<Props> = ({ defaultValue, onSelect }) => {
   return (
     <SelectInput
       className="text-white text-opacity-90 artifact-select-sm"
+      defaultValue={defaultValue}
       items={ARTTYPE_LIST}
       onSelect={onSelect}
-      defaultValue={defaultValue}
     />
   )
 }

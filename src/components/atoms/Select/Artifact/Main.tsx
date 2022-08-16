@@ -1,7 +1,10 @@
+import { useMemo } from "react"
 import type { FC } from "react"
 
 import type { ArtifactTypeID, MainStatusID } from "@/types/Scorer"
 import { ArtifactTypeMap } from "@/consts/Scorer"
+
+import { SelectInput } from "@/components/molecules/SelectInput"
 
 interface Props {
   type: ArtifactTypeID
@@ -14,17 +17,22 @@ export const ArtifactMainSelect: FC<Props> = ({
   defaultValue,
   onSelect,
 }) => {
+  const ArtifactMainList = useMemo(
+    () =>
+      ArtifactTypeMap[type].main.map(({ id, name }, i) => ({
+        key: id + i,
+        label: name,
+        value: id,
+      })),
+    [type]
+  )
+
   return (
-    <select
+    <SelectInput
       className="text-white text-opacity-60 artifact-select-sm"
       defaultValue={defaultValue}
-      onChange={(e) => onSelect(e.currentTarget.value as MainStatusID)}
-    >
-      {ArtifactTypeMap[type].main.map((m, i) => (
-        <option key={m.id + i} value={m.id}>
-          {m.name}
-        </option>
-      ))}
-    </select>
+      items={ArtifactMainList}
+      onSelect={onSelect}
+    />
   )
 }
