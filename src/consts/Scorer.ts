@@ -413,5 +413,13 @@ export const CalcModeBuildMap: {
       ...CustomSubStatusMap.ELEMENTAL_MASTERY,
       value: 0.5,
     },
+    CRIT_RATE: {
+      ...CustomSubStatusMap.CRIT_RATE,
+      value: 1,
+    },
+    CRIT_DMG: {
+      ...CustomSubStatusMap.CRIT_DMG,
+      value: 0.5,
+    },
   },
 }
