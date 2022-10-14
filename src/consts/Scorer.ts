@@ -84,6 +84,8 @@ export const ArtifactSet = {
   OCEAN_HUED_CLAM: "海染硨磲",
   VERMILLION_HEREAFTER: "辰砂往生録",
   ECHOES_OF_AN_OFFERING: "来歆の余響",
+  DEEPWOOD_MEMORIES: "深林の記憶",
+  GILDED_DREAMS: "金メッキの夢",
 } as const
 
 export const ArtifactSetList: ArtifactSetData[] = Object.entries(
