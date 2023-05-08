@@ -88,6 +88,8 @@ export const ArtifactSet = {
   GILDED_DREAMS: "金メッキの夢",
   DESERT_PAVILION_CHRONICLE: "砂上の楼閣の史話",
   FLOWER_OF_PARADISE_LOST: "楽園の絶花",
+  NYMPHS_DREAM: "水仙の夢",
+  VOURUKASHAS_GLOW: "花海甘露の光",
 } as const
 
 export const ArtifactSetList: ArtifactSetData[] = Object.entries(
